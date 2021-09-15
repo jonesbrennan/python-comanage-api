@@ -62,7 +62,7 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
                     {
                         'Version': '1.0',
                         'CoId': CO_API_ID,
-                        'ParentId': str(parent_id),
+                        'ParentId': int(parent_id),
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -183,7 +183,7 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
                     {
                         'Version': '1.0',
                         'CoId': CO_API_ID,
-                        'ParentId': str(parent_id),
+                        'ParentId': int(parent_id),
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -245,7 +245,7 @@ def cous_view_all() -> json:
         200 OK              Cou Response        Cou returned
         401 Unauthorized                        Authentication required
         404 CO Unknown                          id not found
-        500 Other Error                         Unknown error:
+        500 Other Error                         Unknown error
     """
     url = CO_API_URL + '/cous.json'
     params = {'coid': CO_API_ID}
