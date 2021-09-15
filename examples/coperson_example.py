@@ -32,7 +32,7 @@ print('### coperson_find')
 find_coperson = json.loads(coperson_find())
 print(json.dumps(find_coperson, indent=4))
 
-# coperson_match(given=None, family=None, mail=None, distinct_by_id=False) -> json
+# coperson_match(given=None, family=None, mail=None, distinct_by_id=True) -> json
 print('### coperson_match')
 given = 'michael'
 family = None
@@ -51,7 +51,7 @@ print('### coperson_view_all')
 all_coperson = json.loads(coperson_view_all())
 print(json.dumps(all_coperson, indent=4))
 
-# coperson_view_per_identifier(identifier: str) -> json
+# coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json
 print('### coperson_view_per_identifier')
 identifier = 'ImPACT1000002'
 distinct_by_id = True

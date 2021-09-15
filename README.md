@@ -18,7 +18,7 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     - delete (not implemented): `coperson_delete() -> json`
     - edit (not implemented): `coperson_edit() -> json`
     - find (not implemented): `coperson_find() -> json`
-    - match: `coperson_match(given=None, family=None, mail=None, distinct_by_id=False) -> json`
+    - match: `coperson_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
     - view all (per co): `coperson_view_all() -> json`
     - view per identifier: `coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
     - view one: `coperson_view_one(coperson_id: int) -> json`
