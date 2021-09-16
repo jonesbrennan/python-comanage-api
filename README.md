@@ -14,14 +14,14 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     - view one: `cous_view_one(cou_id: int) -> json`
 
 - [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
-    - add (not implemented): `coperson_add() -> json`
-    - delete (not implemented): `coperson_delete() -> json`
-    - edit (not implemented): `coperson_edit() -> json`
-    - find (not implemented): `coperson_find() -> json`
-    - match: `coperson_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
-    - view all (per co): `coperson_view_all() -> json`
-    - view per identifier: `coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
-    - view one: `coperson_view_one(coperson_id: int) -> json`
+    - add (not implemented): `copeople_add() -> json`
+    - delete (not implemented): `copeople_delete() -> json`
+    - edit (not implemented): `copeople_edit() -> json`
+    - find (not implemented): `copeople_find() -> json`
+    - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
+    - view all (per co): `copeople_view_all() -> json`
+    - view per identifier: `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
+    - view one: `copeople_view_one(copeople_id: int) -> json`
 
 - [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
     - add:
@@ -47,6 +47,14 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     - edit:
     - view all:
     - view per person:
+    - view one:
+
+- [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
+    - add:
+    - delete:
+    - edit:
+    - view all:
+    - view all (per co_person):
     - view one:
 
     
@@ -98,4 +106,5 @@ See code in [examples](examples/) directory for usage
 - CoPersonRole API: [https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
 - Identifier API: [https://spaces.at.internet2.edu/display/COmanage/Identifier+API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 - Name API: [https://spaces.at.internet2.edu/display/COmanage/Name+API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
+- SsHKey API: [https://spaces.at.internet2.edu/display/COmanage/SshKey+API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
 - PyPi: [https://pypi.org](https://pypi.org)

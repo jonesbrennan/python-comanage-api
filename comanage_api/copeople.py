@@ -7,7 +7,7 @@ CoPerson API - https://spaces.at.internet2.edu/display/COmanage/CoPerson+API
 """
 
 
-def coperson_add() -> json:
+def copeople_add() -> json:
     """
     Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
     Note that linking to an OrgIdentity and invitations are separate operations.
@@ -21,10 +21,10 @@ def coperson_add() -> json:
     return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
 
 
-def coperson_delete() -> json:
+def copeople_delete() -> json:
     """
-    Remove a CO Person. This method will also delete related data, such as CoPersonRoles, EmailAddresses,
-    and Identifiers. A person must be removed from any COs (CoPerson records must be deleted)
+    Remove a CO Person. This method will also delete related data, such as copeopleRoles, EmailAddresses,
+    and Identifiers. A person must be removed from any COs (copeople records must be deleted)
     before the OrgIdentity record can be removed.
 
     :return
@@ -36,7 +36,7 @@ def coperson_delete() -> json:
     return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
 
 
-def coperson_edit() -> json:
+def copeople_edit() -> json:
     """
     Edit an existing CO Person.
 
@@ -49,7 +49,7 @@ def coperson_edit() -> json:
     return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
 
 
-def coperson_find() -> json:
+def copeople_find() -> json:
     """
     Search for existing CO Person records.
     When too many records are found, a message may be returned rather than specific records.
@@ -63,7 +63,7 @@ def coperson_find() -> json:
     return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
 
 
-def coperson_match(given=None, family=None, mail=None, distinct_by_id=True) -> json:
+def copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json:
     """
     Attempt to match existing CO Person records.
     Note that matching is not performed on search criteria of less than 3 characters,
@@ -122,7 +122,7 @@ def coperson_match(given=None, family=None, mail=None, distinct_by_id=True) -> j
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
 
 
-def coperson_view_all() -> json:
+def copeople_view_all() -> json:
     """
     Retrieve all existing CO People for the specified CO.
 
@@ -163,7 +163,7 @@ def coperson_view_all() -> json:
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
 
 
-def coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
+def copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
     """
     Retrieve all existing CO People attached to the specified identifier.
     Note the specified identifier must be attached to a CO Person, not an Org Identity.
@@ -188,7 +188,7 @@ def coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
 
     Response Format
         HTTP Status                 Response Body           Description
-        200 OK                      CoPerson Response       CoPeople returned
+        200 OK                      CoPerson Response       CoPerson returned
         401 Unauthorized                                    Authentication required
         404 CO Unknown                                      id not found
         500 Other Error                                     Unknown error
@@ -211,11 +211,11 @@ def coperson_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
 
 
-def coperson_view_one(coperson_id: int) -> json:
+def copeople_view_one(copeople_id: int) -> json:
     """
     Retrieve an existing CO Person.
 
-    :param coperson_id:
+    :param copeople_id:
     :return
         {
           "RequestType":"CoPeople",
@@ -237,10 +237,10 @@ def coperson_view_one(coperson_id: int) -> json:
         HTTP Status                 Response Body           Description
         200 OK                      CoPerson Response       CoPerson returned
         401 Unauthorized                                    Authentication required
-        404 CoPerson Unknown                                id not found
+        404 copeople Unknown                                id not found
         500 Other Error                                     Unknown error
     """
-    url = CO_API_URL + '/co_people/' + str(coperson_id) + '.json'
+    url = CO_API_URL + '/co_people/' + str(copeople_id) + '.json'
     params = {'coid': CO_API_ID}
     resp = s.get(
         url=url,

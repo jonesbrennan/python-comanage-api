@@ -99,31 +99,31 @@ $ python examples/cous_example.py
 
 ## CoPerson API
 
-Example: `coperson_example.py`
+Example: `copeople_example.py`
 
 ```console
-$ python examples/coperson_example.py
-### coperson_add
+$ python examples/copeople_example.py
+### copeople_add
 {
     "status_code": 501,
     "reason": "Not Implemented"
 }
-### coperson_delete
+### copeople_delete
 {
     "status_code": 501,
     "reason": "Not Implemented"
 }
-### coperson_edit
+### copeople_edit
 {
     "status_code": 501,
     "reason": "Not Implemented"
 }
-### coperson_find
+### copeople_find
 {
     "status_code": 501,
     "reason": "Not Implemented"
 }
-### coperson_match
+### copeople_match
 {
     "ResponseType": "CoPeople",
     "Version": "1.0",
@@ -141,7 +141,7 @@ $ python examples/coperson_example.py
         }
     ]
 }
-### coperson_view_all
+### copeople_view_all
 {
     "ResponseType": "CoPeople",
     "Version": "1.0",
@@ -203,7 +203,7 @@ $ python examples/coperson_example.py
         }
     ]
 }
-### coperson_view_per_identifier
+### copeople_view_per_identifier
 {
     "ResponseType": "CoPeople",
     "Version": "1.0",
@@ -221,7 +221,7 @@ $ python examples/coperson_example.py
         }
     ]
 }
-### coperson_view_one
+### copeople_view_one
 {
     "ResponseType": "CoPeople",
     "Version": "1.0",
