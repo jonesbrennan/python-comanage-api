@@ -31,12 +31,14 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> json`
     - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> json`
     - view one: `copersonroles_view_one(copersonrole_id: int) -> json`
-    - **NOTE**: Valid values for `status` and `affiliation` as follows:
     
-        ```python
-        STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate', 'Expired', 'GracePeriod', 'Invited', 'Pending', 'PendingApproval', 'PendingConfirmation', 'Suspended']
-        AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
-        ```
+    **NOTE**: when provided, valid values for `status` and `affiliation` as follows:
+
+    ```python
+    STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate', 
+    'Expired', 'GracePeriod', 'Invited', 'Pending', 'PendingApproval', 'PendingConfirmation', 'Suspended']
+    AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
+    ```
 
 - [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
     - add:
