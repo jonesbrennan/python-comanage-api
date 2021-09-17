@@ -23,8 +23,8 @@ def copeople_add() -> json:
 
 def copeople_delete() -> json:
     """
-    Remove a CO Person. This method will also delete related data, such as copeopleRoles, EmailAddresses,
-    and Identifiers. A person must be removed from any COs (copeople records must be deleted)
+    Remove a CO Person. This method will also delete related data, such as CoPersonRoles, EmailAddresses,
+    and Identifiers. A person must be removed from any COs (CoPerson records must be deleted)
     before the OrgIdentity record can be removed.
 
     :return
@@ -99,7 +99,7 @@ def copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> j
         500 Other Error                                 Unknown error
     """
     url = CO_API_URL + '/co_people.json'
-    params = {'coid': CO_API_ID}
+    params = {'coid': CO_API_ORG_ID}
     if given:
         params.update({'given': given})
     if family:
@@ -152,7 +152,7 @@ def copeople_view_all() -> json:
         500 Other Error                                 Unknown error
     """
     url = CO_API_URL + '/co_people.json'
-    params = {'coid': CO_API_ID}
+    params = {'coid': CO_API_ORG_ID}
     resp = s.get(
         url=url,
         params=params
@@ -194,7 +194,7 @@ def copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
         500 Other Error                                     Unknown error
     """
     url = CO_API_URL + '/co_people.json'
-    params = {'coid': CO_API_ID, 'search.identifier': identifier}
+    params = {'coid': CO_API_ORG_ID, 'search.identifier': identifier}
     resp = s.get(
         url=url,
         params=params
@@ -211,11 +211,11 @@ def copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
 
 
-def copeople_view_one(copeople_id: int) -> json:
+def copeople_view_one(coperson_id: int) -> json:
     """
     Retrieve an existing CO Person.
 
-    :param copeople_id:
+    :param coperson_id:
     :return
         {
           "RequestType":"CoPeople",
@@ -240,8 +240,8 @@ def copeople_view_one(copeople_id: int) -> json:
         404 copeople Unknown                                id not found
         500 Other Error                                     Unknown error
     """
-    url = CO_API_URL + '/co_people/' + str(copeople_id) + '.json'
-    params = {'coid': CO_API_ID}
+    url = CO_API_URL + '/co_people/' + str(coperson_id) + '.json'
+    params = {'coid': CO_API_ORG_ID}
     resp = s.get(
         url=url,
         params=params

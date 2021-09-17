@@ -20,17 +20,23 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     - find (not implemented): `copeople_find() -> json`
     - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
     - view all (per co): `copeople_view_all() -> json`
-    - view per identifier: `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
-    - view one: `copeople_view_one(copeople_id: int) -> json`
+    - view all (per identifier): `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
+    - view one: `copeople_view_one(coperson_id: int) -> json`
 
 - [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
-    - add:
-    - delete:
-    - edit:
-    - view all (per co):
-    - view all (per co_person):
-    - view all (per cou):
-    - view one:
+    - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
+    - delete: `copersonroles_delete(copersonrole_id: int) -> json`
+    - edit: `copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
+    - view all (not implemented): `copersonroles_view_all() -> json`
+    - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> json`
+    - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> json`
+    - view one: `copersonroles_view_one(copersonrole_id: int) -> json`
+    - **NOTE**: Valid values for `status` and `affiliation` as follows:
+    
+        ```python
+        STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate', 'Expired', 'GracePeriod', 'Invited', 'Pending', 'PendingApproval', 'PendingConfirmation', 'Suspended']
+        AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
+        ```
 
 - [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
     - add:
@@ -90,7 +96,8 @@ cp template.env .env
 # COmanage API user and pass
 COMANAGE_API_USER=co_123.api-user-name
 COMANAGE_API_PASS=xxxx-xxxx-xxxx-xxxx
-# COmanage CO ID
+# COmanage CO Information
+COMANAGE_CO_NAME=RegistryName
 COMANAGE_CO_ID=123
 # COmanage registry URL
 COMANAGE_URL=https://FQDN_OF_REGISTRY

@@ -243,5 +243,205 @@ $ python examples/copeople_example.py
 
 ## CoPersonRole API
 
+```console
+$ python examples/copersonroles_example.py
+### copersonroles_add
+{
+    "ResponseType": "NewObject",
+    "Version": "1.0",
+    "ObjectType": "CoPersonRole",
+    "Id": "1677"
+}
+### copersonroles_view_one
+{
+    "ResponseType": "CoPersonRoles",
+    "Version": "1.0",
+    "CoPersonRoles": [
+        {
+            "Version": "1.0",
+            "Id": "1677",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "student",
+            "O": "Impact",
+            "Status": "PendingApproval",
+            "Created": "2021-09-17 18:11:49",
+            "Modified": "2021-09-17 18:11:49",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### copersonroles_edit
+Active member
+{
+    "status_code": 200,
+    "reason": "OK"
+}
+### copersonroles_view_one
+{
+    "ResponseType": "CoPersonRoles",
+    "Version": "1.0",
+    "CoPersonRoles": [
+        {
+            "Version": "1.0",
+            "Id": "1677",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "O": "Impact",
+            "Status": "Active",
+            "Created": "2021-09-17 18:11:49",
+            "Modified": "2021-09-17 18:11:50",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### copersonroles_view_all
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### copersonroles_view_per_coperson
+{
+    "ResponseType": "CoPersonRoles",
+    "Version": "1.0",
+    "CoPersonRoles": [
+        {
+            "Version": "1.0",
+            "Id": "1648",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "Status": "Active",
+            "Created": "2021-09-15 12:34:47",
+            "Modified": "2021-09-15 12:36:02",
+            "Revision": "5",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1677",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "O": "Impact",
+            "Status": "Active",
+            "Created": "2021-09-17 18:11:49",
+            "Modified": "2021-09-17 18:11:50",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### copersonroles_view_per_cou
+{
+    "ResponseType": "CoPersonRoles",
+    "Version": "1.0",
+    "CoPersonRoles": [
+        {
+            "Version": "1.0",
+            "Id": "1622",
+            "Person": {
+                "Type": "CO",
+                "Id": "1558"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "Status": "Active",
+            "Created": "2021-09-10 18:32:32",
+            "Modified": "2021-09-10 18:33:46",
+            "Revision": "5",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/227641"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1628",
+            "Person": {
+                "Type": "CO",
+                "Id": "1573"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "Status": "Active",
+            "Created": "2021-09-14 11:06:09",
+            "Modified": "2021-09-14 11:06:57",
+            "Revision": "5",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverT/users/2604273"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1677",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "O": "Impact",
+            "Status": "Active",
+            "Created": "2021-09-17 18:11:49",
+            "Modified": "2021-09-17 18:11:50",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### copersonroles_delete
+{
+    "status_code": 200,
+    "reason": "OK"
+}
+### copersonroles_view_one
+{
+    "ResponseType": "CoPersonRoles",
+    "Version": "1.0",
+    "CoPersonRoles": [
+        {
+            "Version": "1.0",
+            "Id": "1677",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "O": "Impact",
+            "Status": "Active",
+            "Created": "2021-09-17 18:11:49",
+            "Modified": "2021-09-17 18:11:51",
+            "Revision": "1",
+            "Deleted": true,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+```
+
 ## Identifiers API
+
+## Names API
+
+## SshKey API
+
 

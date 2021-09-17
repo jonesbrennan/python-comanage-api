@@ -61,12 +61,12 @@ identifier_copeople = json.loads(copeople_view_per_identifier(
 ))
 print(json.dumps(identifier_copeople, indent=4))
 
-# copeople_view_one(copeople_id: int) -> json
+# copeople_view_one(coperson_id: int) -> json
 print('### copeople_view_one')
 # get first CoPeople['Id'] from all_copeople response
 if all_copeople['CoPeople']:
-    copeople_id = int(all_copeople['CoPeople'][0]['Id'])
-    one_copeople = json.loads(copeople_view_one(copeople_id=copeople_id))
+    coperson_id = int(all_copeople['CoPeople'][0]['Id'])
+    one_copeople = json.loads(copeople_view_one(coperson_id=coperson_id))
     print(json.dumps(one_copeople, indent=4))
 else:
     print('No CoPeople Found...')
