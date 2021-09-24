@@ -6,3 +6,5 @@ from .copeople import copeople_add, copeople_delete, copeople_edit, copeople_fin
 from .copersonroles import copersonroles_add, copersonroles_delete, copersonroles_edit, copersonroles_view_all, \
     copersonroles_view_per_coperson, copersonroles_view_per_cou, copersonroles_view_one
 from .cous import cous_add, cous_delete, cous_edit, cous_view_all, cous_view_one
+from .identifiers import identifiers_add, identifiers_assign, identifiers_delete, identifiers_edit, \
+    identifiers_view_all, identifiers_view_per_entity, identifiers_view_one

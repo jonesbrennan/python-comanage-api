@@ -243,6 +243,8 @@ $ python examples/copeople_example.py
 
 ## CoPersonRole API
 
+Example: `copersonroles_example.py`
+
 ```console
 $ python examples/copersonroles_example.py
 ### copersonroles_add
@@ -439,6 +441,119 @@ Active member
 ```
 
 ## Identifiers API
+
+Example: `identifiers_example.py`
+
+```console
+$ python examples/identifiers_example.py
+### identifiers_add
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### identifiers_assign
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### identifiers_delete
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### identifiers_edit
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### identifiers_view_all
+{
+    "status_code": 401,
+    "reason": "Unauthorized"
+}
+### identifiers_view_per_entity
+{
+    "ResponseType": "Identifiers",
+    "Version": "1.0",
+    "Identifiers": [
+        {
+            "Version": "1.0",
+            "Id": "1552",
+            "Identifier": "http://cilogon.org/serverA/users/226066",
+            "Type": "oidcsub",
+            "Status": "Active",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceIdentifierId": "1550",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1553",
+            "Identifier": "http://cilogon.org/serverA/users/226066",
+            "Type": "sorid",
+            "Status": "Active",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceIdentifierId": "1551",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1554",
+            "Identifier": "ImPACT1000006",
+            "Type": "impactid",
+            "Login": false,
+            "Status": "Active",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Created": "2021-09-15 12:36:01",
+            "Modified": "2021-09-15 12:36:01",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        }
+    ]
+}
+### identifiers_view_one
+{
+    "ResponseType": "Identifiers",
+    "Version": "1.0",
+    "Identifiers": [
+        {
+            "Version": "1.0",
+            "Id": "1552",
+            "Identifier": "http://cilogon.org/serverA/users/226066",
+            "Type": "oidcsub",
+            "Status": "Active",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceIdentifierId": "1550",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        }
+    ]
+}
+```
 
 ## Names API
 

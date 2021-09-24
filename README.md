@@ -41,13 +41,19 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     ```
 
 - [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
-    - add:
-    - assign:
-    - delete:
-    - edit:
-    - view all:
-    - view per entity:
-    - view one:
+    - add (not implemented): `identifiers_add() -> json`
+    - assign (not implemented): `identifiers_assign() -> json`
+    - delete (not implemented): `identifiers_delete() -> json`
+    - edit (not implemented): `identifiers_edit() -> json`
+    - view all: `identifiers_view_all() -> json`
+    - view per entity: `identifiers_view_per_entity(entity_type: str, entity_id: int) -> json`
+    - view one: `identifiers_view_one(identifier_id: int) -> json`
+
+    **NOTE**: when provided, valid values for `entity_type` as follows:
+
+    ```python
+    ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
+    ```
 
 - [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
     - add:
