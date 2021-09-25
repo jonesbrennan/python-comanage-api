@@ -56,20 +56,26 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     ```
 
 - [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
-    - add:
-    - delete:
-    - edit:
-    - view all:
-    - view per person:
-    - view one:
+    - add (not implemented): `names_add() -> json`
+    - delete (not implemented): `names_delete() -> json`
+    - edit (not implemented): `names_edit() -> json`
+    - view all: `names_view_all() -> json`
+    - view per person: `names_view_per_person(person_type: str, person_id: int) -> json`
+    - view one: `names_view_one(name_id: int) -> json`
+
+    **NOTE**: when provided, valid values for `person_type` as follows:
+
+    ```python
+    PERSON_OPTIONS = ['copersonid', 'orgidentityid']
+    ```
 
 - [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
-    - add:
-    - delete:
-    - edit:
-    - view all:
-    - view all (per co_person):
-    - view one:
+    - add: ``
+    - delete: ``
+    - edit: ``
+    - view all: ``
+    - view all (per co_person): ``
+    - view one: ``
 
     
 **DISCLAIMER: The code herein may not be up to date nor compliant with the most recent package and/or security notices. The frequency at which this code is reviewed and updated is based solely on the lifecycle of the project for which it was written to support, and is not actively maintained outside of that scope. Use at your own risk.**

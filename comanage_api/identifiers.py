@@ -105,6 +105,8 @@ def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
     """
     Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 
+    :param entity_type:
+    :param entity_id:
     :return
         {
           "ResponseType":"Identifiers",
@@ -168,37 +170,38 @@ def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
 
 def identifiers_view_one(identifier_id: int) -> json:
     """
-        Retrieve all existing Identifiers.
+    Retrieve all existing Identifiers.
 
-        :return
+    :param identifier_id:
+    :return
+        {
+          "ResponseType":"Identifiers",
+          "Version":"1.0",
+          "Identifiers":
+          [
             {
-              "ResponseType":"Identifiers",
               "Version":"1.0",
-              "Identifiers":
-              [
-                {
-                  "Version":"1.0",
-                  "Id":"<ID>",
-                  "Type":"<Type>",
-                  "Identifier":"<Identifier>",
-                  "Login":true|false,
-                  "Person":{"Type":("CO"|"Dept"|"Group"|"Org"|"Organization"),"ID":"<ID>"},
-                  "CoProvisioningTargetId":"<CoProvisioningTargetId>",
-                  "Status":"Active"|"Deleted",
-                  "Created":"<CreateTime>",
-                  "Modified":"<ModTime>"
-                },
-                {...}
-              ]
-            }:
+              "Id":"<ID>",
+              "Type":"<Type>",
+              "Identifier":"<Identifier>",
+              "Login":true|false,
+              "Person":{"Type":("CO"|"Dept"|"Group"|"Org"|"Organization"),"ID":"<ID>"},
+              "CoProvisioningTargetId":"<CoProvisioningTargetId>",
+              "Status":"Active"|"Deleted",
+              "Created":"<CreateTime>",
+              "Modified":"<ModTime>"
+            },
+            {...}
+          ]
+        }:
 
-        Response Format
-            HTTP Status                 Response Body           Description
-            200 OK                      Identifier Response     Identifiers returned
-            401 Unauthorized                                    Authentication required
-            404 Identifier Unknown                              id not found
-            500 Other Error                                     Unknown error
-        """
+    Response Format
+        HTTP Status                 Response Body           Description
+        200 OK                      Identifier Response     Identifiers returned
+        401 Unauthorized                                    Authentication required
+        404 Identifier Unknown                              id not found
+        500 Other Error                                     Unknown error
+    """
     url = CO_API_URL + '/identifiers/' + str(identifier_id) + '.json'
     resp = s.get(
         url=url

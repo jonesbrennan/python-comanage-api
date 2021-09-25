@@ -20,5 +20,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 
 ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
 
+PERSON_OPTIONS = ['copersonid', 'orgidentityid']
+
 s = Session()
 s.auth = (CO_API_USER, CO_API_PASS)

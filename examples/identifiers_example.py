@@ -1,5 +1,5 @@
-# examples/copeople_example.py
-# CoPerson API examples
+# examples/identifiers_example.py
+# Identifier API examples
 
 import json
 import os.path

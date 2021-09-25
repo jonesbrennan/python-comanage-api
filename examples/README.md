@@ -557,6 +557,118 @@ $ python examples/identifiers_example.py
 
 ## Names API
 
+Example: `names_example.py`
+
+```console
+$ python examples/names_example.py
+### names_add
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### names_delete
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### names_edit
+{
+    "status_code": 501,
+    "reason": "Not Implemented"
+}
+### names_view_all
+{
+    "status_code": 401,
+    "reason": "Unauthorized"
+}
+### names_view_per_person
+{
+    "ResponseType": "Names",
+    "Version": "1.0",
+    "Names": [
+        {
+            "Version": "1.0",
+            "Id": "923",
+            "Given": "mj",
+            "Family": "stealey",
+            "Type": "official",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "PrimaryName": false,
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:47",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "924",
+            "Given": "mj",
+            "Family": "stealey",
+            "Type": "official",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceNameId": "922",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "926",
+            "Honorific": "",
+            "Given": "mj",
+            "Middle": "",
+            "Family": "stealey",
+            "Suffix": "",
+            "Type": "official",
+            "Language": "",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "PrimaryName": true,
+            "Created": "2021-09-15 12:34:47",
+            "Modified": "2021-09-15 12:34:47",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        }
+    ]
+}
+### names_view_one
+{
+    "ResponseType": "Names",
+    "Version": "1.0",
+    "Names": [
+        {
+            "Version": "1.0",
+            "Id": "923",
+            "Given": "mj",
+            "Family": "stealey",
+            "Type": "official",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "PrimaryName": false,
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:47",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        }
+    ]
+}
+```
+
 ## SshKey API
 
 
