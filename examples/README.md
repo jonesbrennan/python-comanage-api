@@ -671,4 +671,126 @@ $ python examples/names_example.py
 
 ## SshKey API
 
+**NOTE**: waiting to resolve whether `add` and `edit` functions should be available to priviledged API users (currenlty they are not)
 
+Example: `ssh_keys_example.py `
+
+```console
+$ python examples/ssh_keys_example.py
+### ssh_keys_add
+{
+    "status_code": 500,
+    "reason": "Internal Server Error"
+}
+### ssh_keys_view_all
+{
+    "status_code": 401,
+    "reason": "Unauthorized"
+}
+### ssh_keys_view_per_coperson
+{
+    "ResponseType": "SshKeys",
+    "Version": "1.0",
+    "SshKeys": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Comment": "michael.j.stealey@gmail.com",
+            "Type": "ssh-rsa",
+            "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+            "Created": "2021-09-25 16:41:57",
+            "Modified": "2021-09-25 16:41:57",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
+            "SshKeyAuthenticatorId": "3"
+        }
+    ]
+}
+### ssh_keys_view_one
+{
+    "ResponseType": "SshKeys",
+    "Version": "1.0",
+    "SshKeys": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Comment": "michael.j.stealey@gmail.com",
+            "Type": "ssh-rsa",
+            "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+            "Created": "2021-09-25 16:41:57",
+            "Modified": "2021-09-25 16:41:57",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
+            "SshKeyAuthenticatorId": "3"
+        }
+    ]
+}
+### ssh_keys_edit
+{
+    "status_code": 401,
+    "reason": "Unauthorized"
+}
+### ssh_keys_view_one
+{
+    "ResponseType": "SshKeys",
+    "Version": "1.0",
+    "SshKeys": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Comment": "michael.j.stealey@gmail.com",
+            "Type": "ssh-rsa",
+            "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+            "Created": "2021-09-25 16:41:57",
+            "Modified": "2021-09-25 16:41:57",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
+            "SshKeyAuthenticatorId": "3"
+        }
+    ]
+}
+### ssh_keys_delete
+{
+    "status_code": 200,
+    "reason": "OK"
+}
+### ssh_keys_view_one (previously deleted ssh key)
+{
+    "ResponseType": "SshKeys",
+    "Version": "1.0",
+    "SshKeys": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Comment": "michael.j.stealey@gmail.com",
+            "Type": "ssh-rsa",
+            "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+            "Created": "2021-09-25 16:41:57",
+            "Modified": "2021-09-26 20:42:17",
+            "Revision": "0",
+            "Deleted": true,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
+            "SshKeyAuthenticatorId": "3"
+        }
+    ]
+}
+```

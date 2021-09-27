@@ -184,18 +184,20 @@ def copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, stat
         500 Other Error                                                 Unknown error
     """
     copersonrole = json.loads(copersonroles_view_one(copersonrole_id))
-    print(status, affiliation)
-    if copersonrole.get('CoPersonRoles'):
-        if not status:
+    if copersonrole.get('CoPersonRoles', None):
+        if status:
+            if status not in STATUS_OPTIONS:
+                return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Status'})
+        else:
             status = copersonrole['CoPersonRoles'][0]['Status']
-        if not affiliation:
+        if affiliation:
+            affiliation = str(affiliation).lower()
+            if affiliation not in AFFILIATION_OPTIONS:
+                return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Affiliation'})
+        else:
             affiliation = copersonrole['CoPersonRoles'][0]['Affiliation']
     else:
         return json.dumps({'status_code': 500, 'reason': 'Unknown error'})
-    if status not in STATUS_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Status'})
-    if affiliation not in AFFILIATION_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Affiliation'})
 
     post_body = json.dumps({
         'RequestType': 'CoPersonRoles',

@@ -69,13 +69,20 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     PERSON_OPTIONS = ['copersonid', 'orgidentityid']
     ```
 
-- [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
-    - add: ``
-    - delete: ``
-    - edit: ``
-    - view all: ``
-    - view all (per co_person): ``
-    - view one: ``
+- [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
+    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ssh_key_authenticator_id=None) -> json`
+    - delete: `ssh_keys_delete(ssh_key_id: int) -> json`
+    - edit (401 Unauthorized): `ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> json`
+    - view all (401 Unauthorized): `ssh_keys_view_all() -> json`
+    - view all (per co_person): `ssh_keys_view_per_coperson(coperson_id: int) -> json`
+    - view one: `ssh_keys_view_one(ssh_key_id: int) -> json`
+
+    **NOTE**: when provided, valid values for `ssh_key_type` as follows:
+
+    ```python
+    SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 
+    'ecdsa-sha2-nistp521', 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
+    ```
 
     
 **DISCLAIMER: The code herein may not be up to date nor compliant with the most recent package and/or security notices. The frequency at which this code is reviewed and updated is based solely on the lifecycle of the project for which it was written to support, and is not actively maintained outside of that scope. Use at your own risk.**
@@ -100,11 +107,13 @@ source venv/bin/activate
 pip install -r comanage_api/requirements.txt
 ```
 
-Create and configure the .env file
+Create a `.env` file from the included template
 
 ```console
 cp template.env .env
 ```
+
+Configure `.env` based on your COmanage Registry settings
 
 ```env
 # COmanage API user and pass
@@ -115,9 +124,48 @@ COMANAGE_CO_NAME=RegistryName
 COMANAGE_CO_ID=123
 # COmanage registry URL
 COMANAGE_URL=https://FQDN_OF_REGISTRY
+# COmanage SshKeyAuthenticator
+COMANAGE_SSH_KEY_AUTHENTICATOR_ID=123
 ```
 
 See code in [examples](examples/) directory for usage
+
+## SSH Key Authenticator Plugin
+
+
+The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) manages SSH Public Keys for CO People.
+
+- The SSH Key Authenticator plugin is available as of Registry v3.3.0. Prior to this version, SSH Key management is available via the CO Person canvas.
+
+After registration you can find the value for `COMANAGE_SSH_KEY_AUTHENTICATOR_ID` in the URL for editing the Authenticator:
+
+- It would be **3** in this example URL: [https://registry.cilogon.org/registry/authenticators/edit/3]()
+
+### Adding a new SSH Key Authenticator in COmanage
+
+To create a new SSH Key Authenticator first select the "Authenticators" option from the COmanage configuraiton page
+
+![](./imgs/SshKeyAuthenticator_1.png)
+
+Next select the "Add Authenticator" option
+
+![](./imgs/SshKeyAuthenticator_2.png)
+
+Populate the required fields and set Status to "Active" and "Add" the Authenticator
+
+![](./imgs/SshKeyAuthenticator_3.png)
+
+Upon success a green box will denote the new Authenticator has been added
+
+![](./imgs/SshKeyAuthenticator_4.png)
+
+Now when choosing the "Authenicators" option from the COmanage configuration page you should see your newly created Authenticator
+
+![](./imgs/SshKeyAuthenticator_5.png)
+
+Pressing the "Edit" option will display the fields for the Authenticator along with its `SshKeyAuthenticatorId` value in the URL (**3** in this example)
+
+![](./imgs/SshKeyAuthenticator_6.png)
 
 ## References
 
@@ -128,4 +176,5 @@ See code in [examples](examples/) directory for usage
 - Identifier API: [https://spaces.at.internet2.edu/display/COmanage/Identifier+API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 - Name API: [https://spaces.at.internet2.edu/display/COmanage/Name+API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
 - SsHKey API: [https://spaces.at.internet2.edu/display/COmanage/SshKey+API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
+- SSH Key Authenticator Plugin: [https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin)
 - PyPi: [https://pypi.org](https://pypi.org)

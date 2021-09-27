@@ -9,3 +9,5 @@ from .cous import cous_add, cous_delete, cous_edit, cous_view_all, cous_view_one
 from .identifiers import identifiers_add, identifiers_assign, identifiers_delete, identifiers_edit, \
     identifiers_view_all, identifiers_view_per_entity, identifiers_view_one
 from .names import names_add, names_delete, names_edit, names_view_all, names_view_per_person, names_view_one
+from .sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_view_all, ssh_keys_view_per_coperson, \
+    ssh_keys_view_one

@@ -91,7 +91,6 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
         return resp.text
     else:
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
-    pass
 
 
 def cous_delete(cou_id: int) -> json:
