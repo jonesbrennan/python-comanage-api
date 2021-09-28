@@ -30,7 +30,7 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
           [
             {
               "Version":"1.0",
-              "CoId":"<CO_API_ID>",
+              "CoId":"<CO_API_ORG_ID>",
               "ParentId":"<parent_id>",
               "Name":"<name>",
               "Description":"<description>",
@@ -61,8 +61,8 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
                 [
                     {
                         'Version': '1.0',
-                        'CoId': CO_API_ID,
-                        'ParentId': str(parent_id),
+                        'CoId': CO_API_ORG_ID,
+                        'ParentId': int(parent_id),
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -76,7 +76,7 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
                 [
                     {
                         'Version': '1.0',
-                        'CoId': CO_API_ID,
+                        'CoId': CO_API_ORG_ID,
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -88,18 +88,9 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
         data=post_body
     )
     if resp.status_code == 201:
-        """
-        {
-            "ResponseType":"NewObject",
-            "Version":"1.0",
-            "ObjectType":"Cou",
-            "Id":"<INTEGER>"
-        }
-        """
         return resp.text
     else:
         return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
-    pass
 
 
 def cous_delete(cou_id: int) -> json:
@@ -120,7 +111,7 @@ def cous_delete(cou_id: int) -> json:
         500 Other Error                                 Unknown error
     """
     url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': CO_API_ID}
+    params = {'coid': CO_API_ORG_ID}
     resp = s.delete(
         url=url,
         params=params
@@ -150,7 +141,7 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
           [
             {
               "Version":"1.0",
-              "CoId":"<CO_API_ID>",
+              "CoId":"<CO_API_ORG_ID>",
               "ParentId":"<parent_id>",
               "Name":"<name>",
               "Description":"<description>",
@@ -182,8 +173,8 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
                 [
                     {
                         'Version': '1.0',
-                        'CoId': CO_API_ID,
-                        'ParentId': str(parent_id),
+                        'CoId': CO_API_ORG_ID,
+                        'ParentId': int(parent_id),
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -197,7 +188,7 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
                 [
                     {
                         'Version': '1.0',
-                        'CoId': CO_API_ID,
+                        'CoId': CO_API_ORG_ID,
                         'Name': str(name),
                         'Description': str(description)
                     }
@@ -223,7 +214,7 @@ def cous_view_all() -> json:
             {
                 "Version":"1.0",
                 "Id":"<INTEGER>",
-                "CoId":"<CO_API_ID>",
+                "CoId":"<CO_API_ORG_ID>",
                 "Name":"<name>",
                 "Description":"<description>",
                 "Lft":"64",
@@ -245,10 +236,10 @@ def cous_view_all() -> json:
         200 OK              Cou Response        Cou returned
         401 Unauthorized                        Authentication required
         404 CO Unknown                          id not found
-        500 Other Error                         Unknown error:
+        500 Other Error                         Unknown error
     """
     url = CO_API_URL + '/cous.json'
-    params = {'coid': CO_API_ID}
+    params = {'coid': CO_API_ORG_ID}
     resp = s.get(
         url=url,
         params=params
@@ -272,7 +263,7 @@ def cous_view_one(cou_id: int) -> json:
             {
                 "Version":"1.0",
                 "Id":"<INTEGER>",
-                "CoId":"<CO_API_ID>",
+                "CoId":"<CO_API_ORG_ID>",
                 "Name":"<name>",
                 "Description":"<description>",
                 "Lft":"64",
@@ -294,7 +285,7 @@ def cous_view_one(cou_id: int) -> json:
         500 Other Error                         Unknown error
     """
     url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': CO_API_ID}
+    params = {'coid': CO_API_ORG_ID}
     resp = s.get(
         url=url,
         params=params
