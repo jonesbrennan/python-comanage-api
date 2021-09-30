@@ -23,7 +23,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_delete() -> json
+# copeople_delete() -> bool
 print('### copeople_delete')
 try:
     delete_copeople = copeople_delete()
@@ -32,7 +32,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_edit() -> json
+# copeople_edit() -> bool
 print('### copeople_edit')
 try:
     edit_copeople = copeople_edit()

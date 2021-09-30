@@ -16,7 +16,7 @@ Return types based on implementation status of wrapped API endpoints
 - [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
     - add: `cous_add(name: str, description: str, parent_id=None) -> json`
     - delete: `cous_delete(cou_id: int) -> bool`
-    - edit: `cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> bool`
+    - edit: `cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool`
     - view all (per co): `cous_view_all() -> json`
     - view one: `cous_view_one(cou_id: int) -> json`
 
@@ -35,7 +35,7 @@ Return types based on implementation status of wrapped API endpoints
 - [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
     - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
     - delete: `copersonroles_delete(copersonrole_id: int) -> bool`
-    - edit: `copersonroles_edit(copersonrole_id=None, coperson_id=None, cou_id: int, status=None, affiliation=None) -> bool`
+    - edit: `copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool`
     - view all: `copersonroles_view_all() -> json`
     - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> json`
     - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> json`

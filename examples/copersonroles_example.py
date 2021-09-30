@@ -46,7 +46,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, status=None, affiliation=None) -> json
+# copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool
 print('### copersonroles_edit')
 try:
     status = 'Active'
@@ -99,7 +99,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_delete(copersonrole_id: int) -> json
+# copersonroles_delete(copersonrole_id: int) -> bool
 print('### copersonroles_delete')
 try:
     roles_delete = copersonroles_delete(copersonrole_id=copersonrole_id)

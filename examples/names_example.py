@@ -25,7 +25,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# names_delete() -> json
+# names_delete() -> bool
 print('### names_delete')
 try:
     delete_name = names_delete()
@@ -34,7 +34,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# names_edit() -> json
+# names_edit() -> bool
 print('### names_edit')
 try:
     edit_name = names_edit()

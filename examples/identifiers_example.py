@@ -26,7 +26,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_assign() -> json
+# identifiers_assign() -> bool
 print('### identifiers_assign')
 try:
     assign_identifier = identifiers_assign()
@@ -35,7 +35,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_delete() -> json
+# identifiers_delete() -> bool
 print('### identifiers_delete')
 try:
     delete_identifier = identifiers_delete()
@@ -44,7 +44,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_edit() -> json
+# identifiers_edit() -> bool
 print('### identifiers_edit')
 try:
     edit_identifier = identifiers_edit()

@@ -39,7 +39,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# cous_edit(cou_id: int, name: str, description: str, parent_id: str) -> json
+# cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool
 print('### cous_edit')
 try:
     name = 'cou test - edited'
@@ -66,7 +66,7 @@ except (NameError, HTTPError) as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# cous_delete(cou_id: int) -> json
+# cous_delete(cou_id: int) -> bool
 print('### cous_delete')
 try:
     delete_cou = cous_delete(cou_id=new_cou_id)

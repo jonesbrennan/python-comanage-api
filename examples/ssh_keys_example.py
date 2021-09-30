@@ -78,8 +78,8 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key: str, key_type: str, comment: str,
-#               ssh_key_authenticator_id=None) -> json
+# ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None,
+#               ssh_key_authenticator_id=None) -> bool
 print('### ssh_keys_edit')
 try:
     if ssh_key_id != -1:
@@ -108,7 +108,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_delete() -> json
+# ssh_keys_delete() -> bool
 print('### ssh_keys_delete')
 try:
     # prevent key from being deleted at this time (demo purposes only)

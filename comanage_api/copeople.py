@@ -26,7 +26,7 @@ def copeople_add() -> json:
         resp.raise_for_status()
 
 
-def copeople_delete() -> json:
+def copeople_delete() -> bool:
     """
     ### NOT IMPLEMENTED ###
     Remove a CO Person. This method will also delete related data, such as CoPersonRoles, EmailAddresses,
@@ -41,12 +41,12 @@ def copeople_delete() -> json:
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return True
     else:
         resp.raise_for_status()
 
 
-def copeople_edit() -> json:
+def copeople_edit() -> bool:
     """
     ### NOT IMPLEMENTED ###
     Edit an existing CO Person.
@@ -59,7 +59,7 @@ def copeople_edit() -> json:
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return True
     else:
         resp.raise_for_status()
 
