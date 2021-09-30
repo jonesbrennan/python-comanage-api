@@ -9,58 +9,78 @@ CoPerson API - https://spaces.at.internet2.edu/display/COmanage/CoPerson+API
 
 def copeople_add() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
     Note that linking to an OrgIdentity and invitations are separate operations.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 201:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
 def copeople_delete() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Remove a CO Person. This method will also delete related data, such as CoPersonRoles, EmailAddresses,
     and Identifiers. A person must be removed from any COs (CoPerson records must be deleted)
     before the OrgIdentity record can be removed.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
 def copeople_edit() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Edit an existing CO Person.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
 def copeople_find() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Search for existing CO Person records.
     When too many records are found, a message may be returned rather than specific records.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
 def copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json:
@@ -119,7 +139,7 @@ def copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> j
         else:
             return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def copeople_view_all() -> json:
@@ -160,7 +180,7 @@ def copeople_view_all() -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
@@ -208,7 +228,7 @@ def copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json:
         else:
             return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def copeople_view_one(coperson_id: int) -> json:
@@ -249,4 +269,4 @@ def copeople_view_one(coperson_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

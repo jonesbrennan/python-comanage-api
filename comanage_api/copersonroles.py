@@ -66,17 +66,7 @@ def copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=No
         403 COU Does Not Exist                                      The specified COU does not exist
         500 Other Error                                             Unknown error
     """
-    if not status:
-        status = 'Active'
-    if not affiliation:
-        affiliation = 'member'
-    else:
-        affiliation = str(affiliation).lower()
-    if status not in STATUS_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Status'})
-    if affiliation not in AFFILIATION_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Affiliation'})
-    post_body = json.dumps({
+    post_body = {
         'RequestType': 'CoPersonRoles',
         'Version': '1.0',
         'CoPersonRoles': [
@@ -88,12 +78,24 @@ def copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=No
                         'Id': str(coperson_id)
                     },
                 'CouId': str(cou_id),
-                'Affiliation': str(affiliation),
-                'O': str(CO_API_ORG_NAME),
-                'Status': str(status)
+                'O': str(CO_API_ORG_NAME)
             }
         ]
-    })
+    }
+    if status:
+        if status not in STATUS_OPTIONS:
+            raise TypeError("Invalid Fields 'status'")
+        post_body['CoPersonRoles'][0]['Status'] = str(status)
+    else:
+        post_body['CoPersonRoles'][0]['Status'] = 'Active'
+    if affiliation:
+        affiliation = str(affiliation).lower()
+        if affiliation not in AFFILIATION_OPTIONS:
+            raise TypeError("Invalid Fields 'affiliation'")
+        post_body['CoPersonRoles'][0]['Affiliation'] = str(affiliation)
+    else:
+        post_body['CoPersonRoles'][0]['Affiliation'] = 'member'
+    post_body = json.dumps(post_body)
     url = CO_API_URL + '/co_person_roles.json'
     resp = s.post(
         url=url,
@@ -102,11 +104,10 @@ def copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=No
     if resp.status_code == 201:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
-    pass
+        resp.raise_for_status()
 
 
-def copersonroles_delete(copersonrole_id: int) -> json:
+def copersonroles_delete(copersonrole_id: int) -> bool:
     """
     Remove a CO Person Role.
 
@@ -125,10 +126,13 @@ def copersonroles_delete(copersonrole_id: int) -> json:
     resp = s.delete(
         url=url
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, status=None, affiliation=None) -> json:
+def copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool:
     """
     Edit an existing CO Person Role.
 
@@ -184,22 +188,7 @@ def copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, stat
         500 Other Error                                                 Unknown error
     """
     copersonrole = json.loads(copersonroles_view_one(copersonrole_id))
-    if copersonrole.get('CoPersonRoles', None):
-        if status:
-            if status not in STATUS_OPTIONS:
-                return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Status'})
-        else:
-            status = copersonrole['CoPersonRoles'][0]['Status']
-        if affiliation:
-            affiliation = str(affiliation).lower()
-            if affiliation not in AFFILIATION_OPTIONS:
-                return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: Affiliation'})
-        else:
-            affiliation = copersonrole['CoPersonRoles'][0]['Affiliation']
-    else:
-        return json.dumps({'status_code': 500, 'reason': 'Unknown error'})
-
-    post_body = json.dumps({
+    post_body = {
         'RequestType': 'CoPersonRoles',
         'Version': '1.0',
         'CoPersonRoles': [
@@ -207,22 +196,44 @@ def copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, stat
                 'Version': '1.0',
                 'Person':
                     {
-                        'Type': 'CO',
-                        'Id': str(coperson_id)
+                        'Type': 'CO'
                     },
-                'CouId': str(cou_id),
-                'Affiliation': str(affiliation),
-                'O': str(CO_API_ORG_NAME),
-                'Status': str(status)
+                'O': str(CO_API_ORG_NAME)
             }
         ]
-    })
+    }
+    if coperson_id:
+        post_body['CoPersonRoles'][0]['Person']['Id'] = str(coperson_id)
+    else:
+        post_body['CoPersonRoles'][0]['Person']['Id'] = str(
+            copersonrole.get('CoPersonRoles')[0].get('Person').get('Id'))
+    if cou_id:
+        post_body['CoPersonRoles'][0]['CouId'] = str(cou_id)
+    else:
+        post_body['CoPersonRoles'][0]['CouId'] = str(copersonrole.get('CoPersonRoles')[0].get('CouId'))
+    if status:
+        if status not in STATUS_OPTIONS:
+            raise TypeError("Invalid Fields 'status'")
+        post_body['CoPersonRoles'][0]['Status'] = str(status)
+    else:
+        post_body['CoPersonRoles'][0]['Status'] = copersonrole.get('CoPersonRoles')[0].get('Status')
+    if affiliation:
+        affiliation = str(affiliation).lower()
+        if affiliation not in AFFILIATION_OPTIONS:
+            raise TypeError("Invalid Fields 'affiliation'")
+        post_body['CoPersonRoles'][0]['Affiliation'] = str(affiliation)
+    else:
+        post_body['CoPersonRoles'][0]['Affiliation'] = copersonrole.get('CoPersonRoles')[0].get('Affiliation')
+    post_body = json.dumps(post_body)
     url = CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
     resp = s.put(
         url=url,
         data=post_body
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
 def copersonroles_view_all() -> json:
@@ -270,18 +281,14 @@ def copersonroles_view_all() -> json:
         401 Unauthorized                                            Authentication required
         500 Other Error                                             Unknown error
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
-    # TODO: Does not allow retrieval of all CoPersonRoles per CO even when CoId is defined
-    # url = CO_API_URL + '/co_person_roles.json'
-    # params = {'coid': CO_API_ORG_ID}
-    # resp = s.get(
-    #     url=url,
-    #     params=params
-    # )
-    # if resp.status_code == 200:
-    #     return resp.text
-    # else:
-    #     return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    url = CO_API_URL + '/co_person_roles.json'
+    resp = s.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
 def copersonroles_view_per_coperson(coperson_id: int) -> json:
@@ -340,7 +347,7 @@ def copersonroles_view_per_coperson(coperson_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def copersonroles_view_per_cou(cou_id: int) -> json:
@@ -399,7 +406,7 @@ def copersonroles_view_per_cou(cou_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def copersonroles_view_one(copersonrole_id: int) -> json:
@@ -456,4 +463,4 @@ def copersonroles_view_one(copersonrole_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

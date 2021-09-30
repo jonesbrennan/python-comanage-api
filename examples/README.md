@@ -1,6 +1,6 @@
 # Examples
 
-Examples demonstrating basic usage for each wrapped endpoint. Some of the values used herein are specific to the ImPACT CO and thus would not work for other registries, but the concept would be the same for any registry.
+Examples demonstrating basic usage for each wrapped endpoint. Some of the values used herein are specific to the ImPACT project registry and thus would not work for other registries, but the concept would be the same for any registry.
 
 ## COU API
 
@@ -13,7 +13,7 @@ $ python examples/cous_example.py
     "ResponseType": "NewObject",
     "Version": "1.0",
     "ObjectType": "Cou",
-    "Id": "53"
+    "Id": "94"
 }
 ### cous_view_all
 {
@@ -50,14 +50,14 @@ $ python examples/cous_example.py
         },
         {
             "Version": "1.0",
-            "Id": "53",
+            "Id": "94",
             "CoId": "3",
             "Name": "cou test",
             "Description": "cou test description",
-            "Lft": "70",
-            "Rght": "71",
-            "Created": "2021-09-14 20:31:21",
-            "Modified": "2021-09-14 20:31:21",
+            "Lft": "82",
+            "Rght": "83",
+            "Created": "2021-09-29 21:51:49",
+            "Modified": "2021-09-29 21:51:49",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -65,10 +65,7 @@ $ python examples/cous_example.py
     ]
 }
 ### cous_edit
-{
-    "status_code": 200,
-    "reason": "OK"
-}
+True
 ### cous_view_one
 {
     "ResponseType": "Cous",
@@ -76,14 +73,14 @@ $ python examples/cous_example.py
     "Cous": [
         {
             "Version": "1.0",
-            "Id": "53",
+            "Id": "94",
             "CoId": "3",
-            "Name": "cou test - edit",
-            "Description": "cou test description - edit",
-            "Lft": "70",
-            "Rght": "71",
-            "Created": "2021-09-14 20:31:21",
-            "Modified": "2021-09-14 20:31:21",
+            "Name": "cou test - edited",
+            "Description": "cou test description - edited",
+            "Lft": "82",
+            "Rght": "83",
+            "Created": "2021-09-29 21:51:49",
+            "Modified": "2021-09-29 21:51:50",
             "Revision": "1",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -91,10 +88,7 @@ $ python examples/cous_example.py
     ]
 }
 ### cous_delete
-{
-    "status_code": 200,
-    "reason": "OK"
-}
+True
 ```
 
 ## CoPerson API
@@ -104,25 +98,17 @@ Example: `copeople_example.py`
 ```console
 $ python examples/copeople_example.py
 ### copeople_add
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### copeople_delete
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### copeople_edit
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### copeople_find
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### copeople_match
 {
     "ResponseType": "CoPeople",
@@ -252,7 +238,7 @@ $ python examples/copersonroles_example.py
     "ResponseType": "NewObject",
     "Version": "1.0",
     "ObjectType": "CoPersonRole",
-    "Id": "1677"
+    "Id": "1727"
 }
 ### copersonroles_view_one
 {
@@ -261,7 +247,7 @@ $ python examples/copersonroles_example.py
     "CoPersonRoles": [
         {
             "Version": "1.0",
-            "Id": "1677",
+            "Id": "1727",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -270,8 +256,8 @@ $ python examples/copersonroles_example.py
             "Affiliation": "student",
             "O": "Impact",
             "Status": "PendingApproval",
-            "Created": "2021-09-17 18:11:49",
-            "Modified": "2021-09-17 18:11:49",
+            "Created": "2021-09-30 01:22:44",
+            "Modified": "2021-09-30 01:22:44",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -279,11 +265,7 @@ $ python examples/copersonroles_example.py
     ]
 }
 ### copersonroles_edit
-Active member
-{
-    "status_code": 200,
-    "reason": "OK"
-}
+True
 ### copersonroles_view_one
 {
     "ResponseType": "CoPersonRoles",
@@ -291,7 +273,7 @@ Active member
     "CoPersonRoles": [
         {
             "Version": "1.0",
-            "Id": "1677",
+            "Id": "1727",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -300,8 +282,8 @@ Active member
             "Affiliation": "member",
             "O": "Impact",
             "Status": "Active",
-            "Created": "2021-09-17 18:11:49",
-            "Modified": "2021-09-17 18:11:50",
+            "Created": "2021-09-30 01:22:44",
+            "Modified": "2021-09-30 01:22:45",
             "Revision": "1",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -309,10 +291,8 @@ Active member
     ]
 }
 ### copersonroles_view_all
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/co_person_roles.json
 ### copersonroles_view_per_coperson
 {
     "ResponseType": "CoPersonRoles",
@@ -336,7 +316,7 @@ Active member
         },
         {
             "Version": "1.0",
-            "Id": "1677",
+            "Id": "1727",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -345,8 +325,8 @@ Active member
             "Affiliation": "member",
             "O": "Impact",
             "Status": "Active",
-            "Created": "2021-09-17 18:11:49",
-            "Modified": "2021-09-17 18:11:50",
+            "Created": "2021-09-30 01:22:44",
+            "Modified": "2021-09-30 01:22:45",
             "Revision": "1",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -392,7 +372,23 @@ Active member
         },
         {
             "Version": "1.0",
-            "Id": "1677",
+            "Id": "1648",
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "CouId": "39",
+            "Affiliation": "member",
+            "Status": "Active",
+            "Created": "2021-09-15 12:34:47",
+            "Modified": "2021-09-15 12:36:02",
+            "Revision": "5",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "1727",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -401,8 +397,8 @@ Active member
             "Affiliation": "member",
             "O": "Impact",
             "Status": "Active",
-            "Created": "2021-09-17 18:11:49",
-            "Modified": "2021-09-17 18:11:50",
+            "Created": "2021-09-30 01:22:44",
+            "Modified": "2021-09-30 01:22:45",
             "Revision": "1",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -410,10 +406,7 @@ Active member
     ]
 }
 ### copersonroles_delete
-{
-    "status_code": 200,
-    "reason": "OK"
-}
+True
 ### copersonroles_view_one
 {
     "ResponseType": "CoPersonRoles",
@@ -421,7 +414,7 @@ Active member
     "CoPersonRoles": [
         {
             "Version": "1.0",
-            "Id": "1677",
+            "Id": "1727",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -430,8 +423,8 @@ Active member
             "Affiliation": "member",
             "O": "Impact",
             "Status": "Active",
-            "Created": "2021-09-17 18:11:49",
-            "Modified": "2021-09-17 18:11:51",
+            "Created": "2021-09-30 01:22:44",
+            "Modified": "2021-09-30 01:22:46",
             "Revision": "1",
             "Deleted": true,
             "ActorIdentifier": "co_3.development"
@@ -447,30 +440,20 @@ Example: `identifiers_example.py`
 ```console
 $ python examples/identifiers_example.py
 ### identifiers_add
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### identifiers_assign
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### identifiers_delete
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### identifiers_edit
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### identifiers_view_all
-{
-    "status_code": 401,
-    "reason": "Unauthorized"
-}
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/identifiers.json
 ### identifiers_view_per_entity
 {
     "ResponseType": "Identifiers",
@@ -562,25 +545,17 @@ Example: `names_example.py`
 ```console
 $ python examples/names_example.py
 ### names_add
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### names_delete
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### names_edit
-{
-    "status_code": 501,
-    "reason": "Not Implemented"
-}
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 ### names_view_all
-{
-    "status_code": 401,
-    "reason": "Unauthorized"
-}
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/names.json
 ### names_view_per_person
 {
     "ResponseType": "Names",
@@ -678,15 +653,11 @@ Example: `ssh_keys_example.py `
 ```console
 $ python examples/ssh_keys_example.py
 ### ssh_keys_add
-{
-    "status_code": 500,
-    "reason": "Internal Server Error"
-}
+[ERROR] Exception caught
+-->  HTTPError - 500 Server Error: Internal Server Error for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys/add
 ### ssh_keys_view_all
-{
-    "status_code": 401,
-    "reason": "Unauthorized"
-}
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys.json
 ### ssh_keys_view_per_coperson
 {
     "ResponseType": "SshKeys",
@@ -694,7 +665,7 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "38",
+            "Id": "39",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -702,8 +673,8 @@ $ python examples/ssh_keys_example.py
             "Comment": "michael.j.stealey@gmail.com",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-25 16:41:57",
-            "Modified": "2021-09-25 16:41:57",
+            "Created": "2021-09-27 01:11:57",
+            "Modified": "2021-09-27 01:11:57",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
@@ -718,7 +689,7 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "38",
+            "Id": "39",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -726,8 +697,8 @@ $ python examples/ssh_keys_example.py
             "Comment": "michael.j.stealey@gmail.com",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-25 16:41:57",
-            "Modified": "2021-09-25 16:41:57",
+            "Created": "2021-09-27 01:11:57",
+            "Modified": "2021-09-27 01:11:57",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
@@ -736,10 +707,8 @@ $ python examples/ssh_keys_example.py
     ]
 }
 ### ssh_keys_edit
-{
-    "status_code": 401,
-    "reason": "Unauthorized"
-}
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys/39.json
 ### ssh_keys_view_one
 {
     "ResponseType": "SshKeys",
@@ -747,7 +716,7 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "38",
+            "Id": "39",
             "Person": {
                 "Type": "CO",
                 "Id": "1603"
@@ -755,8 +724,8 @@ $ python examples/ssh_keys_example.py
             "Comment": "michael.j.stealey@gmail.com",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-25 16:41:57",
-            "Modified": "2021-09-25 16:41:57",
+            "Created": "2021-09-27 01:11:57",
+            "Modified": "2021-09-27 01:11:57",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
@@ -765,10 +734,7 @@ $ python examples/ssh_keys_example.py
     ]
 }
 ### ssh_keys_delete
-{
-    "status_code": 200,
-    "reason": "OK"
-}
+True
 ### ssh_keys_view_one (previously deleted ssh key)
 {
     "ResponseType": "SshKeys",

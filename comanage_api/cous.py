@@ -53,35 +53,22 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
         403 Wrong CO                                                Parent/Child COU not member of same CO
         500 Other Error                                             Unknown error
     """
+    post_body = {
+            'RequestType': 'Cous',
+            'Version': '1.0',
+            'Cous':
+                [
+                    {
+                        'Version': '1.0',
+                        'CoId': CO_API_ORG_ID,
+                        'Name': str(name),
+                        'Description': str(description)
+                    }
+                ]
+        }
     if parent_id:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'ParentId': int(parent_id),
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
-    else:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
+        post_body['Cous'][0]['ParentId'] = str(parent_id)
+    post_body = json.dumps(post_body)
     url = CO_API_URL + '/cous.json'
     resp = s.post(
         url=url,
@@ -90,10 +77,10 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
     if resp.status_code == 201:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def cous_delete(cou_id: int) -> json:
+def cous_delete(cou_id: int) -> bool:
     """
     Remove a Cou.
 
@@ -116,10 +103,13 @@ def cous_delete(cou_id: int) -> json:
         url=url,
         params=params
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
+def cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool:
     """
     Edit an existing Cou.
 
@@ -151,7 +141,7 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
 
     Response Format
         HTTP Status             Response Body                       Description
-        200 OK                                                      Cou added
+        200 OK                                                      Cou updated
         400 Bad Request                                             Cou Request not provided in POST body
         400 Invalid Fields      ErrorRespons with details in        An error in one or more provided fields
                                 InvalidFields element
@@ -165,41 +155,43 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
         404 Identifier Unknown                                      id not found
         500 Other Error                                             Unknown error
     """
-    if parent_id:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'ParentId': int(parent_id),
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
+    cou = json.loads(cous_view_one(cou_id))
+    post_body = {
+        'RequestType': 'Cous',
+        'Version': '1.0',
+        'Cous':
+            [
+                {
+                    'Version': '1.0',
+                    'CoId': CO_API_ORG_ID
+                }
+            ]
+    }
+    if name:
+        post_body['Cous'][0]['Name'] = str(name)
     else:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
+        post_body['Cous'][0]['Name'] = cou.get('Cous')[0].get('Name')
+    if description:
+        post_body['Cous'][0]['Description'] = str(description)
+    else:
+        post_body['Cous'][0]['Description'] = cou.get('Cous')[0].get('Description')
+    if parent_id:
+        post_body['Cous'][0]['ParentId'] = str(parent_id)
+    else:
+        if cou.get('Cous')[0].get('ParentId'):
+            post_body['Cous'][0]['ParentId'] = str(cou.get('Cous')[0].get('ParentId'))
+        if str(parent_id) == '0':
+            post_body['Cous'][0]['ParentId'] = ''
+    post_body = json.dumps(post_body)
     url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
     resp = s.put(
         url=url,
         data=post_body
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
 def cous_view_all() -> json:
@@ -247,7 +239,7 @@ def cous_view_all() -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def cous_view_one(cou_id: int) -> json:
@@ -293,4 +285,4 @@ def cous_view_one(cou_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

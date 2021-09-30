@@ -9,54 +9,74 @@ Identifier API - https://spaces.at.internet2.edu/display/COmanage/Identifier+API
 
 def identifiers_add() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Add a new Identifier.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 201:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
-def identifiers_assign() -> json:
+def identifiers_assign() -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Assign Identifiers for a CO Person.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def identifiers_delete() -> json:
+def identifiers_delete() -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Remove an Identifier.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def identifiers_edit() -> json:
+def identifiers_edit() -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Edit an existing Identifier.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
 def identifiers_view_all() -> json:
@@ -98,7 +118,7 @@ def identifiers_view_all() -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
@@ -155,7 +175,7 @@ def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
     else:
         entity_type = str(entity_type).lower()
     if entity_type not in ENTITY_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: entity_type'})
+        raise TypeError("Invalid Fields 'entity_type'")
     url = CO_API_URL + '/identifiers.json'
     params = {str(entity_type): str(entity_id)}
     resp = s.get(
@@ -165,7 +185,7 @@ def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def identifiers_view_one(identifier_id: int) -> json:
@@ -209,4 +229,4 @@ def identifiers_view_one(identifier_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

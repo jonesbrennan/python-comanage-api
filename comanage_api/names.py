@@ -9,41 +9,56 @@ Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
 
 def names_add() -> json:
     """
+    ### NOT IMPLEMENTED ###
     Add a new Name.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 201:
+        return resp.text
+    else:
+        resp.raise_for_status()
 
 
-def names_delete() -> json:
+def names_delete() -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Remove a Name.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def names_edit() -> json:
+def names_edit() -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Edit an existing Name.
 
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = MOCK_501_URL
+    resp = mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
 def names_view_all() -> json:
@@ -92,7 +107,7 @@ def names_view_all() -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def names_view_per_person(person_type: str, person_id: int) -> json:
@@ -143,7 +158,7 @@ def names_view_per_person(person_type: str, person_id: int) -> json:
     else:
         person_type = str(person_type).lower()
     if person_type not in PERSON_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: person_type'})
+        raise TypeError("Invalid Fields 'person_type'")
     url = CO_API_URL + '/names.json'
     params = {str(person_type): str(person_id)}
     resp = s.get(
@@ -153,7 +168,7 @@ def names_view_per_person(person_type: str, person_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def names_view_one(name_id: int) -> json:
@@ -204,4 +219,4 @@ def names_view_one(name_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

@@ -5,6 +5,8 @@ import json
 import os.path
 import sys
 
+from requests.exceptions import HTTPError
+
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
@@ -25,81 +27,113 @@ EX_COMMENT = 'SshKey API test'
 
 # ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ssh_key_authenticator_id=None) -> json
 print('### ssh_keys_add')
-coperson_id = CO_PERSON_ID
-ssh_key = EX_SSH_KEY
-key_type = EX_KEY_TYPE
-comment = EX_COMMENT
-new_key = json.loads(ssh_keys_add(
-    coperson_id=coperson_id,
-    ssh_key=ssh_key,
-    key_type=key_type,
-    comment=comment
-))
-print(json.dumps(new_key, indent=4))
+try:
+    coperson_id = CO_PERSON_ID
+    ssh_key = EX_SSH_KEY
+    key_type = EX_KEY_TYPE
+    comment = EX_COMMENT
+    new_key = ssh_keys_add(
+        coperson_id=coperson_id,
+        ssh_key=ssh_key,
+        key_type=key_type,
+        comment=comment
+    )
+    print(json.dumps(json.loads(new_key), indent=4))
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_view_all() -> json
 print('### ssh_keys_view_all')
-all_keys = json.loads(ssh_keys_view_all())
-print(json.dumps(all_keys, indent=4))
+try:
+    all_keys = ssh_keys_view_all()
+    print(json.dumps(json.loads(all_keys), indent=4))
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_view_per_coperson(coperson_id: int) -> json
 print('### ssh_keys_view_per_coperson')
-person_keys = json.loads(ssh_keys_view_per_coperson(
-    coperson_id=CO_PERSON_ID
-))
-print(json.dumps(person_keys, indent=4))
+try:
+    person_keys = ssh_keys_view_per_coperson(
+        coperson_id=CO_PERSON_ID
+    )
+    print(json.dumps(json.loads(person_keys), indent=4))
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_view_one(ssh_key_id: int) -> json
 print('### ssh_keys_view_one')
-# get first SshKeys['Id'] from person_keys response if it exists
-if person_keys.get('SshKeys', None):
-    ssh_key_id = int(person_keys['SshKeys'][0]['Id'])
-    one_key = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
-    print(json.dumps(one_key, indent=4))
-else:
-    print('No SSH Keys Found...')
-    ssh_key_id = -1
+try:
+    # get first SshKeys['Id'] from person_keys response if it exists
+    if json.loads(person_keys).get('SshKeys'):
+        ssh_key_id = int(json.loads(person_keys).get('SshKeys')[0].get('Id'))
+        one_key = ssh_keys_view_one(ssh_key_id=ssh_key_id)
+        print(json.dumps(json.loads(one_key), indent=4))
+    else:
+        print('No SSH Keys Found...')
+        ssh_key_id = -1
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key: str, key_type: str, comment: str,
 #               ssh_key_authenticator_id=None) -> json
 print('### ssh_keys_edit')
-if ssh_key_id != -1:
-    new_comment = 'NEW COMMENT'
-    edit_key = json.loads(ssh_keys_edit(
-        ssh_key_id=ssh_key_id,
-        coperson_id=CO_PERSON_ID,
-        comment=new_comment
-    ))
-    print(json.dumps(edit_key, indent=4))
-else:
-    print('No SSH Keys Found...')
+try:
+    if ssh_key_id != -1:
+        new_comment = 'NEW COMMENT'
+        edit_key = ssh_keys_edit(
+            ssh_key_id=ssh_key_id,
+            coperson_id=CO_PERSON_ID,
+            comment=new_comment
+        )
+        print(edit_key)
+    else:
+        print('No SSH Keys Found...')
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_view_one(ssh_key_id: int) -> json
-print('### ssh_keys_view_one')
-if ssh_key_id != -1:
-    one_key = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
-    print(json.dumps(one_key, indent=4))
-else:
-    print('No SSH Keys Found...')
+try:
+    print('### ssh_keys_view_one')
+    if ssh_key_id != -1:
+        one_key = ssh_keys_view_one(ssh_key_id=ssh_key_id)
+        print(json.dumps(json.loads(one_key), indent=4))
+    else:
+        print('No SSH Keys Found...')
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_delete() -> json
 print('### ssh_keys_delete')
-# prevent key from being deleted at this time (demo purposes only)
-ssh_key_id = -1
-if ssh_key_id != -1:
-    delete_key = json.loads(ssh_keys_delete(
-        ssh_key_id=ssh_key_id
-    ))
-    print(json.dumps(delete_key, indent=4))
-else:
-    print('No SSH Keys Found...')
+try:
+    # prevent key from being deleted at this time (demo purposes only)
+    # ssh_key_id = -1
+    if ssh_key_id != -1:
+        delete_key = ssh_keys_delete(
+            ssh_key_id=ssh_key_id
+        )
+        print(delete_key)
+    else:
+        print('No SSH Keys Found...')
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
 
 # ssh_keys_view_one(ssh_key_id: int) -> json
 print('### ssh_keys_view_one (previously deleted ssh key)')
-# use known previously deleted key (demo purposes only)
-ssh_key_id = PREV_DELETED_KEY_ID
-if ssh_key_id != -1:
-    one_key = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
-    print(json.dumps(one_key, indent=4))
-else:
-    print('No SSH Keys Found...')
+try:
+    # use known previously deleted key (demo purposes only)
+    ssh_key_id = PREV_DELETED_KEY_ID
+    if ssh_key_id != -1:
+        one_key = ssh_keys_view_one(ssh_key_id=ssh_key_id)
+        print(json.dumps(json.loads(one_key), indent=4))
+    else:
+        print('No SSH Keys Found...')
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)

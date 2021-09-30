@@ -1,0 +1,18 @@
+{
+    "RequestType":"SshKeys",
+    "Version":"1.0",
+    "SshKeys":[
+        {
+        "Version":"1.0",
+        "Person":
+        {
+            "Type":"CO",
+            "Id":"1603"
+        },
+        "Comment":"SSH Key add test",
+        "Type":"ssh-rsa",
+        "Skey":"AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+        "SshKeyAuthenticatorId":"3"
+        }
+    ]
+}

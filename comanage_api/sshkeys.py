@@ -19,7 +19,7 @@ Implementation Notes
 """
 
 
-def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ssh_key_authenticator_id=None) -> json:
+def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> json:
     """
     Add a new SSH Key.
 
@@ -83,12 +83,9 @@ def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ss
     """
     if not ssh_key_authenticator_id:
         ssh_key_authenticator_id = CO_SSH_KEY_AUTHENTICATOR_ID
-    if not key_type:
-        key_type = 'ssh-rsa'
-    else:
-        key_type = str(key_type).lower()
+    key_type = str(key_type).lower()
     if key_type not in SSH_KEY_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: key_type'})
+        raise TypeError("Invalid Fields 'key_type'")
     post_body = json.dumps({
         'RequestType': 'SshKeys',
         'Version': '1.0',
@@ -116,10 +113,10 @@ def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ss
     if resp.status_code == 201:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def ssh_keys_delete(ssh_key_id: int) -> json:
+def ssh_keys_delete(ssh_key_id: int) -> bool:
     """
     Remove an SSH Key.
 
@@ -138,11 +135,14 @@ def ssh_keys_delete(ssh_key_id: int) -> json:
     resp = s.delete(
         url=url
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None, comment=None,
-                  ssh_key_authenticator_id=None) -> json:
+def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None,
+                  ssh_key_authenticator_id=None) -> bool:
     """
     Edit an exiting SSH Key.
 
@@ -181,9 +181,7 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None
         404 SshKey Unknown                                          id not found
         500 Other Error                                             Unknown error
     """
-    orig_key = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
-    if not ssh_key_authenticator_id:
-        ssh_key_authenticator_id = CO_SSH_KEY_AUTHENTICATOR_ID
+    sshkey = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
     post_body = {
         'RequestType': 'SshKeys',
         'Version': '1.0',
@@ -193,27 +191,34 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None
                     'Version': '1.0',
                     'Person':
                         {
-                            'Type': 'CO',
-                            'Id': str(coperson_id)
-                        },
-                    'SshKeyAuthenticatorId': str(ssh_key_authenticator_id)
+                            'Type': 'CO'
+                        }
                 }
             ]
     }
-    if comment:
-        post_body['SshKeys'][0]['Comment'] = str(comment)
+    if coperson_id:
+        post_body['SshKeys'][0]['Person']['Id'] = str(coperson_id)
     else:
-        post_body['SshKeys'][0]['Comment'] = orig_key['SshKeys'][0]['Comment']
-    if key_type:
-        post_body['SshKeys'][0]['Type'] = str(key_type).lower()
-        if key_type not in SSH_KEY_OPTIONS:
-            return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: key_type'})
-    else:
-        post_body['SshKeys'][0]['Type'] = orig_key['SshKeys'][0]['Type']
+        post_body['SshKeys'][0]['Person']['Id'] = str(sshkey.get('SshKeys')[0].get('Person').get('Id'))
     if ssh_key:
         post_body['SshKeys'][0]['Skey'] = str(ssh_key)
     else:
-        post_body['SshKeys'][0]['Skey'] = orig_key['SshKeys'][0]['Skey']
+        post_body['SshKeys'][0]['Skey'] = sshkey.get('SshKeys')[0].get('Skey')
+    if key_type:
+        key_type = str(key_type).lower()
+        if key_type not in SSH_KEY_OPTIONS:
+            raise TypeError("Invalid Fields 'key_type'")
+        post_body['SshKeys'][0]['Type'] = str(key_type)
+    else:
+        post_body['SshKeys'][0]['Type'] = sshkey.get('SshKeys')[0].get('Type')
+    if comment:
+        post_body['SshKeys'][0]['Comment'] = str(comment)
+    else:
+        post_body['SshKeys'][0]['Comment'] = sshkey.get('SshKeys')[0].get('Comment')
+    if ssh_key_authenticator_id:
+        post_body['SshKeys'][0]['SshKeyAuthenticatorId'] = str(ssh_key_authenticator_id)
+    else:
+        post_body['SshKeys'][0]['SshKeyAuthenticatorId'] = str(sshkey.get('SshKeys')[0].get('SshKeyAuthenticatorId'))
     post_body = json.dumps(post_body)
     url = CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
     resp = s.put(
@@ -221,9 +226,9 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None
         data=post_body
     )
     if resp.status_code == 200:
-        return resp.text
+        return True
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def ssh_keys_view_all() -> json:
@@ -268,7 +273,7 @@ def ssh_keys_view_all() -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def ssh_keys_view_per_coperson(coperson_id: int) -> json:
@@ -313,10 +318,17 @@ def ssh_keys_view_per_coperson(coperson_id: int) -> json:
         url=url,
         params=params
     )
+    no_ssh_keys = {
+        'RequestType': 'SshKeys',
+        'Version': '1.0',
+        'SshKeys': []
+    }
     if resp.status_code == 200:
         return resp.text
+    if resp.status_code == 204:
+        return json.dumps(no_ssh_keys)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
 def ssh_keys_view_one(ssh_key_id: int) -> json:
@@ -362,4 +374,4 @@ def ssh_keys_view_one(ssh_key_id: int) -> json:
     if resp.status_code == 200:
         return resp.text
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

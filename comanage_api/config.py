@@ -1,5 +1,6 @@
 import os
 
+import requests_mock
 from dotenv import load_dotenv
 from requests import Session
 
@@ -26,5 +27,15 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521',
                    'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
 
+# create comanage_api session
 s = Session()
 s.auth = (CO_API_USER, CO_API_PASS)
+
+# create mock response session
+mock_session = Session()
+adapter = requests_mock.Adapter()
+mock_session.mount('mock://', adapter)
+
+# add mock adapters
+MOCK_501_URL = 'mock://not_implemented_501.local'
+adapter.register_uri('GET', MOCK_501_URL, reason='Not Implemented', status_code=501)

@@ -2,21 +2,30 @@
 
 Provide a limited Python 3 implementation of COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
 
-All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/publications-and-standards/standards/ecma-404/) format
+Return types based on implementation status of wrapped API endpoints
+
+- Implemented:
+    - `--> json`: Data is returned in [JSON (ECMA-404)](https://www.ecma-international.org/publications-and-standards/standards/ecma-404/) format 
+    - `--> bool`: Success/Failure is returned as Boolean `True`/`False`
+- Not Implemented: 
+    - `--> json`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
+    - `--> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
 ### API endpoints
 
 - [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
     - add: `cous_add(name: str, description: str, parent_id=None) -> json`
-    - delete: `cous_delete(cou_id: int) -> json`
-    - edit: `cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json`
+    - delete: `cous_delete(cou_id: int) -> bool`
+    - edit: `cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> bool`
     - view all (per co): `cous_view_all() -> json`
     - view one: `cous_view_one(cou_id: int) -> json`
 
+    **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
+
 - [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
     - add (not implemented): `copeople_add() -> json`
-    - delete (not implemented): `copeople_delete() -> json`
-    - edit (not implemented): `copeople_edit() -> json`
+    - delete (not implemented): `copeople_delete() -> bool`
+    - edit (not implemented): `copeople_edit() -> bool`
     - find (not implemented): `copeople_find() -> json`
     - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
     - view all (per co): `copeople_view_all() -> json`
@@ -25,9 +34,9 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
 
 - [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
     - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
-    - delete: `copersonroles_delete(copersonrole_id: int) -> json`
-    - edit: `copersonroles_edit(copersonrole_id: int, coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
-    - view all (not implemented): `copersonroles_view_all() -> json`
+    - delete: `copersonroles_delete(copersonrole_id: int) -> bool`
+    - edit: `copersonroles_edit(copersonrole_id=None, coperson_id=None, cou_id: int, status=None, affiliation=None) -> bool`
+    - view all: `copersonroles_view_all() -> json`
     - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> json`
     - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> json`
     - view one: `copersonroles_view_one(copersonrole_id: int) -> json`
@@ -42,9 +51,9 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
 
 - [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
     - add (not implemented): `identifiers_add() -> json`
-    - assign (not implemented): `identifiers_assign() -> json`
-    - delete (not implemented): `identifiers_delete() -> json`
-    - edit (not implemented): `identifiers_edit() -> json`
+    - assign (not implemented): `identifiers_assign() -> bool`
+    - delete (not implemented): `identifiers_delete() -> bool`
+    - edit (not implemented): `identifiers_edit() -> bool`
     - view all: `identifiers_view_all() -> json`
     - view per entity: `identifiers_view_per_entity(entity_type: str, entity_id: int) -> json`
     - view one: `identifiers_view_one(identifier_id: int) -> json`
@@ -57,8 +66,8 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
 
 - [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
     - add (not implemented): `names_add() -> json`
-    - delete (not implemented): `names_delete() -> json`
-    - edit (not implemented): `names_edit() -> json`
+    - delete (not implemented): `names_delete() -> bool`
+    - edit (not implemented): `names_edit() -> bool`
     - view all: `names_view_all() -> json`
     - view per person: `names_view_per_person(person_type: str, person_id: int) -> json`
     - view one: `names_view_one(name_id: int) -> json`
@@ -70,10 +79,10 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
     ```
 
 - [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
-    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ssh_key_authenticator_id=None) -> json`
-    - delete: `ssh_keys_delete(ssh_key_id: int) -> json`
-    - edit (401 Unauthorized): `ssh_keys_edit(ssh_key_id: int, coperson_id: int, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> json`
-    - view all (401 Unauthorized): `ssh_keys_view_all() -> json`
+    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> json`
+    - delete: `ssh_keys_delete(ssh_key_id: int) -> bool`
+    - edit: `ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> bool`
+    - view all: `ssh_keys_view_all() -> json`
     - view all (per co_person): `ssh_keys_view_per_coperson(coperson_id: int) -> json`
     - view one: `ssh_keys_view_one(ssh_key_id: int) -> json`
 
@@ -91,21 +100,30 @@ All responses are in [JSON (ECMA-404)](https://www.ecma-international.org/public
 
 ## Usage
 
-### From PyPi
+Set up a virtual environment (`virtualenv` is used in these examples)
 
-TODO
-
-See code in [examples](examples/) directory for usage
-
-### From Source
-
-Install supporting packages
-
-```
+```console
 virtualenv -p /usr/local/bin/python3 venv
 source venv/bin/activate
-pip install -r comanage_api/requirements.txt
 ```
+
+### Install supporting packages
+
+Install from PyPi
+
+```console
+pip install fabric-comanage-api
+```
+
+**OR** 
+
+Install for Local Development
+
+```console
+pip install -r requirements.txt
+```
+
+### Configure your environment
 
 Create a `.env` file from the included template
 
@@ -128,7 +146,9 @@ COMANAGE_URL=https://FQDN_OF_REGISTRY
 COMANAGE_SSH_KEY_AUTHENTICATOR_ID=123
 ```
 
-See code in [examples](examples/) directory for usage
+### Example Code
+
+See code in [examples](examples/) directory for how to use each endpoint
 
 ## SSH Key Authenticator Plugin
 
