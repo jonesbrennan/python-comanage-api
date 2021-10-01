@@ -2,23 +2,40 @@
 # CoPerson API examples
 
 import json
-import os.path
+import os
 import sys
 
+from dotenv import load_dotenv
 from requests.exceptions import HTTPError
+
+load_dotenv()
+
+COMANAGE_API_USER = os.getenv('COMANAGE_API_USER')
+COMANAGE_API_PASS = os.getenv('COMANAGE_API_PASS')
+COMANAGE_API_CO_NAME = os.getenv('COMANAGE_API_CO_NAME')
+COMANAGE_API_CO_ID = int(os.getenv('COMANAGE_API_CO_ID'))
+COMANAGE_API_URL = os.getenv('COMANAGE_API_URL')
+COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID = int(os.getenv('COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID'))
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
 
-from comanage_api import copeople_add, copeople_delete, copeople_edit, copeople_find, copeople_match, \
-    copeople_view_all, copeople_view_per_identifier, copeople_view_one
+from comanage_api import ComanageApi
+
+api = ComanageApi(co_api_url=COMANAGE_API_URL,
+                  co_api_user=COMANAGE_API_USER,
+                  co_api_pass=COMANAGE_API_PASS,
+                  co_api_org_id=COMANAGE_API_CO_ID,
+                  co_api_org_name=COMANAGE_API_CO_NAME,
+                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+                  )
 
 # copeople_add() -> json
 print('### copeople_add')
 try:
-    new_copeople = copeople_add()
-    print(json.dumps(json.loads(new_copeople), indent=4))
+    new_copeople = api.copeople_add()
+    print(json.dumps(new_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
@@ -26,8 +43,8 @@ except HTTPError as err:
 # copeople_delete() -> bool
 print('### copeople_delete')
 try:
-    delete_copeople = copeople_delete()
-    print(json.dumps(json.loads(delete_copeople), indent=4))
+    delete_copeople = api.copeople_delete()
+    print(json.dumps(delete_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
@@ -35,8 +52,8 @@ except HTTPError as err:
 # copeople_edit() -> bool
 print('### copeople_edit')
 try:
-    edit_copeople = copeople_edit()
-    print(json.dumps(json.loads(edit_copeople), indent=4))
+    edit_copeople = api.copeople_edit()
+    print(json.dumps(edit_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
@@ -44,8 +61,8 @@ except HTTPError as err:
 # copeople_find() -> json
 print('### copeople_find')
 try:
-    find_copeople = copeople_find()
-    print(json.dumps(json.loads(find_copeople), indent=4))
+    find_copeople = api.copeople_find()
+    print(json.dumps(find_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
@@ -57,13 +74,13 @@ try:
     family = None
     mail = None
     distinct_by_id = True
-    match_copeople = copeople_match(
+    match_copeople = api.copeople_match(
         given=given,
         family=family,
         mail=mail,
         distinct_by_id=distinct_by_id
     )
-    print(json.dumps(json.loads(match_copeople), indent=4))
+    print(json.dumps(match_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
@@ -71,7 +88,7 @@ except HTTPError as err:
 # copeople_view_all() -> json
 print('### copeople_view_all')
 try:
-    all_copeople = json.loads(copeople_view_all())
+    all_copeople = api.copeople_view_all()
     print(json.dumps(all_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
@@ -82,10 +99,10 @@ print('### copeople_view_per_identifier')
 try:
     identifier = 'ImPACT1000002'
     distinct_by_id = True
-    identifier_copeople = json.loads(copeople_view_per_identifier(
+    identifier_copeople = api.copeople_view_per_identifier(
         identifier=identifier,
         distinct_by_id=True
-    ))
+    )
     print(json.dumps(identifier_copeople, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
@@ -97,7 +114,7 @@ try:
     # get first CoPeople['Id'] from all_copeople response
     if all_copeople['CoPeople']:
         coperson_id = int(all_copeople['CoPeople'][0]['Id'])
-        one_copeople = json.loads(copeople_view_one(coperson_id=coperson_id))
+        one_copeople = api.copeople_view_one(coperson_id=coperson_id)
         print(json.dumps(one_copeople, indent=4))
     else:
         print('No CoPeople Found...')

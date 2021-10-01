@@ -1,10 +1,9 @@
+# comanage_api/_sshkeys.py
+# SshKey API - https://spaces.at.internet2.edu/display/COmanage/SshKey+API
+
 import json
 
-from .config import *
-
 """
-SshKey API - https://spaces.at.internet2.edu/display/COmanage/SshKey+API
-
 Experimental
 - The SshKey API is implemented via the SSH Key Authenticator Plugin. 
   REST APIs provided by plugins are currently considered Experimental, and as such this interface may change 
@@ -19,11 +18,17 @@ Implementation Notes
 """
 
 
-def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> json:
+def ssh_keys_add(self, coperson_id: int, ssh_key: str, key_type: str, comment: str = None,
+                 ssh_key_authenticator_id: int = None) -> dict:
     """
     Add a new SSH Key.
 
-    :post_body
+    :param self:
+    :param coperson_id:
+    :param ssh_key:
+    :param key_type:
+    :param comment:
+    :param ssh_key_authenticator_id:
     :return
         {
             "ResponseType":"SshKeys",
@@ -82,9 +87,9 @@ def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ss
         500 Other Error                                             Unknown error
     """
     if not ssh_key_authenticator_id:
-        ssh_key_authenticator_id = CO_SSH_KEY_AUTHENTICATOR_ID
+        ssh_key_authenticator_id = self.CO_SSH_KEY_AUTHENTICATOR_ID
     key_type = str(key_type).lower()
-    if key_type not in SSH_KEY_OPTIONS:
+    if key_type not in self.SSH_KEY_OPTIONS:
         raise TypeError("Invalid Fields 'key_type'")
     post_body = json.dumps({
         'RequestType': 'SshKeys',
@@ -105,21 +110,22 @@ def ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ss
                 }
             ]
     })
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
-    resp = s.post(
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
+    resp = self.s.post(
         url=url,
         data=post_body
     )
     if resp.status_code == 201:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def ssh_keys_delete(ssh_key_id: int) -> bool:
+def ssh_keys_delete(self, ssh_key_id: int) -> bool:
     """
     Remove an SSH Key.
 
+    :param self:
     :param ssh_key_id:
     :return::
 
@@ -131,8 +137,8 @@ def ssh_keys_delete(ssh_key_id: int) -> bool:
         404 SshKey Unknown                          id not found
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
-    resp = s.delete(
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
+    resp = self.s.delete(
         url=url
     )
     if resp.status_code == 200:
@@ -141,12 +147,18 @@ def ssh_keys_delete(ssh_key_id: int) -> bool:
         resp.raise_for_status()
 
 
-def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None,
-                  ssh_key_authenticator_id=None) -> bool:
+def ssh_keys_edit(self, ssh_key_id: int, coperson_id: int = None, ssh_key: str = None, key_type: str = None,
+                  comment: str = None, ssh_key_authenticator_id: int = None) -> bool:
     """
     Edit an exiting SSH Key.
 
-    :post_body
+    :param self:
+    :param ssh_key_id:
+    :param coperson_id:
+    :param ssh_key:
+    :param key_type:
+    :param comment:
+    :param ssh_key_authenticator_id:
     :return:
 
     Request Format
@@ -181,7 +193,7 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None
         404 SshKey Unknown                                          id not found
         500 Other Error                                             Unknown error
     """
-    sshkey = json.loads(ssh_keys_view_one(ssh_key_id=ssh_key_id))
+    sshkey = ssh_keys_view_one(self, ssh_key_id=ssh_key_id)
     post_body = {
         'RequestType': 'SshKeys',
         'Version': '1.0',
@@ -206,7 +218,7 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None
         post_body['SshKeys'][0]['Skey'] = sshkey.get('SshKeys')[0].get('Skey')
     if key_type:
         key_type = str(key_type).lower()
-        if key_type not in SSH_KEY_OPTIONS:
+        if key_type not in self.SSH_KEY_OPTIONS:
             raise TypeError("Invalid Fields 'key_type'")
         post_body['SshKeys'][0]['Type'] = str(key_type)
     else:
@@ -220,8 +232,8 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None
     else:
         post_body['SshKeys'][0]['SshKeyAuthenticatorId'] = str(sshkey.get('SshKeys')[0].get('SshKeyAuthenticatorId'))
     post_body = json.dumps(post_body)
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
-    resp = s.put(
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
+    resp = self.s.put(
         url=url,
         data=post_body
     )
@@ -231,10 +243,11 @@ def ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None
         resp.raise_for_status()
 
 
-def ssh_keys_view_all() -> json:
+def ssh_keys_view_all(self) -> dict:
     """
     Retrieve all existing SSH Keys.
 
+    :param self:
     :return
         {
             "ResponseType":"SshKeys",
@@ -266,20 +279,22 @@ def ssh_keys_view_all() -> json:
         401 Unauthorized                        Authentication required
         500 Other Error                         Unknown error
     """
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def ssh_keys_view_per_coperson(coperson_id: int) -> json:
+def ssh_keys_view_per_coperson(self, coperson_id: int) -> dict:
     """
     Retrieve all existing SSH Keys for the specified CO Person.
 
+    :param self:
+    :param coperson_id:
     :return
         {
             "ResponseType":"SshKeys",
@@ -312,9 +327,9 @@ def ssh_keys_view_per_coperson(coperson_id: int) -> json:
         404 SSH Key Unknown                         id not found
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys.json'
     params = {'copersonid': str(coperson_id)}
-    resp = s.get(
+    resp = self.s.get(
         url=url,
         params=params
     )
@@ -324,17 +339,19 @@ def ssh_keys_view_per_coperson(coperson_id: int) -> json:
         'SshKeys': []
     }
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     if resp.status_code == 204:
-        return json.dumps(no_ssh_keys)
+        return no_ssh_keys
     else:
         resp.raise_for_status()
 
 
-def ssh_keys_view_one(ssh_key_id: int) -> json:
+def ssh_keys_view_one(self, ssh_key_id: int) -> dict:
     """
     Retrieve an existing SSH Key.
 
+    :param self:
+    :param ssh_key_id:
     :return
         {
             "ResponseType":"SshKeys",
@@ -367,11 +384,11 @@ def ssh_keys_view_one(ssh_key_id: int) -> json:
         404 SSH Key Unknown                         id not found
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/ssh_key_authenticator/ssh_keys/' + str(ssh_key_id) + '.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()

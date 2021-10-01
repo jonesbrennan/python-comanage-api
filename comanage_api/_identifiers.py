@@ -1,13 +1,10 @@
+# comanage_api/_identifiers.py
+# Identifier API - https://spaces.at.internet2.edu/display/COmanage/Identifier+API
+
 import json
 
-from .config import *
 
-"""
-Identifier API - https://spaces.at.internet2.edu/display/COmanage/Identifier+API
-"""
-
-
-def identifiers_add() -> json:
+def identifiers_add(self) -> dict:
     """
     ### NOT IMPLEMENTED ###
     Add a new Identifier.
@@ -15,17 +12,17 @@ def identifiers_add() -> json:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 201:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def identifiers_assign() -> bool:
+def identifiers_assign(self) -> bool:
     """
     ### NOT IMPLEMENTED ###
     Assign Identifiers for a CO Person.
@@ -33,8 +30,8 @@ def identifiers_assign() -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -43,7 +40,7 @@ def identifiers_assign() -> bool:
         resp.raise_for_status()
 
 
-def identifiers_delete() -> bool:
+def identifiers_delete(self) -> bool:
     """
     ### NOT IMPLEMENTED ###
     Remove an Identifier.
@@ -51,8 +48,8 @@ def identifiers_delete() -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -61,7 +58,7 @@ def identifiers_delete() -> bool:
         resp.raise_for_status()
 
 
-def identifiers_edit() -> bool:
+def identifiers_edit(self) -> bool:
     """
     ### NOT IMPLEMENTED ###
     Edit an existing Identifier.
@@ -69,8 +66,8 @@ def identifiers_edit() -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -79,7 +76,7 @@ def identifiers_edit() -> bool:
         resp.raise_for_status()
 
 
-def identifiers_view_all() -> json:
+def identifiers_view_all(self) -> dict:
     """
     Retrieve all existing Identifiers.
 
@@ -111,17 +108,17 @@ def identifiers_view_all() -> json:
         401 Unauthorized                            Authentication required
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/identifiers.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/identifiers.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
+def identifiers_view_per_entity(self, entity_type: str, entity_id: int) -> dict:
     """
     Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 
@@ -174,21 +171,21 @@ def identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
         entity_type = 'copersonid'
     else:
         entity_type = str(entity_type).lower()
-    if entity_type not in ENTITY_OPTIONS:
+    if entity_type not in self.ENTITY_OPTIONS:
         raise TypeError("Invalid Fields 'entity_type'")
-    url = CO_API_URL + '/identifiers.json'
+    url = self.CO_API_URL + '/identifiers.json'
     params = {str(entity_type): str(entity_id)}
-    resp = s.get(
+    resp = self.s.get(
         url=url,
         params=params
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def identifiers_view_one(identifier_id: int) -> json:
+def identifiers_view_one(self, identifier_id: int) -> dict:
     """
     Retrieve all existing Identifiers.
 
@@ -222,11 +219,11 @@ def identifiers_view_one(identifier_id: int) -> json:
         404 Identifier Unknown                              id not found
         500 Other Error                                     Unknown error
     """
-    url = CO_API_URL + '/identifiers/' + str(identifier_id) + '.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/identifiers/' + str(identifier_id) + '.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()

@@ -5,41 +5,41 @@ Provide a limited Python 3 implementation of COmanage REST API v1: [https://spac
 Return types based on implementation status of wrapped API endpoints
 
 - Implemented:
-    - `--> json`: Data is returned in [JSON (ECMA-404)](https://www.ecma-international.org/publications-and-standards/standards/ecma-404/) format 
-    - `--> bool`: Success/Failure is returned as Boolean `True`/`False`
+    - `--> dict`: Data is returned as a Python [Dictionary](https://docs.python.org/3/c-api/dict.html) object
+    - `--> bool`: Success/Failure is returned as Python [Boolean](https://docs.python.org/3/c-api/bool.html) object
 - Not Implemented: 
-    - `--> json`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
+    - `--> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `--> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
 ### API endpoints
 
 - [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
-    - add: `cous_add(name: str, description: str, parent_id=None) -> json`
+    - add: `cous_add(name: str, description: str, parent_id=None) -> dict`
     - delete: `cous_delete(cou_id: int) -> bool`
     - edit: `cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool`
-    - view all (per co): `cous_view_all() -> json`
-    - view one: `cous_view_one(cou_id: int) -> json`
+    - view all (per co): `cous_view_all() -> dict`
+    - view one: `cous_view_one(cou_id: int) -> dict`
 
     **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
 
 - [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
-    - add (not implemented): `copeople_add() -> json`
+    - add (not implemented): `copeople_add() -> dict`
     - delete (not implemented): `copeople_delete() -> bool`
     - edit (not implemented): `copeople_edit() -> bool`
-    - find (not implemented): `copeople_find() -> json`
-    - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json`
-    - view all (per co): `copeople_view_all() -> json`
-    - view all (per identifier): `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json`
-    - view one: `copeople_view_one(coperson_id: int) -> json`
+    - find (not implemented): `copeople_find() -> dict`
+    - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> dict`
+    - view all (per co): `copeople_view_all() -> dict`
+    - view all (per identifier): `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> dict`
+    - view one: `copeople_view_one(coperson_id: int) -> dict`
 
 - [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
-    - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> json`
+    - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> dict`
     - delete: `copersonroles_delete(copersonrole_id: int) -> bool`
     - edit: `copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool`
-    - view all: `copersonroles_view_all() -> json`
-    - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> json`
-    - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> json`
-    - view one: `copersonroles_view_one(copersonrole_id: int) -> json`
+    - view all: `copersonroles_view_all() -> dict`
+    - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> dict`
+    - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> dict`
+    - view one: `copersonroles_view_one(copersonrole_id: int) -> dict`
     
     **NOTE**: when provided, valid values for `status` and `affiliation` as follows:
 
@@ -50,13 +50,13 @@ Return types based on implementation status of wrapped API endpoints
     ```
 
 - [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
-    - add (not implemented): `identifiers_add() -> json`
+    - add (not implemented): `identifiers_add() -> dict`
     - assign (not implemented): `identifiers_assign() -> bool`
     - delete (not implemented): `identifiers_delete() -> bool`
     - edit (not implemented): `identifiers_edit() -> bool`
-    - view all: `identifiers_view_all() -> json`
-    - view per entity: `identifiers_view_per_entity(entity_type: str, entity_id: int) -> json`
-    - view one: `identifiers_view_one(identifier_id: int) -> json`
+    - view all: `identifiers_view_all() -> dict`
+    - view per entity: `identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict`
+    - view one: `identifiers_view_one(identifier_id: int) -> dict`
 
     **NOTE**: when provided, valid values for `entity_type` as follows:
 
@@ -65,12 +65,12 @@ Return types based on implementation status of wrapped API endpoints
     ```
 
 - [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
-    - add (not implemented): `names_add() -> json`
+    - add (not implemented): `names_add() -> dict`
     - delete (not implemented): `names_delete() -> bool`
     - edit (not implemented): `names_edit() -> bool`
-    - view all: `names_view_all() -> json`
-    - view per person: `names_view_per_person(person_type: str, person_id: int) -> json`
-    - view one: `names_view_one(name_id: int) -> json`
+    - view all: `names_view_all() -> dict`
+    - view per person: `names_view_per_person(person_type: str, person_id: int) -> dict`
+    - view one: `names_view_one(name_id: int) -> dict`
 
     **NOTE**: when provided, valid values for `person_type` as follows:
 
@@ -79,12 +79,12 @@ Return types based on implementation status of wrapped API endpoints
     ```
 
 - [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
-    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> json`
+    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> dict`
     - delete: `ssh_keys_delete(ssh_key_id: int) -> bool`
     - edit: `ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> bool`
-    - view all: `ssh_keys_view_all() -> json`
-    - view all (per co_person): `ssh_keys_view_per_coperson(coperson_id: int) -> json`
-    - view one: `ssh_keys_view_one(ssh_key_id: int) -> json`
+    - view all: `ssh_keys_view_all() -> dict`
+    - view all (per co_person): `ssh_keys_view_per_coperson(coperson_id: int) -> dict`
+    - view one: `ssh_keys_view_one(ssh_key_id: int) -> dict`
 
     **NOTE**: when provided, valid values for `ssh_key_type` as follows:
 
@@ -125,7 +125,7 @@ pip install -r requirements.txt
 
 ### Configure your environment
 
-Create a `.env` file from the included template
+Create a `.env` file from the included template if you don't want to put the API credentials in your code. Example code makes use of [python-dotenv](https://pypi.org/project/python-dotenv/)
 
 ```console
 cp template.env .env
@@ -138,17 +138,17 @@ Configure `.env` based on your COmanage Registry settings
 COMANAGE_API_USER=co_123.api-user-name
 COMANAGE_API_PASS=xxxx-xxxx-xxxx-xxxx
 # COmanage CO Information
-COMANAGE_CO_NAME=RegistryName
-COMANAGE_CO_ID=123
+COMANAGE_API_CO_NAME=RegistryName
+COMANAGE_API_CO_ID=123
 # COmanage registry URL
-COMANAGE_URL=https://FQDN_OF_REGISTRY
-# COmanage SshKeyAuthenticator
-COMANAGE_SSH_KEY_AUTHENTICATOR_ID=123
+COMANAGE_API_URL=https://FQDN_OF_REGISTRY
+# COmanage SshKeyAuthenticatorId
+COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID=123
 ```
 
 ### Example Code
 
-See code in [examples](examples/) directory for how to use each endpoint
+See code in [examples](examples/) for a demonstration of how to use each endpoint
 
 ## SSH Key Authenticator Plugin
 
@@ -157,7 +157,7 @@ The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COman
 
 - The SSH Key Authenticator plugin is available as of Registry v3.3.0. Prior to this version, SSH Key management is available via the CO Person canvas.
 
-After registration you can find the value for `COMANAGE_SSH_KEY_AUTHENTICATOR_ID` in the URL for editing the Authenticator:
+After registration you can find the value for `COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID` in the URL for editing the Authenticator:
 
 - It would be **3** in this example URL: [https://registry.cilogon.org/registry/authenticators/edit/3]()
 

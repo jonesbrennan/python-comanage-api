@@ -1,13 +1,10 @@
+# comanage_api/_names.py
+# Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
+
 import json
 
-from .config import *
 
-"""
-Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
-"""
-
-
-def names_add() -> json:
+def names_add(self) -> dict:
     """
     ### NOT IMPLEMENTED ###
     Add a new Name.
@@ -15,17 +12,17 @@ def names_add() -> json:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 201:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def names_delete() -> bool:
+def names_delete(self) -> bool:
     """
     ### NOT IMPLEMENTED ###
     Remove a Name.
@@ -33,8 +30,8 @@ def names_delete() -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -43,7 +40,7 @@ def names_delete() -> bool:
         resp.raise_for_status()
 
 
-def names_edit() -> bool:
+def names_edit(self) -> bool:
     """
     ### NOT IMPLEMENTED ###
     Edit an existing Name.
@@ -51,8 +48,8 @@ def names_edit() -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = MOCK_501_URL
-    resp = mock_session.get(
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -61,7 +58,7 @@ def names_edit() -> bool:
         resp.raise_for_status()
 
 
-def names_view_all() -> json:
+def names_view_all(self) -> dict:
     """
     Retrieve all existing Names.
 
@@ -100,17 +97,17 @@ def names_view_all() -> json:
         401 Unauthorized                            Authentication required
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/names.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/names.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def names_view_per_person(person_type: str, person_id: int) -> json:
+def names_view_per_person(self, person_type: str, person_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
@@ -157,21 +154,21 @@ def names_view_per_person(person_type: str, person_id: int) -> json:
         person_type = 'copersonid'
     else:
         person_type = str(person_type).lower()
-    if person_type not in PERSON_OPTIONS:
+    if person_type not in self.PERSON_OPTIONS:
         raise TypeError("Invalid Fields 'person_type'")
-    url = CO_API_URL + '/names.json'
+    url = self.CO_API_URL + '/names.json'
     params = {str(person_type): str(person_id)}
-    resp = s.get(
+    resp = self.s.get(
         url=url,
         params=params
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
 
-def names_view_one(name_id: int) -> json:
+def names_view_one(self, name_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
@@ -212,11 +209,11 @@ def names_view_one(name_id: int) -> json:
         404 Name Unknown                                    id not found
         500 Other Error                                     Unknown error
     """
-    url = CO_API_URL + '/names/' + str(name_id) + '.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/names/' + str(name_id) + '.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()

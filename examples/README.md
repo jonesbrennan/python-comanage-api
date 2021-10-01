@@ -13,7 +13,7 @@ $ python examples/cous_example.py
     "ResponseType": "NewObject",
     "Version": "1.0",
     "ObjectType": "Cou",
-    "Id": "94"
+    "Id": "105"
 }
 ### cous_view_all
 {
@@ -26,8 +26,8 @@ $ python examples/cous_example.py
             "CoId": "3",
             "Name": "enrollment-approval",
             "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
-            "Lft": "60",
-            "Rght": "61",
+            "Lft": "66",
+            "Rght": "67",
             "Created": "2021-09-10 14:33:11",
             "Modified": "2021-09-10 14:33:11",
             "Revision": "0",
@@ -40,8 +40,8 @@ $ python examples/cous_example.py
             "CoId": "3",
             "Name": "impact-users",
             "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
-            "Lft": "62",
-            "Rght": "63",
+            "Lft": "68",
+            "Rght": "69",
             "Created": "2021-09-10 14:44:09",
             "Modified": "2021-09-10 14:44:09",
             "Revision": "0",
@@ -50,14 +50,14 @@ $ python examples/cous_example.py
         },
         {
             "Version": "1.0",
-            "Id": "94",
+            "Id": "105",
             "CoId": "3",
             "Name": "cou test",
             "Description": "cou test description",
-            "Lft": "82",
-            "Rght": "83",
-            "Created": "2021-09-29 21:51:49",
-            "Modified": "2021-09-29 21:51:49",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:33",
             "Revision": "0",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -73,14 +73,14 @@ True
     "Cous": [
         {
             "Version": "1.0",
-            "Id": "94",
+            "Id": "105",
             "CoId": "3",
             "Name": "cou test - edited",
             "Description": "cou test description - edited",
-            "Lft": "82",
-            "Rght": "83",
-            "Created": "2021-09-29 21:51:49",
-            "Modified": "2021-09-29 21:51:50",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:34",
             "Revision": "1",
             "Deleted": false,
             "ActorIdentifier": "co_3.development"
@@ -89,6 +89,27 @@ True
 }
 ### cous_delete
 True
+### cous_view_one (previously deleted cou)
+{
+    "ResponseType": "Cous",
+    "Version": "1.0",
+    "Cous": [
+        {
+            "Version": "1.0",
+            "Id": "105",
+            "CoId": "3",
+            "Name": "cou test - edited",
+            "Description": "cou test description - edited",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:34",
+            "Revision": "1",
+            "Deleted": true,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
 ```
 
 ## CoPerson API
@@ -407,7 +428,7 @@ True
 }
 ### copersonroles_delete
 True
-### copersonroles_view_one
+### copersonroles_view_one (previously deleted co person role)
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
