@@ -1,55 +1,71 @@
+# comanage_api/_names.py
+# Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
+
 import json
 
-from .config import *
 
-"""
-Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
-"""
-
-
-def names_add() -> json:
+def names_add(self) -> dict:
     """
+    ### NOT IMPLEMENTED ###
     Add a new Name.
 
+    :param self:
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
+        url=url
+    )
+    if resp.status_code == 201:
+        return json.loads(resp.text)
+    else:
+        resp.raise_for_status()
 
 
-def names_delete() -> json:
+def names_delete(self) -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Remove a Name.
 
+    :param self:
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def names_edit() -> json:
+def names_edit(self) -> bool:
     """
+    ### NOT IMPLEMENTED ###
     Edit an existing Name.
 
+    :param self:
     :return
-        {
-            "status_code": 501,
-            "reason": "Not Implemented"
-        }:
+        501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    return json.dumps({'status_code': 501, 'reason': 'Not Implemented'})
+    url = self.MOCK_501_URL
+    resp = self.mock_session.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def names_view_all() -> json:
+def names_view_all(self) -> dict:
     """
     Retrieve all existing Names.
 
+    :param self:
     :return
         {
             "ResponseType":"Names",
@@ -85,20 +101,21 @@ def names_view_all() -> json:
         401 Unauthorized                            Authentication required
         500 Other Error                             Unknown error
     """
-    url = CO_API_URL + '/names.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/names.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def names_view_per_person(person_type: str, person_id: int) -> json:
+def names_view_per_person(self, person_type: str, person_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
+    :param self:
     :param person_type:
     :param person_id:
     :return
@@ -142,24 +159,25 @@ def names_view_per_person(person_type: str, person_id: int) -> json:
         person_type = 'copersonid'
     else:
         person_type = str(person_type).lower()
-    if person_type not in PERSON_OPTIONS:
-        return json.dumps({'status_code': 400, 'reason': 'Invalid Fields: person_type'})
-    url = CO_API_URL + '/names.json'
+    if person_type not in self.PERSON_OPTIONS:
+        raise TypeError("Invalid Fields 'person_type'")
+    url = self.CO_API_URL + '/names.json'
     params = {str(person_type): str(person_id)}
-    resp = s.get(
+    resp = self.s.get(
         url=url,
         params=params
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def names_view_one(name_id: int) -> json:
+def names_view_one(self, name_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
+    :param self:
     :param name_id:
     :return
         {
@@ -197,11 +215,11 @@ def names_view_one(name_id: int) -> json:
         404 Name Unknown                                    id not found
         500 Other Error                                     Unknown error
     """
-    url = CO_API_URL + '/names/' + str(name_id) + '.json'
-    resp = s.get(
+    url = self.CO_API_URL + '/names/' + str(name_id) + '.json'
+    resp = self.s.get(
         url=url
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

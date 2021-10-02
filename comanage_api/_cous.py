@@ -1,16 +1,14 @@
+# comanage_api/_cous.py
+# COU API - https://spaces.at.internet2.edu/display/COmanage/COU+API
+
 import json
 
-from .config import *
 
-"""
-COU API - https://spaces.at.internet2.edu/display/COmanage/COU+API
-"""
-
-
-def cous_add(name: str, description: str, parent_id=None) -> json:
+def cous_add(self, name: str, description: str, parent_id: int = None) -> dict:
     """
     Add a new Cou.
 
+    :param self:
     :param name:
     :param description:
     :param parent_id:
@@ -53,50 +51,38 @@ def cous_add(name: str, description: str, parent_id=None) -> json:
         403 Wrong CO                                                Parent/Child COU not member of same CO
         500 Other Error                                             Unknown error
     """
+    post_body = {
+        'RequestType': 'Cous',
+        'Version': '1.0',
+        'Cous':
+            [
+                {
+                    'Version': '1.0',
+                    'CoId': self.CO_API_ORG_ID,
+                    'Name': str(name),
+                    'Description': str(description)
+                }
+            ]
+    }
     if parent_id:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'ParentId': int(parent_id),
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
-    else:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
-    url = CO_API_URL + '/cous.json'
-    resp = s.post(
+        post_body['Cous'][0]['ParentId'] = str(parent_id)
+    post_body = json.dumps(post_body)
+    url = self.CO_API_URL + '/cous.json'
+    resp = self.s.post(
         url=url,
         data=post_body
     )
     if resp.status_code == 201:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def cous_delete(cou_id: int) -> json:
+def cous_delete(self, cou_id: int) -> bool:
     """
     Remove a Cou.
 
+    :param self:
     :param cou_id:
     :return:
 
@@ -110,19 +96,23 @@ def cous_delete(cou_id: int) -> json:
         404 Identifier Unknown                          id not found
         500 Other Error                                 Unknown error
     """
-    url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': CO_API_ORG_ID}
-    resp = s.delete(
+    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    params = {'coid': self.CO_API_ORG_ID}
+    resp = self.s.delete(
         url=url,
         params=params
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
+def cous_edit(self, cou_id: int, name: str = None, description: str = None, parent_id: int = None) -> bool:
     """
     Edit an existing Cou.
 
+    :param self:
     :param cou_id:
     :param name:
     :param description:
@@ -151,7 +141,7 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
 
     Response Format
         HTTP Status             Response Body                       Description
-        200 OK                                                      Cou added
+        200 OK                                                      Cou updated
         400 Bad Request                                             Cou Request not provided in POST body
         400 Invalid Fields      ErrorRespons with details in        An error in one or more provided fields
                                 InvalidFields element
@@ -165,47 +155,50 @@ def cous_edit(cou_id: int, name: str, description: str, parent_id=None) -> json:
         404 Identifier Unknown                                      id not found
         500 Other Error                                             Unknown error
     """
-    if parent_id:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'ParentId': int(parent_id),
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
+    cou = cous_view_one(self, cou_id)
+    post_body = {
+        'RequestType': 'Cous',
+        'Version': '1.0',
+        'Cous':
+            [
+                {
+                    'Version': '1.0',
+                    'CoId': self.CO_API_ORG_ID
+                }
+            ]
+    }
+    if name:
+        post_body['Cous'][0]['Name'] = str(name)
     else:
-        post_body = json.dumps({
-            'RequestType': 'Cous',
-            'Version': '1.0',
-            'Cous':
-                [
-                    {
-                        'Version': '1.0',
-                        'CoId': CO_API_ORG_ID,
-                        'Name': str(name),
-                        'Description': str(description)
-                    }
-                ]
-        })
-    url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    resp = s.put(
+        post_body['Cous'][0]['Name'] = cou.get('Cous')[0].get('Name')
+    if description:
+        post_body['Cous'][0]['Description'] = str(description)
+    else:
+        post_body['Cous'][0]['Description'] = cou.get('Cous')[0].get('Description')
+    if parent_id:
+        post_body['Cous'][0]['ParentId'] = str(parent_id)
+    else:
+        if cou.get('Cous')[0].get('ParentId'):
+            post_body['Cous'][0]['ParentId'] = str(cou.get('Cous')[0].get('ParentId'))
+        if str(parent_id) == '0':
+            post_body['Cous'][0]['ParentId'] = ''
+    post_body = json.dumps(post_body)
+    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    resp = self.s.put(
         url=url,
         data=post_body
     )
-    return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+    if resp.status_code == 200:
+        return True
+    else:
+        resp.raise_for_status()
 
 
-def cous_view_all() -> json:
+def cous_view_all(self) -> dict:
     """
     Retrieve Cou attached to a CO.
 
+    :param self:
     :return
     {
         "ResponseType":"Cous",
@@ -238,22 +231,23 @@ def cous_view_all() -> json:
         404 CO Unknown                          id not found
         500 Other Error                         Unknown error
     """
-    url = CO_API_URL + '/cous.json'
-    params = {'coid': CO_API_ORG_ID}
-    resp = s.get(
+    url = self.CO_API_URL + '/cous.json'
+    params = {'coid': self.CO_API_ORG_ID}
+    resp = self.s.get(
         url=url,
         params=params
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()
 
 
-def cous_view_one(cou_id: int) -> json:
+def cous_view_one(self, cou_id: int) -> dict:
     """
     Retrieve an existing Cou.
 
+    :param self:
     :param cou_id:
     :return
     {
@@ -284,13 +278,13 @@ def cous_view_one(cou_id: int) -> json:
         404 COU Unknown                         id not found
         500 Other Error                         Unknown error
     """
-    url = CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': CO_API_ORG_ID}
-    resp = s.get(
+    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    params = {'coid': self.CO_API_ORG_ID}
+    resp = self.s.get(
         url=url,
         params=params
     )
     if resp.status_code == 200:
-        return resp.text
+        return json.loads(resp.text)
     else:
-        return json.dumps({'status_code': resp.status_code, 'reason': resp.reason})
+        resp.raise_for_status()

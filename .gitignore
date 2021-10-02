@@ -140,3 +140,4 @@ cython_debug/
 # Others
 .DS_Store
 .idea
+tldr.py
