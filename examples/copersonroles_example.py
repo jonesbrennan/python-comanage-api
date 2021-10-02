@@ -23,19 +23,20 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
 # must be set ahead of time and be valid within the CO
 CO_PERSON_ID = 1603
 COU_ID = 39
 
-# # copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> json
+# # copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict
 print('### copersonroles_add')
 try:
     coperson_id = CO_PERSON_ID
@@ -53,7 +54,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_one(copersonrole_id: int) -> json
+# copersonroles_view_one(copersonrole_id: int) -> dict
 print('### copersonroles_view_one')
 try:
     copersonrole_id = roles_add.get('Id')
@@ -63,7 +64,8 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool
+# copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
+#                    affiliation: str = None) -> bool
 print('### copersonroles_edit')
 try:
     status = 'Active'
@@ -80,7 +82,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_one(copersonrole_id: int) -> json
+# copersonroles_view_one(copersonrole_id: int) -> dict
 print('### copersonroles_view_one')
 try:
     roles_view_one = api.copersonroles_view_one(copersonrole_id=copersonrole_id)
@@ -89,7 +91,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_all() -> json
+# copersonroles_view_all() -> dict
 print('### copersonroles_view_all')
 try:
     roles_all = api.copersonroles_view_all()
@@ -98,7 +100,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_per_coperson(coperson_id: int) -> json
+# copersonroles_view_per_coperson(coperson_id: int) -> dict
 print('### copersonroles_view_per_coperson')
 try:
     roles_view_per_coperson = api.copersonroles_view_per_coperson(coperson_id=coperson_id)
@@ -107,7 +109,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_per_cou(cou_id: int) -> json
+# copersonroles_view_per_cou(cou_id: int) -> dict
 print('### copersonroles_view_per_cou')
 try:
     roles_view_per_cou = api.copersonroles_view_per_cou(cou_id=cou_id)
@@ -125,7 +127,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copersonroles_view_one(copersonrole_id: int) -> json
+# copersonroles_view_one(copersonrole_id: int) -> dict
 print('### copersonroles_view_one (previously deleted co person role)')
 try:
     roles_view_one = api.copersonroles_view_one(copersonrole_id=copersonrole_id)

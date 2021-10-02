@@ -23,18 +23,19 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
 # must be set ahead of time and be valid within the CO
 CO_PERSON_ID = 1603
 
-# names_add() -> json
+# names_add() -> dict
 print('### names_add')
 try:
     new_name = api.names_add()
@@ -61,7 +62,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# names_view_all() -> json
+# names_view_all() -> dict
 print('### names_view_all')
 try:
     all_names = api.names_view_all()
@@ -70,7 +71,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# names_view_per_person(person_type: str, person_id: int) -> json
+# names_view_per_person(person_type: str, person_id: int) -> dict
 print('### names_view_per_person')
 try:
     person_names = api.names_view_per_person(
@@ -82,7 +83,7 @@ except (TypeError, HTTPError) as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# names_view_one(name_id: int) -> json
+# names_view_one(name_id: int) -> dict
 print('### names_view_one')
 try:
     name_id = int(person_names['Names'][0]['Id'])

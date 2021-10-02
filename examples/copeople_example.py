@@ -23,15 +23,16 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
-# copeople_add() -> json
+# copeople_add() -> dict
 print('### copeople_add')
 try:
     new_copeople = api.copeople_add()
@@ -58,7 +59,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_find() -> json
+# copeople_find() -> dict
 print('### copeople_find')
 try:
     find_copeople = api.copeople_find()
@@ -67,7 +68,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> json
+# copeople_match(given: str = None, family: str = None, mail: str = None, distinct_by_id: bool = True) -> dict
 print('### copeople_match')
 try:
     given = 'michael'
@@ -85,7 +86,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_view_all() -> json
+# copeople_view_all() -> dict
 print('### copeople_view_all')
 try:
     all_copeople = api.copeople_view_all()
@@ -94,7 +95,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> json
+# copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict
 print('### copeople_view_per_identifier')
 try:
     identifier = 'ImPACT1000002'
@@ -108,7 +109,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# copeople_view_one(coperson_id: int) -> json
+# copeople_view_one(coperson_id: int) -> dict
 print('### copeople_view_one')
 try:
     # get first CoPeople['Id'] from all_copeople response

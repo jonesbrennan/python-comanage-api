@@ -9,6 +9,7 @@ def identifiers_add(self) -> dict:
     ### NOT IMPLEMENTED ###
     Add a new Identifier.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -27,6 +28,7 @@ def identifiers_assign(self) -> bool:
     ### NOT IMPLEMENTED ###
     Assign Identifiers for a CO Person.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -45,6 +47,7 @@ def identifiers_delete(self) -> bool:
     ### NOT IMPLEMENTED ###
     Remove an Identifier.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -63,6 +66,7 @@ def identifiers_edit(self) -> bool:
     ### NOT IMPLEMENTED ###
     Edit an existing Identifier.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -80,6 +84,7 @@ def identifiers_view_all(self) -> dict:
     """
     Retrieve all existing Identifiers.
 
+    :param self:
     :return
         {
           "ResponseType":"Identifiers",
@@ -122,6 +127,7 @@ def identifiers_view_per_entity(self, entity_type: str, entity_id: int) -> dict:
     """
     Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 
+    :param self:
     :param entity_type:
     :param entity_id:
     :return
@@ -189,6 +195,7 @@ def identifiers_view_one(self, identifier_id: int) -> dict:
     """
     Retrieve all existing Identifiers.
 
+    :param self:
     :param identifier_id:
     :return
         {

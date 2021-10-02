@@ -23,18 +23,19 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
 # must be set ahead of time and be valid within the CO
 CO_PERSON_ID = 1603
 
-# identifiers_add() -> json
+# identifiers_add() -> dict
 print('### identifiers_add')
 try:
     new_identifier = api.identifiers_add()
@@ -79,7 +80,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_view_per_entity(entity_type: str, entity_id: int) -> json:
+# identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict:
 print('### identifiers_view_per_entity')
 try:
     entity_identifiers = api.identifiers_view_per_entity(
@@ -91,7 +92,7 @@ except (TypeError, HTTPError) as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_view_one(identifier_id: int) -> json
+# identifiers_view_one(identifier_id: int) -> dict
 print('### identifiers_view_one')
 try:
     # get first Identifiers['Id'] from entity_identifiers response

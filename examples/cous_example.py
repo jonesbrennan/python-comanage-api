@@ -23,15 +23,16 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
-# cous_add(name: str, description: str, parent_id = None) -> dict
+# cous_add(name: str, description: str, parent_id: int = None) -> dict
 print('### cous_add')
 try:
     name = 'cou test'

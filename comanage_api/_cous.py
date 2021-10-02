@@ -8,6 +8,7 @@ def cous_add(self, name: str, description: str, parent_id: int = None) -> dict:
     """
     Add a new Cou.
 
+    :param self:
     :param name:
     :param description:
     :param parent_id:
@@ -81,6 +82,7 @@ def cous_delete(self, cou_id: int) -> bool:
     """
     Remove a Cou.
 
+    :param self:
     :param cou_id:
     :return:
 
@@ -110,6 +112,7 @@ def cous_edit(self, cou_id: int, name: str = None, description: str = None, pare
     """
     Edit an existing Cou.
 
+    :param self:
     :param cou_id:
     :param name:
     :param description:
@@ -195,6 +198,7 @@ def cous_view_all(self) -> dict:
     """
     Retrieve Cou attached to a CO.
 
+    :param self:
     :return
     {
         "ResponseType":"Cous",
@@ -243,6 +247,7 @@ def cous_view_one(self, cou_id: int) -> dict:
     """
     Retrieve an existing Cou.
 
+    :param self:
     :param cou_id:
     :return
     {

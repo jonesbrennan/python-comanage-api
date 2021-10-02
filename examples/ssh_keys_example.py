@@ -23,13 +23,14 @@ sys.path.append(
 
 from comanage_api import ComanageApi
 
-api = ComanageApi(co_api_url=COMANAGE_API_URL,
-                  co_api_user=COMANAGE_API_USER,
-                  co_api_pass=COMANAGE_API_PASS,
-                  co_api_org_id=COMANAGE_API_CO_ID,
-                  co_api_org_name=COMANAGE_API_CO_NAME,
-                  co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
-                  )
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
 
 # must be set ahead of time and be valid within the CO
 CO_PERSON_ID = 1603
@@ -42,7 +43,8 @@ EX_SSH_KEY = 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVv
 EX_KEY_TYPE = 'ssh-rsa'
 EX_COMMENT = 'SshKey API test'
 
-# ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str, ssh_key_authenticator_id=None) -> json
+# ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str,
+#              ssh_key_authenticator_id: int = None) -> dict
 print('### ssh_keys_add')
 try:
     coperson_id = CO_PERSON_ID
@@ -60,7 +62,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_view_all() -> json
+# ssh_keys_view_all() -> dict
 print('### ssh_keys_view_all')
 try:
     all_keys = api.ssh_keys_view_all()
@@ -69,7 +71,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_view_per_coperson(coperson_id: int) -> json
+# ssh_keys_view_per_coperson(coperson_id: int) -> dict
 print('### ssh_keys_view_per_coperson')
 try:
     person_keys = api.ssh_keys_view_per_coperson(
@@ -80,7 +82,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_view_one(ssh_key_id: int) -> json
+# ssh_keys_view_one(ssh_key_id: int) -> dict
 print('### ssh_keys_view_one')
 try:
     # get first SshKeys['Id'] from person_keys response if it exists
@@ -95,8 +97,8 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None,
-#               ssh_key_authenticator_id=None) -> bool
+# ssh_keys_edit(ssh_key_id: int, coperson_id: int = None, ssh_key: str = None, key_type: str = None,
+#               comment: str = None, ssh_key_authenticator_id: int = None) -> bool
 print('### ssh_keys_edit')
 try:
     if ssh_key_id != -1:
@@ -113,7 +115,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_view_one(ssh_key_id: int) -> json
+# ssh_keys_view_one(ssh_key_id: int) -> dict
 try:
     print('### ssh_keys_view_one')
     if ssh_key_id != -1:
@@ -141,7 +143,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# ssh_keys_view_one(ssh_key_id: int) -> json
+# ssh_keys_view_one(ssh_key_id: int) -> dict
 print('### ssh_keys_view_one (previously deleted ssh key)')
 try:
     # use known previously deleted key (demo purposes only)

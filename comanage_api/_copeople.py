@@ -10,6 +10,7 @@ def copeople_add(self) -> dict:
     Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
     Note that linking to an OrgIdentity and invitations are separate operations.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -30,6 +31,7 @@ def copeople_delete(self) -> bool:
     and Identifiers. A person must be removed from any COs (CoPerson records must be deleted)
     before the OrgIdentity record can be removed.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -48,6 +50,7 @@ def copeople_edit(self) -> bool:
     ### NOT IMPLEMENTED ###
     Edit an existing CO Person.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -67,6 +70,7 @@ def copeople_find(self) -> dict:
     Search for existing CO Person records.
     When too many records are found, a message may be returned rather than specific records.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -86,6 +90,7 @@ def copeople_match(self, given: str = None, family: str = None, mail: str = None
     Note that matching is not performed on search criteria of less than 3 characters,
     or for email addresses that are not syntactically valid.
 
+    :param self:
     :param given:
     :param family:
     :param mail:
@@ -143,6 +148,7 @@ def copeople_view_all(self) -> dict:
     """
     Retrieve all existing CO People for the specified CO.
 
+    :param self:
     :return
         {
           "RequestType":"CoPeople",
@@ -185,6 +191,7 @@ def copeople_view_per_identifier(self, identifier: str, distinct_by_id: bool = T
     Retrieve all existing CO People attached to the specified identifier.
     Note the specified identifier must be attached to a CO Person, not an Org Identity.
 
+    :param self:
     :param identifier:
     :param distinct_by_id:
     :return
@@ -233,6 +240,7 @@ def copeople_view_one(self, coperson_id: int) -> dict:
     """
     Retrieve an existing CO Person.
 
+    :param self:
     :param coperson_id:
     :return
         {

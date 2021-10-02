@@ -8,6 +8,7 @@ def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, a
     """
     Add a new CO Person Role.
 
+    :param self:
     :param affiliation:
     :param coperson_id:
     :param cou_id:
@@ -108,6 +109,7 @@ def copersonroles_delete(self, copersonrole_id: int) -> bool:
     """
     Remove a CO Person Role.
 
+    :param self:
     :param copersonrole_id:
     :return:
 
@@ -134,6 +136,7 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
     """
     Edit an existing CO Person Role.
 
+    :param self:
     :param copersonrole_id:
     :param affiliation:
     :param coperson_id:
@@ -238,6 +241,7 @@ def copersonroles_view_all(self) -> dict:
     """
     Retrieve all existing CO Person Roles.
 
+    :param self:
     :return
         {
           "ResponseType":"CoPersonRoles",
@@ -293,6 +297,7 @@ def copersonroles_view_per_coperson(self, coperson_id: int) -> dict:
     """
     Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
 
+    :param self:
     :param coperson_id:
     :return
         {
@@ -352,6 +357,7 @@ def copersonroles_view_per_cou(self, cou_id: int) -> dict:
     """
     Retrieve all existing CO Person Roles for the specified COU.
 
+    :param self:
     :param cou_id:
     :return
         {
@@ -411,6 +417,7 @@ def copersonroles_view_one(self, copersonrole_id: int) -> dict:
     """
     Retrieve an existing CO Person Role.
 
+    :param self:
     :param copersonrole_id:
     :return
         {

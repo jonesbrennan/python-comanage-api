@@ -2,6 +2,94 @@
 
 Provide a limited Python 3 implementation of COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
 
+## Table of contents
+
+- [TL;DR](#tldr)
+- [API endpoints](#endpoints)
+- [Usage](#usage)
+- [SSH Key Authenticator Plugin in COmanage](#sshplugin)
+- [References](#reference)
+
+## <a name="tldr"></a>TL;DR
+
+Install the latest version from PyPi
+
+```console
+pip install fabric-comanage-api
+```
+
+Create a COmanage API connection
+
+```python
+from comanage_api import ComanageApi
+
+api = ComanageApi(
+    co_api_url=COMANAGE_API_URL,
+    co_api_user=COMANAGE_API_USER,
+    co_api_pass=COMANAGE_API_PASS,
+    co_api_org_id=COMANAGE_API_CO_ID,
+    co_api_org_name=COMANAGE_API_CO_NAME,
+    co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
+)
+```
+
+Get some data! (example using `cous_view_all()`)
+
+```python
+$ python
+Python 3.9.6 (v3.9.6:db3ff76da1, Jun 28 2021, 11:49:53)
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> import json
+>>> from comanage_api import ComanageApi
+>>> api = ComanageApi(
+...     co_api_url='https://FQDN_OF_REGISTRY',
+...     co_api_user='co_123.api-user-name',
+...     co_api_pass='xxxx-xxxx-xxxx-xxxx',
+...     co_api_org_id='123',
+...     co_api_org_name='RegistryName',
+...     co_ssh_key_authenticator_id='123'
+... )
+>>> print(json.dumps(api.cous_view_all(), indent=4))
+{
+    "ResponseType": "Cous",
+    "Version": "1.0",
+    "Cous": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "CoId": "3",
+            "Name": "enrollment-approval",
+            "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
+            "Lft": "66",
+            "Rght": "67",
+            "Created": "2021-09-10 14:33:11",
+            "Modified": "2021-09-10 14:33:11",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        },
+        {
+            "Version": "1.0",
+            "Id": "39",
+            "CoId": "3",
+            "Name": "impact-users",
+            "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
+            "Lft": "68",
+            "Rght": "69",
+            "Created": "2021-09-10 14:44:09",
+            "Modified": "2021-09-10 14:44:09",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        }
+    ]
+}
+```
+
+## <a name="endpoints"></a>API endpoints
+
 Return types based on implementation status of wrapped API endpoints
 
 - Implemented:
@@ -11,9 +99,7 @@ Return types based on implementation status of wrapped API endpoints
     - `--> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `--> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
-### API endpoints
-
-- [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
+- ### [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
     - add: `cous_add(name: str, description: str, parent_id=None) -> dict`
     - delete: `cous_delete(cou_id: int) -> bool`
     - edit: `cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool`
@@ -22,7 +108,7 @@ Return types based on implementation status of wrapped API endpoints
 
     **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
 
-- [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
+- ### [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
     - add (not implemented): `copeople_add() -> dict`
     - delete (not implemented): `copeople_delete() -> bool`
     - edit (not implemented): `copeople_edit() -> bool`
@@ -32,7 +118,7 @@ Return types based on implementation status of wrapped API endpoints
     - view all (per identifier): `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> dict`
     - view one: `copeople_view_one(coperson_id: int) -> dict`
 
-- [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
+- ### [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
     - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> dict`
     - delete: `copersonroles_delete(copersonrole_id: int) -> bool`
     - edit: `copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool`
@@ -49,7 +135,7 @@ Return types based on implementation status of wrapped API endpoints
     AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
     ```
 
-- [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
+- ### [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
     - add (not implemented): `identifiers_add() -> dict`
     - assign (not implemented): `identifiers_assign() -> bool`
     - delete (not implemented): `identifiers_delete() -> bool`
@@ -64,7 +150,7 @@ Return types based on implementation status of wrapped API endpoints
     ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
     ```
 
-- [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
+- ### [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
     - add (not implemented): `names_add() -> dict`
     - delete (not implemented): `names_delete() -> bool`
     - edit (not implemented): `names_edit() -> bool`
@@ -78,7 +164,7 @@ Return types based on implementation status of wrapped API endpoints
     PERSON_OPTIONS = ['copersonid', 'orgidentityid']
     ```
 
-- [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
+- ### [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
     - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> dict`
     - delete: `ssh_keys_delete(ssh_key_id: int) -> bool`
     - edit: `ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> bool`
@@ -98,7 +184,7 @@ Return types based on implementation status of wrapped API endpoints
 
 
 
-## Usage
+## <a name="usage"></a>Usage
 
 Set up a virtual environment (`virtualenv` is used in these examples)
 
@@ -150,7 +236,7 @@ COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID=123
 
 See code in [examples](examples/) for a demonstration of how to use each endpoint
 
-## SSH Key Authenticator Plugin
+## <a name="sshplugin"></a>SSH Key Authenticator Plugin
 
 
 The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) manages SSH Public Keys for CO People.
@@ -187,7 +273,7 @@ Pressing the "Edit" option will display the fields for the Authenticator along w
 
 ![](./imgs/SshKeyAuthenticator_6.png)
 
-## References
+## <a name="reference"></a>References
 
 - COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
 - COU API: [https://spaces.at.internet2.edu/display/COmanage/COU+API](https://spaces.at.internet2.edu/display/COmanage/COU+API)

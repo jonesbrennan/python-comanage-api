@@ -9,6 +9,7 @@ def names_add(self) -> dict:
     ### NOT IMPLEMENTED ###
     Add a new Name.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -27,6 +28,7 @@ def names_delete(self) -> bool:
     ### NOT IMPLEMENTED ###
     Remove a Name.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -45,6 +47,7 @@ def names_edit(self) -> bool:
     ### NOT IMPLEMENTED ###
     Edit an existing Name.
 
+    :param self:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
@@ -62,6 +65,7 @@ def names_view_all(self) -> dict:
     """
     Retrieve all existing Names.
 
+    :param self:
     :return
         {
             "ResponseType":"Names",
@@ -111,6 +115,7 @@ def names_view_per_person(self, person_type: str, person_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
+    :param self:
     :param person_type:
     :param person_id:
     :return
@@ -172,6 +177,7 @@ def names_view_one(self, name_id: int) -> dict:
     """
     Retrieve Names attached to a CO Person or Org Identity.
 
+    :param self:
     :param name_id:
     :return
         {
