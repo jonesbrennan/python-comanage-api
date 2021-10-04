@@ -1,5 +1,21 @@
 # comanage_api/_cous.py
-# COU API - https://spaces.at.internet2.edu/display/COmanage/COU+API
+
+"""
+COU API - https://spaces.at.internet2.edu/display/COmanage/COU+API
+
+Methods
+-------
+cous_add(name: str, description: str, parent_id: int = None) -> dict
+    Add a new Cou.
+cous_delete(cou_id: int) -> bool
+    Remove a Cou.
+cous_edit(cou_id: int, name: str = None, description: str = None, parent_id: int = None) -> bool
+    Edit an existing Cou.
+cous_view_all() -> dict
+    Retrieve Cou attached to a CO.
+cous_view_one(cou_id: int) -> dict
+    Retrieve an existing Cou.
+"""
 
 import json
 
@@ -58,7 +74,7 @@ def cous_add(self, name: str, description: str, parent_id: int = None) -> dict:
             [
                 {
                     'Version': '1.0',
-                    'CoId': self.CO_API_ORG_ID,
+                    'CoId': self._CO_API_ORG_ID,
                     'Name': str(name),
                     'Description': str(description)
                 }
@@ -67,8 +83,8 @@ def cous_add(self, name: str, description: str, parent_id: int = None) -> dict:
     if parent_id:
         post_body['Cous'][0]['ParentId'] = str(parent_id)
     post_body = json.dumps(post_body)
-    url = self.CO_API_URL + '/cous.json'
-    resp = self.s.post(
+    url = self._CO_API_URL + '/cous.json'
+    resp = self._s.post(
         url=url,
         data=post_body
     )
@@ -96,9 +112,9 @@ def cous_delete(self, cou_id: int) -> bool:
         404 Identifier Unknown                          id not found
         500 Other Error                                 Unknown error
     """
-    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': self.CO_API_ORG_ID}
-    resp = self.s.delete(
+    url = self._CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    params = {'coid': self._CO_API_ORG_ID}
+    resp = self._s.delete(
         url=url,
         params=params
     )
@@ -163,7 +179,7 @@ def cous_edit(self, cou_id: int, name: str = None, description: str = None, pare
             [
                 {
                     'Version': '1.0',
-                    'CoId': self.CO_API_ORG_ID
+                    'CoId': self._CO_API_ORG_ID
                 }
             ]
     }
@@ -183,8 +199,8 @@ def cous_edit(self, cou_id: int, name: str = None, description: str = None, pare
         if str(parent_id) == '0':
             post_body['Cous'][0]['ParentId'] = ''
     post_body = json.dumps(post_body)
-    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    resp = self.s.put(
+    url = self._CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    resp = self._s.put(
         url=url,
         data=post_body
     )
@@ -231,9 +247,9 @@ def cous_view_all(self) -> dict:
         404 CO Unknown                          id not found
         500 Other Error                         Unknown error
     """
-    url = self.CO_API_URL + '/cous.json'
-    params = {'coid': self.CO_API_ORG_ID}
-    resp = self.s.get(
+    url = self._CO_API_URL + '/cous.json'
+    params = {'coid': self._CO_API_ORG_ID}
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -278,9 +294,9 @@ def cous_view_one(self, cou_id: int) -> dict:
         404 COU Unknown                         id not found
         500 Other Error                         Unknown error
     """
-    url = self.CO_API_URL + '/cous/' + str(cou_id) + '.json'
-    params = {'coid': self.CO_API_ORG_ID}
-    resp = self.s.get(
+    url = self._CO_API_URL + '/cous/' + str(cou_id) + '.json'
+    params = {'coid': self._CO_API_ORG_ID}
+    resp = self._s.get(
         url=url,
         params=params
     )

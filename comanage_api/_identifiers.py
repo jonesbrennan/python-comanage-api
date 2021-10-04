@@ -1,5 +1,29 @@
 # comanage_api/_identifiers.py
-# Identifier API - https://spaces.at.internet2.edu/display/COmanage/Identifier+API
+
+"""
+Identifier API - https://spaces.at.internet2.edu/display/COmanage/Identifier+API
+
+Methods
+-------
+identifiers_add() -> dict
+    ### NOT IMPLEMENTED ###
+    Add a new Identifier.
+identifiers_assign() -> bool
+    ### NOT IMPLEMENTED ###
+    Assign Identifiers for a CO Person.
+identifiers_delete() -> bool
+    ### NOT IMPLEMENTED ###
+    Remove an Identifier.
+identifiers_edit() -> bool
+    ### NOT IMPLEMENTED ###
+    Edit an existing Identifier.
+identifiers_view_all() -> dict
+    Retrieve all existing Identifiers.
+identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict
+    Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
+identifiers_view_one(identifier_id: int) -> dict
+    Retrieve all existing Identifiers.
+"""
 
 import json
 
@@ -13,8 +37,8 @@ def identifiers_add(self) -> dict:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 201:
@@ -32,8 +56,8 @@ def identifiers_assign(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -51,8 +75,8 @@ def identifiers_delete(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -70,8 +94,8 @@ def identifiers_edit(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -113,8 +137,8 @@ def identifiers_view_all(self) -> dict:
         401 Unauthorized                            Authentication required
         500 Other Error                             Unknown error
     """
-    url = self.CO_API_URL + '/identifiers.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/identifiers.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:
@@ -179,9 +203,9 @@ def identifiers_view_per_entity(self, entity_type: str, entity_id: int) -> dict:
         entity_type = str(entity_type).lower()
     if entity_type not in self.ENTITY_OPTIONS:
         raise TypeError("Invalid Fields 'entity_type'")
-    url = self.CO_API_URL + '/identifiers.json'
+    url = self._CO_API_URL + '/identifiers.json'
     params = {str(entity_type): str(entity_id)}
-    resp = self.s.get(
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -226,8 +250,8 @@ def identifiers_view_one(self, identifier_id: int) -> dict:
         404 Identifier Unknown                              id not found
         500 Other Error                                     Unknown error
     """
-    url = self.CO_API_URL + '/identifiers/' + str(identifier_id) + '.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/identifiers/' + str(identifier_id) + '.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:

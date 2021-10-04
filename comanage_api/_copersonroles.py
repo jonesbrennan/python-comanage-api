@@ -1,5 +1,26 @@
 # comanage_api/_copersonroles.py
-# CoPersonRole API - https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API
+
+"""
+CoPersonRole API - https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API
+
+Methods
+-------
+copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict
+    Add a new CO Person Role.
+copersonroles_delete(copersonrole_id: int) -> bool
+    Remove a CO Person Role.
+copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
+                   affiliation: str = None) -> bool
+    Edit an existing CO Person Role.
+copersonroles_view_all() -> dict
+    Retrieve all existing CO Person Roles.
+copersonroles_view_per_coperson(coperson_id: int) -> dict
+    Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
+copersonroles_view_per_cou(cou_id: int) -> dict
+    Retrieve all existing CO Person Roles for the specified COU.
+copersonroles_view_one(copersonrole_id: int) -> dict
+    Retrieve an existing CO Person Role.
+"""
 
 import json
 
@@ -76,7 +97,7 @@ def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, a
                         'Id': str(coperson_id)
                     },
                 'CouId': str(cou_id),
-                'O': str(self.CO_API_ORG_NAME)
+                'O': str(self._CO_API_ORG_NAME)
             }
         ]
     }
@@ -94,8 +115,8 @@ def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, a
     else:
         post_body['CoPersonRoles'][0]['Affiliation'] = 'member'
     post_body = json.dumps(post_body)
-    url = self.CO_API_URL + '/co_person_roles.json'
-    resp = self.s.post(
+    url = self._CO_API_URL + '/co_person_roles.json'
+    resp = self._s.post(
         url=url,
         data=post_body
     )
@@ -121,8 +142,8 @@ def copersonroles_delete(self, copersonrole_id: int) -> bool:
         404 CoPersonRole Unknown                        id not found
         500 Other Error                                 Unknown error
     """
-    url = self.CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
-    resp = self.s.delete(
+    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    resp = self._s.delete(
         url=url
     )
     if resp.status_code == 200:
@@ -199,7 +220,7 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
                     {
                         'Type': 'CO'
                     },
-                'O': str(self.CO_API_ORG_NAME)
+                'O': str(self._CO_API_ORG_NAME)
             }
         ]
     }
@@ -226,8 +247,8 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
     else:
         post_body['CoPersonRoles'][0]['Affiliation'] = copersonrole.get('CoPersonRoles')[0].get('Affiliation')
     post_body = json.dumps(post_body)
-    url = self.CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
-    resp = self.s.put(
+    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    resp = self._s.put(
         url=url,
         data=post_body
     )
@@ -283,8 +304,8 @@ def copersonroles_view_all(self) -> dict:
         401 Unauthorized                                            Authentication required
         500 Other Error                                             Unknown error
     """
-    url = self.CO_API_URL + '/co_person_roles.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/co_person_roles.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:
@@ -341,9 +362,9 @@ def copersonroles_view_per_coperson(self, coperson_id: int) -> dict:
         404 CO Person Unknown                                       id not found
         500 Other Error                                             Unknown error
     """
-    url = self.CO_API_URL + '/co_person_roles.json'
+    url = self._CO_API_URL + '/co_person_roles.json'
     params = {'copersonid': int(coperson_id)}
-    resp = self.s.get(
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -401,9 +422,9 @@ def copersonroles_view_per_cou(self, cou_id: int) -> dict:
         404 COU Unknown                                             id not found
         500 Other Error                                             Unknown error
     """
-    url = self.CO_API_URL + '/co_person_roles.json'
+    url = self._CO_API_URL + '/co_person_roles.json'
     params = {'couid': int(cou_id)}
-    resp = self.s.get(
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -461,8 +482,8 @@ def copersonroles_view_one(self, copersonrole_id: int) -> dict:
         404 CoPersonRole Unknown                                        id not found
         500 Other Error                                                 Unknown error
     """
-    url = self.CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:

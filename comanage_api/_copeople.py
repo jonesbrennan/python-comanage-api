@@ -1,5 +1,38 @@
 # comanage_api/_copeople.py
-# CoPerson API - https://spaces.at.internet2.edu/display/COmanage/CoPerson+API
+
+"""
+CoPerson API - https://spaces.at.internet2.edu/display/COmanage/CoPerson+API
+
+Methods
+-------
+copeople_add() -> dict
+    ### NOT IMPLEMENTED ###
+    Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
+    Note that linking to an OrgIdentity and invitations are separate operations.
+copeople_delete() -> bool
+    ### NOT IMPLEMENTED ###
+    Remove a CO Person. This method will also delete related data, such as CoPersonRoles, EmailAddresses,
+    and Identifiers. A person must be removed from any COs (CoPerson records must be deleted)
+    before the OrgIdentity record can be removed.
+copeople_edit() -> bool
+    ### NOT IMPLEMENTED ###
+    Edit an existing CO Person.
+copeople_find() -> dict
+    ### NOT IMPLEMENTED ###
+    Search for existing CO Person records.
+    When too many records are found, a message may be returned rather than specific records.
+copeople_match(given: str = None, family: str = None, mail: str = None, distinct_by_id: bool = True) -> dict
+    Attempt to match existing CO Person records.
+    Note that matching is not performed on search criteria of less than 3 characters,
+    or for email addresses that are not syntactically valid.
+copeople_view_all() -> dict
+    Retrieve all existing CO People for the specified CO.
+copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict
+    Retrieve all existing CO People attached to the specified identifier.
+    Note the specified identifier must be attached to a CO Person, not an Org Identity.
+copeople_view_one(coperson_id: int) -> dict
+    Retrieve an existing CO Person.
+"""
 
 import json
 
@@ -14,8 +47,8 @@ def copeople_add(self) -> dict:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 201:
@@ -35,8 +68,8 @@ def copeople_delete(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -54,8 +87,8 @@ def copeople_edit(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -74,8 +107,8 @@ def copeople_find(self) -> dict:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -120,15 +153,15 @@ def copeople_match(self, given: str = None, family: str = None, mail: str = None
                                                             -- unknown CO will return an empty set
         500 Other Error                                 Unknown error
     """
-    url = self.CO_API_URL + '/co_people.json'
-    params = {'coid': self.CO_API_ORG_ID}
+    url = self._CO_API_URL + '/co_people.json'
+    params = {'coid': self._CO_API_ORG_ID}
     if given:
         params.update({'given': given})
     if family:
         params.update({'family': family})
     if mail:
         params.update({'mail': mail})
-    resp = self.s.get(
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -174,9 +207,9 @@ def copeople_view_all(self) -> dict:
                                                             -- unknown CO will return an empty set
         500 Other Error                                 Unknown error
     """
-    url = self.CO_API_URL + '/co_people.json'
-    params = {'coid': self.CO_API_ORG_ID}
-    resp = self.s.get(
+    url = self._CO_API_URL + '/co_people.json'
+    params = {'coid': self._CO_API_ORG_ID}
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -218,9 +251,9 @@ def copeople_view_per_identifier(self, identifier: str, distinct_by_id: bool = T
         404 CO Unknown                                      id not found
         500 Other Error                                     Unknown error
     """
-    url = self.CO_API_URL + '/co_people.json'
-    params = {'coid': self.CO_API_ORG_ID, 'search.identifier': identifier}
-    resp = self.s.get(
+    url = self._CO_API_URL + '/co_people.json'
+    params = {'coid': self._CO_API_ORG_ID, 'search.identifier': identifier}
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -266,9 +299,9 @@ def copeople_view_one(self, coperson_id: int) -> dict:
         404 copeople Unknown                                id not found
         500 Other Error                                     Unknown error
     """
-    url = self.CO_API_URL + '/co_people/' + str(coperson_id) + '.json'
-    params = {'coid': self.CO_API_ORG_ID}
-    resp = self.s.get(
+    url = self._CO_API_URL + '/co_people/' + str(coperson_id) + '.json'
+    params = {'coid': self._CO_API_ORG_ID}
+    resp = self._s.get(
         url=url,
         params=params
     )

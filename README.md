@@ -1,11 +1,19 @@
 # python-comanage-api
 
-Provide a limited Python 3 implementation of COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
+Provide a limited Python 3 client implementation (wrapper) for COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
+
+**DISCLAIMER: The code herein may not be up to date nor compliant with the most recent package and/or security notices. The frequency at which this code is reviewed and updated is based solely on the lifecycle of the project for which it was written to support, and is not actively maintained outside of that scope. Use at your own risk.**
 
 ## Table of contents
 
 - [TL;DR](#tldr)
 - [API endpoints](#endpoints)
+    - [CoPerson](#coperson)
+    - [CoPersonRole](#copersonrole)
+    - [Cou](#cou)
+    - [Identifier](#identifier)
+    - [Name](#name)
+    - [SshKey](#sshkey)
 - [Usage](#usage)
 - [SSH Key Authenticator Plugin in COmanage](#sshplugin)
 - [References](#reference)
@@ -41,8 +49,8 @@ Python 3.9.6 (v3.9.6:db3ff76da1, Jun 28 2021, 11:49:53)
 [Clang 6.0 (clang-600.0.57)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
->>> import json
 >>> from comanage_api import ComanageApi
+>>>
 >>> api = ComanageApi(
 ...     co_api_url='https://FQDN_OF_REGISTRY',
 ...     co_api_user='co_123.api-user-name',
@@ -51,41 +59,49 @@ Type "help", "copyright", "credits" or "license" for more information.
 ...     co_api_org_name='RegistryName',
 ...     co_ssh_key_authenticator_id='123'
 ... )
->>> print(json.dumps(api.cous_view_all(), indent=4))
+>>>
+>>> cous = api.cous_view_all()
+>>>
+>>> print(cous)
+{'ResponseType': 'Cous', 'Version': '1.0', 'Cous': [{'Version': '1.0', 'Id': '38', 'CoId': '3', 'Name': 'enrollment-approval', 'Description': 'Enrollment Approval Personnel - can approve or deny new registry members', 'Lft': '66', 'Rght': '67', 'Created': '2021-09-10 14:33:11', 'Modified': '2021-09-10 14:33:11', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}, {'Version': '1.0', 'Id': '39', 'CoId': '3', 'Name': 'impact-users', 'Description': "ImPACT Users - Registering with the ImPACT site will add new user's to this group", 'Lft': '68', 'Rght': '69', 'Created': '2021-09-10 14:44:09', 'Modified': '2021-09-10 14:44:09', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}]}
+>>>
+>>> import json
+>>> print(json.dumps(cous, indent=2))
 {
-    "ResponseType": "Cous",
-    "Version": "1.0",
-    "Cous": [
-        {
-            "Version": "1.0",
-            "Id": "38",
-            "CoId": "3",
-            "Name": "enrollment-approval",
-            "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
-            "Lft": "66",
-            "Rght": "67",
-            "Created": "2021-09-10 14:33:11",
-            "Modified": "2021-09-10 14:33:11",
-            "Revision": "0",
-            "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
-        },
-        {
-            "Version": "1.0",
-            "Id": "39",
-            "CoId": "3",
-            "Name": "impact-users",
-            "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
-            "Lft": "68",
-            "Rght": "69",
-            "Created": "2021-09-10 14:44:09",
-            "Modified": "2021-09-10 14:44:09",
-            "Revision": "0",
-            "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
-        }
-    ]
+  "ResponseType": "Cous",
+  "Version": "1.0",
+  "Cous": [
+    {
+      "Version": "1.0",
+      "Id": "38",
+      "CoId": "3",
+      "Name": "enrollment-approval",
+      "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
+      "Lft": "66",
+      "Rght": "67",
+      "Created": "2021-09-10 14:33:11",
+      "Modified": "2021-09-10 14:33:11",
+      "Revision": "0",
+      "Deleted": false,
+      "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+    },
+    {
+      "Version": "1.0",
+      "Id": "39",
+      "CoId": "3",
+      "Name": "impact-users",
+      "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
+      "Lft": "68",
+      "Rght": "69",
+      "Created": "2021-09-10 14:44:09",
+      "Modified": "2021-09-10 14:44:09",
+      "Revision": "0",
+      "Deleted": false,
+      "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+    }
+  ]
 }
+>>>
 ```
 
 ## <a name="endpoints"></a>API endpoints
@@ -95,95 +111,154 @@ Return types based on implementation status of wrapped API endpoints
 - Implemented:
     - `--> dict`: Data is returned as a Python [Dictionary](https://docs.python.org/3/c-api/dict.html) object
     - `--> bool`: Success/Failure is returned as Python [Boolean](https://docs.python.org/3/c-api/bool.html) object
-- Not Implemented: 
+- Not Implemented (`### NOT IMPLEMENTED ###`): 
     - `--> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `--> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
-- ### [COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
-    - add: `cous_add(name: str, description: str, parent_id=None) -> dict`
-    - delete: `cous_delete(cou_id: int) -> bool`
-    - edit: `cous_edit(cou_id: int, name=None, description=None, parent_id=None) -> bool`
-    - view all (per co): `cous_view_all() -> dict`
-    - view one: `cous_view_one(cou_id: int) -> dict`
+### <a name="coperson"></a>[CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
 
-    **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
+- `copeople_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
+    - Note that linking to an OrgIdentity and invitations are separate operations.
+- `copeople_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove a CO Person. This method will also delete related data, such as `CoPersonRoles`, `EmailAddresses`,
+and `Identifiers`. 
+    - A person must be removed from any COs (CoPerson records must be deleted)
+before the OrgIdentity record can be removed.
+- `copeople_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing CO Person.
+- `copeople_find() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Search for existing CO Person records.
+    - When too many records are found, a message may be returned rather than specific records.
+- `copeople_match(given: str = None, family: str = None, mail: str = None, distinct_by_id: bool = True) -> dict`
+    - Attempt to match existing CO Person records.
+    - Note that matching is not performed on search criteria of less than 3 characters,
+    or for email addresses that are not syntactically valid.
+- `copeople_view_all() -> dict`
+    - Retrieve all existing CO People for the specified CO.
+- `copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict`
+    - Retrieve all existing CO People attached to the specified identifier.
+    - Note the specified identifier must be attached to a CO Person, not an Org Identity.
+- `copeople_view_one(coperson_id: int) -> dict`
+    - Retrieve an existing CO Person.
 
-- ### [CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
-    - add (not implemented): `copeople_add() -> dict`
-    - delete (not implemented): `copeople_delete() -> bool`
-    - edit (not implemented): `copeople_edit() -> bool`
-    - find (not implemented): `copeople_find() -> dict`
-    - match: `copeople_match(given=None, family=None, mail=None, distinct_by_id=True) -> dict`
-    - view all (per co): `copeople_view_all() -> dict`
-    - view all (per identifier): `copeople_view_per_identifier(identifier: str, distinct_by_id=True) -> dict`
-    - view one: `copeople_view_one(coperson_id: int) -> dict`
+### <a name="copersonrole"></a>[CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
 
-- ### [CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
-    - add: `copersonroles_add(coperson_id: int, cou_id: int, status=None, affiliation=None) -> dict`
-    - delete: `copersonroles_delete(copersonrole_id: int) -> bool`
-    - edit: `copersonroles_edit(copersonrole_id: int, coperson_id=None, cou_id=None, status=None, affiliation=None) -> bool`
-    - view all: `copersonroles_view_all() -> dict`
-    - view all (per co_person): `copersonroles_view_per_coperson(coperson_id: int) -> dict`
-    - view all (per cou): `copersonroles_view_per_cou(cou_id: int) -> dict`
-    - view one: `copersonroles_view_one(copersonrole_id: int) -> dict`
-    
-    **NOTE**: when provided, valid values for `status` and `affiliation` as follows:
+- `copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
+    - Add a new CO Person Role.
+- `copersonroles_delete(copersonrole_id: int) -> bool`
+    - Remove a CO Person Role.
+- `copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None, affiliation: str = None) -> bool`
+    - Edit an existing CO Person Role.
+- `copersonroles_view_all() -> dict`
+    - Retrieve all existing CO Person Roles.
+- `copersonroles_view_per_coperson(coperson_id: int) -> dict`
+    - Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
+- `copersonroles_view_per_cou(cou_id: int) -> dict`
+    - Retrieve all existing CO Person Roles for the specified COU.
+- `copersonroles_view_one(copersonrole_id: int) -> dict`
+    - Retrieve an existing CO Person Role.
 
-    ```python
-    STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate', 
-    'Expired', 'GracePeriod', 'Invited', 'Pending', 'PendingApproval', 'PendingConfirmation', 'Suspended']
-    AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
-    ```
+**NOTE**: when provided, valid values for `status` and `affiliation` as follows:
 
-- ### [Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
-    - add (not implemented): `identifiers_add() -> dict`
-    - assign (not implemented): `identifiers_assign() -> bool`
-    - delete (not implemented): `identifiers_delete() -> bool`
-    - edit (not implemented): `identifiers_edit() -> bool`
-    - view all: `identifiers_view_all() -> dict`
-    - view per entity: `identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict`
-    - view one: `identifiers_view_one(identifier_id: int) -> dict`
+```python
+STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate', 
+'Expired', 'GracePeriod', 'Invited', 'Pending', 'PendingApproval', 'PendingConfirmation', 'Suspended']
+AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
+```
 
-    **NOTE**: when provided, valid values for `entity_type` as follows:
+### <a name="cou"></a>[COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
 
-    ```python
-    ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
-    ```
+- `cous_add(name: str, description: str, parent_id: int = None) -> dict`
+    - Add a new Cou.
+- `cous_delete(cou_id: int) -> bool`
+    - Remove a Cou.
+- `cous_edit(cou_id: int, name: str = None, description: str = None, parent_id: int = None) -> bool`
+    - Edit an existing Cou.
+- `cous_view_all() -> dict`
+    - Retrieve Cou attached to a CO.
+- `cous_view_one(cou_id: int) -> dict`
+    - Retrieve an existing Cou.
 
-- ### [Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
-    - add (not implemented): `names_add() -> dict`
-    - delete (not implemented): `names_delete() -> bool`
-    - edit (not implemented): `names_edit() -> bool`
-    - view all: `names_view_all() -> dict`
-    - view per person: `names_view_per_person(person_type: str, person_id: int) -> dict`
-    - view one: `names_view_one(name_id: int) -> dict`
+**NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
 
-    **NOTE**: when provided, valid values for `person_type` as follows:
+### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 
-    ```python
-    PERSON_OPTIONS = ['copersonid', 'orgidentityid']
-    ```
+- `identifiers_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new Identifier.
+- `identifiers_assign() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Assign Identifiers for a CO Person.
+- `identifiers_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove an Identifier.
+- `identifiers_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing Identifier.
+- `identifiers_view_all() -> dict`
+    - Retrieve all existing Identifiers.
+- `identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict`
+    - Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
+- `identifiers_view_one(identifier_id: int) -> dict`
+    - Retrieve all existing Identifiers.   
 
-- ### [SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
-    - add (not working): `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment=None, ssh_key_authenticator_id=None) -> dict`
-    - delete: `ssh_keys_delete(ssh_key_id: int) -> bool`
-    - edit: `ssh_keys_edit(ssh_key_id: int, coperson_id=None, ssh_key=None, key_type=None, comment=None, ssh_key_authenticator_id=None) -> bool`
-    - view all: `ssh_keys_view_all() -> dict`
-    - view all (per co_person): `ssh_keys_view_per_coperson(coperson_id: int) -> dict`
-    - view one: `ssh_keys_view_one(ssh_key_id: int) -> dict`
+**NOTE**: when provided, valid values for `entity_type` as follows:
 
-    **NOTE**: when provided, valid values for `ssh_key_type` as follows:
+```python
+ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
+```   
 
-    ```python
-    SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 
-    'ecdsa-sha2-nistp521', 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
-    ```
+### <a name="name"></a>[Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
 
-    
-**DISCLAIMER: The code herein may not be up to date nor compliant with the most recent package and/or security notices. The frequency at which this code is reviewed and updated is based solely on the lifecycle of the project for which it was written to support, and is not actively maintained outside of that scope. Use at your own risk.**
+- `names_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new Name.
+- `names_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove a Name.
+- `names_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing Name.
+- `names_view_all() -> dict`
+    - Retrieve all existing Names.
+- `names_view_per_person(person_type: str, person_id: int) -> dict`
+    - Retrieve Names attached to a CO Person or Org Identity.
+- `names_view_one(name_id: int) -> dict`
+    - Retrieve Names attached to a CO Person or Org Identity.
+ 
+**NOTE**: when provided, valid values for `person_type` as follows:
 
+```python
+PERSON_OPTIONS = ['copersonid', 'orgidentityid']
+```
 
+### <a name="sshkey"></a>[SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
 
+- `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str = None, ssh_key_authenticator_id: int = None) -> dict`
+    - Add a new SSH Key.
+- `ssh_keys_delete(ssh_key_id: int) -> bool`
+    - Remove an SSH Key.
+- `ssh_keys_edit(ssh_key_id: int, coperson_id: int = None, ssh_key: str = None, key_type: str = None, comment: str = None, ssh_key_authenticator_id: int = None) -> bool`
+    - Edit an exiting SSH Key.
+- `ssh_keys_view_all() -> dict`
+    - Retrieve all existing SSH Keys.
+- `ssh_keys_view_per_coperson(coperson_id: int) -> dict`
+    - Retrieve all existing SSH Keys for the specified CO Person.
+- `ssh_keys_view_one(ssh_key_id: int) -> dict`
+    - Retrieve an existing SSH Key.
+
+**NOTE**: when provided, valid values for `ssh_key_type` as follows:
+
+```python
+SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 
+'ecdsa-sha2-nistp521', 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
+```
+ 
 ## <a name="usage"></a>Usage
 
 Set up a virtual environment (`virtualenv` is used in these examples)
@@ -228,7 +303,7 @@ COMANAGE_API_CO_NAME=RegistryName
 COMANAGE_API_CO_ID=123
 # COmanage registry URL
 COMANAGE_API_URL=https://FQDN_OF_REGISTRY
-# COmanage SshKeyAuthenticatorId
+# COmanage SshKeyAuthenticatorId (optional)
 COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID=123
 ```
 
@@ -238,7 +313,6 @@ See code in [examples](examples/) for a demonstration of how to use each endpoin
 
 ## <a name="sshplugin"></a>SSH Key Authenticator Plugin
 
-
 The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) manages SSH Public Keys for CO People.
 
 - The SSH Key Authenticator plugin is available as of Registry v3.3.0. Prior to this version, SSH Key management is available via the CO Person canvas.
@@ -246,6 +320,20 @@ The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COman
 After registration you can find the value for `COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID` in the URL for editing the Authenticator:
 
 - It would be **3** in this example URL: [https://registry.cilogon.org/registry/authenticators/edit/3]()
+
+**NOTE**:
+
+- Experimental
+    - The SshKey API is implemented via the SSH Key Authenticator Plugin.
+      REST APIs provided by plugins are currently considered Experimental, and as such this interface may change
+      without notice between minor releases.
+
+- Implementation Notes
+    - Only JSON format is supported. XML format is not supported.
+    - Note the URLs for this API use plugin syntax. (There is an extra component to the path.)
+    - As defined in the SshKey Schema, an SSH Key Authenticator ID is required as part of the request.
+      This refers to the Authenticator instantiated for the CO.
+    - Authenticators that are locked cannot be managed by the API.
 
 ### Adding a new SSH Key Authenticator in COmanage
 

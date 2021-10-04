@@ -2,26 +2,52 @@ import requests_mock
 from requests import Session
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.0"
+__VERSION__ = "0.1.1"
 
 
 class ComanageApi(object):
+    """
+    fabric-comanage-api:
+
+    Provide a limited Python 3 client implementation (wrapper) for
+    COmanage REST API v1: https://spaces.at.internet2.edu/display/COmanage/REST+API+v1
+
+
+    Attributes
+    ----------
+    co_api_url: str
+        COmanage registry URL (required)
+    co_api_user: str
+        COmanage API username (required)
+    co_api_pass: str
+        COmanage API password (required)
+    co_api_org_id: int
+        COmanage Org ID (required)
+    co_api_org_name: str
+        COmanage Org Name (required)
+    co_ssh_key_authenticator_id: int = None
+        SSH Authenticator Plugin ID (optional)
+
+    """
 
     def __init__(self, co_api_url: str, co_api_user: str, co_api_pass: str, co_api_org_id: int,
-                 co_api_org_name: str, co_ssh_key_authenticator_id: int):
+                 co_api_org_name: str, co_ssh_key_authenticator_id: int = None):
         # COmanage API user and pass
-        self.CO_API_USER = str(co_api_user)
-        self.CO_API_PASS = str(co_api_pass)
+        self._CO_API_USER = str(co_api_user)
+        self._CO_API_PASS = str(co_api_pass)
         # COmanage CO information
-        self.CO_API_ORG_NAME = str(co_api_org_name)
-        self.CO_API_ORG_ID = int(co_api_org_id)
+        self._CO_API_ORG_NAME = str(co_api_org_name)
+        self._CO_API_ORG_ID = int(co_api_org_id)
         # COmanage Registry URL
         if str(co_api_url).endswith('/'):
-            self.CO_API_URL = str(co_api_url)[:-1]
+            self._CO_API_URL = str(co_api_url)[:-1]
         else:
-            self.CO_API_URL = str(co_api_url)
+            self._CO_API_URL = str(co_api_url)
         # COmanage SshKeyAuthenticatorId
-        self.CO_SSH_KEY_AUTHENTICATOR_ID = int(co_ssh_key_authenticator_id)
+        if co_ssh_key_authenticator_id:
+            self._CO_SSH_KEY_AUTHENTICATOR_ID = int(co_ssh_key_authenticator_id)
+        else:
+            self._CO_SSH_KEY_AUTHENTICATOR_ID = 0
         # Status Type options
         self.STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Denied', 'Duplicate',
                                'Expired',
@@ -37,15 +63,15 @@ class ComanageApi(object):
         self.SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521',
                                 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
         # create mock response session
-        self.mock_session = Session()
-        self.adapter = requests_mock.Adapter()
-        self.mock_session.mount('mock://', self.adapter)
+        self._mock_session = Session()
+        self._adapter = requests_mock.Adapter()
+        self._mock_session.mount('mock://', self._adapter)
         # add mock adapters
-        self.MOCK_501_URL = 'mock://not_implemented_501.local'
-        self.adapter.register_uri('GET', self.MOCK_501_URL, reason='Not Implemented', status_code=501)
+        self._MOCK_501_URL = 'mock://not_implemented_501.local'
+        self._adapter.register_uri('GET', self._MOCK_501_URL, reason='Not Implemented', status_code=501)
         # create comanage_api session
-        self.s = Session()
-        self.s.auth = (self.CO_API_USER, self.CO_API_PASS)
+        self._s = Session()
+        self._s.auth = (self._CO_API_USER, self._CO_API_PASS)
 
     # Import COmanage API endpoint methods
     from ._copeople import copeople_add, copeople_delete, copeople_edit, copeople_find, copeople_match, \

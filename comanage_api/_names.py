@@ -1,5 +1,26 @@
 # comanage_api/_names.py
-# Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
+
+"""
+Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
+
+Methods
+-------
+names_add() -> dict
+    ### NOT IMPLEMENTED ###
+    Add a new Name.
+names_delete() -> bool
+    ### NOT IMPLEMENTED ###
+    Remove a Name.
+names_edit() -> bool
+    ### NOT IMPLEMENTED ###
+    Edit an existing Name.
+names_view_all() -> dict
+    Retrieve all existing Names.
+names_view_per_person(person_type: str, person_id: int) -> dict
+    Retrieve Names attached to a CO Person or Org Identity.
+names_view_one(name_id: int) -> dict
+    Retrieve Names attached to a CO Person or Org Identity.
+"""
 
 import json
 
@@ -13,8 +34,8 @@ def names_add(self) -> dict:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 201:
@@ -32,8 +53,8 @@ def names_delete(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -51,8 +72,8 @@ def names_edit(self) -> bool:
     :return
         501 Server Error: Not Implemented for url: mock://not_implemented_501.local:
     """
-    url = self.MOCK_501_URL
-    resp = self.mock_session.get(
+    url = self._MOCK_501_URL
+    resp = self._mock_session.get(
         url=url
     )
     if resp.status_code == 200:
@@ -101,8 +122,8 @@ def names_view_all(self) -> dict:
         401 Unauthorized                            Authentication required
         500 Other Error                             Unknown error
     """
-    url = self.CO_API_URL + '/names.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/names.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:
@@ -161,9 +182,9 @@ def names_view_per_person(self, person_type: str, person_id: int) -> dict:
         person_type = str(person_type).lower()
     if person_type not in self.PERSON_OPTIONS:
         raise TypeError("Invalid Fields 'person_type'")
-    url = self.CO_API_URL + '/names.json'
+    url = self._CO_API_URL + '/names.json'
     params = {str(person_type): str(person_id)}
-    resp = self.s.get(
+    resp = self._s.get(
         url=url,
         params=params
     )
@@ -215,8 +236,8 @@ def names_view_one(self, name_id: int) -> dict:
         404 Name Unknown                                    id not found
         500 Other Error                                     Unknown error
     """
-    url = self.CO_API_URL + '/names/' + str(name_id) + '.json'
-    resp = self.s.get(
+    url = self._CO_API_URL + '/names/' + str(name_id) + '.json'
+    resp = self._s.get(
         url=url
     )
     if resp.status_code == 200:
