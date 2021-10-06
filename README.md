@@ -63,7 +63,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> cous = api.cous_view_per_co()
 >>>
 >>> print(cous)
-{'ResponseType': 'Cous', 'Version': '1.0', 'Cous': [{'Version': '1.0', 'Id': '38', 'CoId': '3', 'Name': 'enrollment-approval', 'Description': 'Enrollment Approval Personnel - can approve or deny new registry members', 'Lft': '66', 'Rght': '67', 'Created': '2021-09-10 14:33:11', 'Modified': '2021-09-10 14:33:11', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}, {'Version': '1.0', 'Id': '39', 'CoId': '3', 'Name': 'impact-users', 'Description': "ImPACT Users - Registering with the ImPACT site will add new user's to this group", 'Lft': '68', 'Rght': '69', 'Created': '2021-09-10 14:44:09', 'Modified': '2021-09-10 14:44:09', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}]}
+{'ResponseType': 'Cous', 'Version': '1.0', 'Cous': [{'Version': '1.0', 'Id': '38', 'CoId': '123', 'Name': 'enrollment-approval', 'Description': 'Enrollment Approval Personnel - can approve or deny new registry members', 'Lft': '66', 'Rght': '67', 'Created': '2021-09-10 14:33:11', 'Modified': '2021-09-10 14:33:11', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}, {'Version': '1.0', 'Id': '39', 'CoId': '123', 'Name': 'impact-users', 'Description': "ImPACT Users - Registering with the ImPACT site will add new user's to this group", 'Lft': '68', 'Rght': '69', 'Created': '2021-09-10 14:44:09', 'Modified': '2021-09-10 14:44:09', 'Revision': '0', 'Deleted': False, 'ActorIdentifier': 'http://cilogon.org/serverA/users/242181'}]}
 >>>
 >>> import json
 >>> print(json.dumps(cous, indent=2))
@@ -74,7 +74,7 @@ Type "help", "copyright", "credits" or "license" for more information.
     {
       "Version": "1.0",
       "Id": "38",
-      "CoId": "3",
+      "CoId": "123",
       "Name": "enrollment-approval",
       "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
       "Lft": "66",
@@ -88,7 +88,7 @@ Type "help", "copyright", "credits" or "license" for more information.
     {
       "Version": "1.0",
       "Id": "39",
-      "CoId": "3",
+      "CoId": "123",
       "Name": "impact-users",
       "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
       "Lft": "68",
