@@ -71,7 +71,7 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# identifiers_view_all() -> json
+# identifiers_view_all() -> dict
 print('### identifiers_view_all')
 try:
     all_identifiers = api.identifiers_view_all()

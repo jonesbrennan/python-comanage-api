@@ -12,6 +12,8 @@ cous_delete(cou_id: int) -> bool
 cous_edit(cou_id: int, name: str = None, description: str = None, parent_id: int = None) -> bool
     Edit an existing Cou.
 cous_view_all() -> dict
+    Retrieve all existing Cous.
+cous_view_per_co() -> dict
     Retrieve Cou attached to a CO.
 cous_view_one(cou_id: int) -> dict
     Retrieve an existing Cou.
@@ -211,6 +213,52 @@ def cous_edit(self, cou_id: int, name: str = None, description: str = None, pare
 
 
 def cous_view_all(self) -> dict:
+    """
+    Retrieve all existing Cous.
+
+    :param self:
+    :return
+    {
+        "ResponseType":"Cous",
+        "Version":"1.0",
+        "Cous":[
+            {
+                "Version":"1.0",
+                "Id":"<INTEGER>",
+                "CoId":"<CO_API_ORG_ID>",
+                "Name":"<name>",
+                "Description":"<description>",
+                "Lft":"64",
+                "Rght":"65",
+                "Created":"2021-09-14 14:53:02",
+                "Modified":"2021-09-14 14:53:02",
+                "Revision":"0",
+                "Deleted":false,
+                "ActorIdentifier":"<COmanage_ID>"
+            },
+            {
+                ...
+            }
+        ]
+    }:
+
+    Response Format
+        HTTP Status         Response Body       Description
+        200 OK              Cou Response        Cou returned
+        401 Unauthorized                        Authentication required
+        500 Other Error                         Unknown error
+    """
+    url = self._CO_API_URL + '/cous.json'
+    resp = self._s.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return json.loads(resp.text)
+    else:
+        resp.raise_for_status()
+
+
+def cous_view_per_co(self) -> dict:
     """
     Retrieve Cou attached to a CO.
 

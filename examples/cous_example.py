@@ -49,11 +49,20 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# cous_view_all() -> json
+# cous_view_all() -> dict
 print('### cous_view_all')
 try:
     cous_all = api.cous_view_all()
     print(json.dumps(cous_all, indent=4))
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
+
+# cous_view_per_co() -> dict
+print('### cous_view_per_co')
+try:
+    cous_per_co = api.cous_view_per_co()
+    print(json.dumps(cous_per_co, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
