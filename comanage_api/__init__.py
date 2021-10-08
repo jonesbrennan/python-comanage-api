@@ -2,7 +2,7 @@ import requests_mock
 from requests import Session
 
 from ._copeople import copeople_add, copeople_delete, copeople_edit, copeople_find, copeople_match, \
-    copeople_view_all, copeople_view_per_identifier, copeople_view_one
+    copeople_view_all, copeople_view_per_co, copeople_view_per_identifier, copeople_view_one
 from ._copersonroles import copersonroles_add, copersonroles_delete, copersonroles_edit, copersonroles_view_all, \
     copersonroles_view_per_coperson, copersonroles_view_per_cou, copersonroles_view_one
 from ._cous import cous_add, cous_delete, cous_edit, cous_view_all, cous_view_per_co, cous_view_one
@@ -13,7 +13,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.2"
+__VERSION__ = "0.1.3"
 
 
 class ComanageApi(object):
@@ -101,6 +101,9 @@ class ComanageApi(object):
 
     def copeople_view_all(self):
         return copeople_view_all(self)
+
+    def copeople_view_per_co(self):
+        return copeople_view_per_co(self)
 
     def copeople_view_per_identifier(self, identifier: str, distinct_by_id: bool = True):
         return copeople_view_per_identifier(self, identifier=identifier, distinct_by_id=distinct_by_id)

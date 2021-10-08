@@ -149,6 +149,9 @@ $ python examples/copeople_example.py
     ]
 }
 ### copeople_view_all
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/co_people.json
+### copeople_view_per_co
 {
     "ResponseType": "CoPeople",
     "Version": "1.0",

@@ -2,6 +2,8 @@
 
 Provide a limited Python 3 client implementation (wrapper) for COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
 
+Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.org/project/fabric-comanage-api/)
+
 **DISCLAIMER: The code herein may not be up to date nor compliant with the most recent package and/or security notices. The frequency at which this code is reviewed and updated is based solely on the lifecycle of the project for which it was written to support, and is not actively maintained outside of that scope. Use at your own risk.**
 
 ## Table of contents
@@ -139,6 +141,8 @@ before the OrgIdentity record can be removed.
     - Note that matching is not performed on search criteria of less than 3 characters,
     or for email addresses that are not syntactically valid.
 - `copeople_view_all() -> dict`
+    - Retrieve all existing CO People.
+- `copeople_view_per_co() -> dict`
     - Retrieve all existing CO People for the specified CO.
 - `copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict`
     - Retrieve all existing CO People attached to the specified identifier.

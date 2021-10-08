@@ -95,6 +95,15 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
+# copeople_view_per_co() -> dict
+print('### copeople_view_per_co')
+try:
+    per_co_copeople = api.copeople_view_per_co()
+    print(json.dumps(per_co_copeople, indent=4))
+except HTTPError as err:
+    print('[ERROR] Exception caught')
+    print('--> ', type(err).__name__, '-', err)
+
 # copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict
 print('### copeople_view_per_identifier')
 try:
@@ -113,12 +122,12 @@ except HTTPError as err:
 print('### copeople_view_one')
 try:
     # get first CoPeople['Id'] from all_copeople response
-    if all_copeople['CoPeople']:
-        coperson_id = int(all_copeople['CoPeople'][0]['Id'])
+    if per_co_copeople['CoPeople']:
+        coperson_id = int(per_co_copeople['CoPeople'][0]['Id'])
         one_copeople = api.copeople_view_one(coperson_id=coperson_id)
         print(json.dumps(one_copeople, indent=4))
     else:
         print('No CoPeople Found...')
-except HTTPError as err:
+except (NameError, HTTPError) as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)

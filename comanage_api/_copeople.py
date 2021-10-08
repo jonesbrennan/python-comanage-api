@@ -26,6 +26,8 @@ copeople_match(given: str = None, family: str = None, mail: str = None, distinct
     Note that matching is not performed on search criteria of less than 3 characters,
     or for email addresses that are not syntactically valid.
 copeople_view_all() -> dict
+    Retrieve all existing CO People.
+copeople_view_per_co() -> dict
     Retrieve all existing CO People for the specified CO.
 copeople_view_per_identifier(identifier: str, distinct_by_id: bool = True) -> dict
     Retrieve all existing CO People attached to the specified identifier.
@@ -178,6 +180,44 @@ def copeople_match(self, given: str = None, family: str = None, mail: str = None
 
 
 def copeople_view_all(self) -> dict:
+    """
+    Retrieve all existing CO People.
+
+    :param self:
+    :return
+        {
+          "RequestType":"CoPeople",
+          "Version":"1.0",
+          "CoPeople":
+          [
+            {
+              "Version":"1.0",
+              "CoId":"<CoId>",
+              "Timezone":"<Timezone>",
+              "DateOfBirth":"<DateOfBirth>",
+              "Status":("Active"|"Approved"|"Confirmed"|"Declined"|"Deleted"|"Denied"|"Duplicate"|"Expired"|
+                  "GracePeriod"|"Invited"|"Locked"|"Pending"|"PendingApproval"|"PendingConfirmation"|"Suspended")
+            }
+          ]
+        }:
+
+    Response Format
+        HTTP Status             Response Body           Description
+        200 OK                  CoPerson Response       CoPerson returned
+        401 Unauthorized                                Authentication required
+        500 Other Error                                 Unknown error
+    """
+    url = self._CO_API_URL + '/co_people.json'
+    resp = self._s.get(
+        url=url
+    )
+    if resp.status_code == 200:
+        return json.loads(resp.text)
+    else:
+        resp.raise_for_status()
+
+
+def copeople_view_per_co(self) -> dict:
     """
     Retrieve all existing CO People for the specified CO.
 
