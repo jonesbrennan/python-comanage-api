@@ -211,6 +211,12 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 - `email_addresses_view_one(email_address_id: int) -> dict`
     - Retrieve an existing EmailAddress.
 
+**NOTE**: when provided, valid values for `person_type` as follows:
+
+```python
+EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentityid']
+```
+
 ### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 
 - `identifiers_add() -> dict`

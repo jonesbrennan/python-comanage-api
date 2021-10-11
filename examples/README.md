@@ -253,18 +253,18 @@ $ python examples/copeople_example.py
 
 ## CoPersonRole API
 
-Example: `copersonroles_example.py`
+Example: `coperson_roles_example.py`
 
 ```console
-$ python examples/copersonroles_example.py
-### copersonroles_add
+$ python examples/coperson_roles_example.py
+### coperson_roles_add
 {
     "ResponseType": "NewObject",
     "Version": "1.0",
     "ObjectType": "CoPersonRole",
     "Id": "1727"
 }
-### copersonroles_view_one
+### coperson_roles_view_one
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
@@ -288,9 +288,9 @@ $ python examples/copersonroles_example.py
         }
     ]
 }
-### copersonroles_edit
+### coperson_roles_edit
 True
-### copersonroles_view_one
+### coperson_roles_view_one
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
@@ -314,10 +314,10 @@ True
         }
     ]
 }
-### copersonroles_view_all
+### coperson_roles_view_all
 [ERROR] Exception caught
 -->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/co_person_roles.json
-### copersonroles_view_per_coperson
+### coperson_roles_view_per_coperson
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
@@ -357,7 +357,7 @@ True
         }
     ]
 }
-### copersonroles_view_per_cou
+### coperson_roles_view_per_cou
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
@@ -429,9 +429,9 @@ True
         }
     ]
 }
-### copersonroles_delete
+### coperson_roles_delete
 True
-### copersonroles_view_one (previously deleted co person role)
+### coperson_roles_view_one (previously deleted co person role)
 {
     "ResponseType": "CoPersonRoles",
     "Version": "1.0",
@@ -452,6 +452,90 @@ True
             "Revision": "1",
             "Deleted": true,
             "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+```
+
+## EmailAddress API
+
+Example: `email_addresses_example.py`
+
+```console
+$ python examples/email_addresses_example.py
+### email_addresses_add
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### email_addresses_delete
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### email_addresses_edit
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### email_addresses_view_all
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/email_addresses.json
+### email_addresses_view_per_person
+{
+    "ResponseType": "EmailAddresses",
+    "Version": "1.0",
+    "EmailAddresses": [
+        {
+            "Version": "1.0",
+            "Id": "810",
+            "Mail": "mjstealey@gmail.com",
+            "Type": "official",
+            "Verified": true,
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceEmailAddressId": "809",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        },
+        {
+            "Version": "1.0",
+            "Id": "811",
+            "Mail": "mjstealey@gmail.com",
+            "Type": "official",
+            "Verified": true,
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "Created": "2021-09-15 12:34:47",
+            "Modified": "2021-09-15 12:35:22",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        }
+    ]
+}
+### email_addresses_view_one
+{
+    "ResponseType": "EmailAddresses",
+    "Version": "1.0",
+    "EmailAddresses": [
+        {
+            "Version": "1.0",
+            "Id": "810",
+            "Mail": "mjstealey@gmail.com",
+            "Type": "official",
+            "Verified": true,
+            "Person": {
+                "Type": "CO",
+                "Id": "1603"
+            },
+            "SourceEmailAddressId": "809",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
         }
     ]
 }
