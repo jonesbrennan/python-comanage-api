@@ -3,8 +3,8 @@ from requests import Session
 
 from ._copeople import copeople_add, copeople_delete, copeople_edit, copeople_find, copeople_match, \
     copeople_view_all, copeople_view_per_co, copeople_view_per_identifier, copeople_view_one
-from ._copersonroles import copersonroles_add, copersonroles_delete, copersonroles_edit, copersonroles_view_all, \
-    copersonroles_view_per_coperson, copersonroles_view_per_cou, copersonroles_view_one
+from ._copersonroles import coperson_roles_add, coperson_roles_delete, coperson_roles_edit, coperson_roles_view_all, \
+    coperson_roles_view_per_coperson, coperson_roles_view_per_cou, coperson_roles_view_one
 from ._cous import cous_add, cous_delete, cous_edit, cous_view_all, cous_view_per_co, cous_view_one
 from ._identifiers import identifiers_add, identifiers_assign, identifiers_delete, identifiers_edit, \
     identifiers_view_all, identifiers_view_per_entity, identifiers_view_one
@@ -13,7 +13,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.3"
+__VERSION__ = "0.1.4"
 
 
 class ComanageApi(object):
@@ -65,6 +65,8 @@ class ComanageApi(object):
                                'Suspended']
         # Affiliation Type options
         self.AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
+        # EmailAddress Type options
+        self.EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentityid']
         # Entity Type options
         self.ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
         # Person Type options
@@ -112,28 +114,28 @@ class ComanageApi(object):
         return copeople_view_one(self, coperson_id=coperson_id)
 
     # COPersonRoles API
-    def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, affiliation: str = None):
-        return copersonroles_add(self, coperson_id=coperson_id, cou_id=cou_id, status=status, affiliation=affiliation)
+    def coperson_roles_add(self, coperson_id: int, cou_id: int, status: str = None, affiliation: str = None):
+        return coperson_roles_add(self, coperson_id=coperson_id, cou_id=cou_id, status=status, affiliation=affiliation)
 
-    def copersonroles_delete(self, copersonrole_id: int):
-        return copersonroles_delete(self, copersonrole_id=copersonrole_id)
+    def coperson_roles_delete(self, coperson_role_id: int):
+        return coperson_roles_delete(self, coperson_role_id=coperson_role_id)
 
-    def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
-                           affiliation: str = None):
-        return copersonroles_edit(self, copersonrole_id=copersonrole_id, coperson_id=coperson_id, cou_id=cou_id,
-                                  status=status, affiliation=affiliation)
+    def coperson_roles_edit(self, coperson_role_id: int, coperson_id: int = None, cou_id: int = None,
+                            status: str = None, affiliation: str = None):
+        return coperson_roles_edit(self, coperson_role_id=coperson_role_id, coperson_id=coperson_id, cou_id=cou_id,
+                                   status=status, affiliation=affiliation)
 
-    def copersonroles_view_all(self):
-        return copersonroles_view_all(self)
+    def coperson_roles_view_all(self):
+        return coperson_roles_view_all(self)
 
-    def copersonroles_view_per_coperson(self, coperson_id: int):
-        return copersonroles_view_per_coperson(self, coperson_id=coperson_id)
+    def coperson_roles_view_per_coperson(self, coperson_id: int):
+        return coperson_roles_view_per_coperson(self, coperson_id=coperson_id)
 
-    def copersonroles_view_per_cou(self, cou_id: int):
-        return copersonroles_view_per_cou(self, cou_id=cou_id)
+    def coperson_roles_view_per_cou(self, cou_id: int):
+        return coperson_roles_view_per_cou(self, cou_id=cou_id)
 
-    def copersonroles_view_one(self, copersonrole_id: int):
-        return copersonroles_view_one(self, copersonrole_id=copersonrole_id)
+    def coperson_roles_view_one(self, coperson_role_id: int):
+        return coperson_roles_view_one(self, coperson_role_id=coperson_role_id)
 
     # COU API
     def cous_add(self, name: str, description: str, parent_id: int = None):

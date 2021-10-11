@@ -152,19 +152,19 @@ before the OrgIdentity record can be removed.
 
 ### <a name="copersonrole"></a>[CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
 
-- `copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
+- `coperson_roles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
     - Add a new CO Person Role.
-- `copersonroles_delete(copersonrole_id: int) -> bool`
+- `coperson_roles_delete(coperson_role_id: int) -> bool`
     - Remove a CO Person Role.
-- `copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None, affiliation: str = None) -> bool`
+- `coperson_roles_edit(coperson_role_id: int, coperson_id: int = None, cou_id: int = None, status: str = None, affiliation: str = None) -> bool`
     - Edit an existing CO Person Role.
-- `copersonroles_view_all() -> dict`
+- `coperson_roles_view_all() -> dict`
     - Retrieve all existing CO Person Roles.
-- `copersonroles_view_per_coperson(coperson_id: int) -> dict`
+- `coperson_roles_view_per_coperson(coperson_id: int) -> dict`
     - Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
-- `copersonroles_view_per_cou(cou_id: int) -> dict`
+- `coperson_roles_view_per_cou(cou_id: int) -> dict`
     - Retrieve all existing CO Person Roles for the specified COU.
-- `copersonroles_view_one(copersonrole_id: int) -> dict`
+- `coperson_roles_view_one(coperson_role_id: int) -> dict`
     - Retrieve an existing CO Person Role.
 
 **NOTE**: when provided, valid values for `status` and `affiliation` as follows:
@@ -211,7 +211,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 - `identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict`
     - Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 - `identifiers_view_one(identifier_id: int) -> dict`
-    - Retrieve all existing Identifiers.   
+    - Retrieve an existing Identifier.   
 
 **NOTE**: when provided, valid values for `entity_type` as follows:
 

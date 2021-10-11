@@ -5,27 +5,27 @@ CoPersonRole API - https://spaces.at.internet2.edu/display/COmanage/CoPersonRole
 
 Methods
 -------
-copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict
+coperson_roles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict
     Add a new CO Person Role.
-copersonroles_delete(copersonrole_id: int) -> bool
+coperson_roles_delete(coperson_role_id: int) -> bool
     Remove a CO Person Role.
-copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
+coperson_roles_edit(coperson_role_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
                    affiliation: str = None) -> bool
     Edit an existing CO Person Role.
-copersonroles_view_all() -> dict
+coperson_roles_view_all() -> dict
     Retrieve all existing CO Person Roles.
-copersonroles_view_per_coperson(coperson_id: int) -> dict
+coperson_roles_view_per_coperson(coperson_id: int) -> dict
     Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
-copersonroles_view_per_cou(cou_id: int) -> dict
+coperson_roles_view_per_cou(cou_id: int) -> dict
     Retrieve all existing CO Person Roles for the specified COU.
-copersonroles_view_one(copersonrole_id: int) -> dict
+coperson_roles_view_one(coperson_role_id: int) -> dict
     Retrieve an existing CO Person Role.
 """
 
 import json
 
 
-def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict:
+def coperson_roles_add(self, coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict:
     """
     Add a new CO Person Role.
 
@@ -126,12 +126,12 @@ def copersonroles_add(self, coperson_id: int, cou_id: int, status: str = None, a
         resp.raise_for_status()
 
 
-def copersonroles_delete(self, copersonrole_id: int) -> bool:
+def coperson_roles_delete(self, coperson_role_id: int) -> bool:
     """
     Remove a CO Person Role.
 
     :param self:
-    :param copersonrole_id:
+    :param coperson_role_id:
     :return:
 
     Response Format
@@ -142,7 +142,7 @@ def copersonroles_delete(self, copersonrole_id: int) -> bool:
         404 CoPersonRole Unknown                        id not found
         500 Other Error                                 Unknown error
     """
-    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    url = self._CO_API_URL + '/co_person_roles/' + str(coperson_role_id) + '.json'
     resp = self._s.delete(
         url=url
     )
@@ -152,13 +152,13 @@ def copersonroles_delete(self, copersonrole_id: int) -> bool:
         resp.raise_for_status()
 
 
-def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
+def coperson_roles_edit(self, coperson_role_id: int, coperson_id: int = None, cou_id: int = None, status: str = None,
                        affiliation: str = None) -> bool:
     """
     Edit an existing CO Person Role.
 
     :param self:
-    :param copersonrole_id:
+    :param coperson_role_id:
     :param affiliation:
     :param coperson_id:
     :param cou_id:
@@ -209,7 +209,7 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
         404 CoPersonRole Unknown                                        id not found
         500 Other Error                                                 Unknown error
     """
-    copersonrole = copersonroles_view_one(self, copersonrole_id)
+    coperson_role = coperson_roles_view_one(self, coperson_role_id)
     post_body = {
         'RequestType': 'CoPersonRoles',
         'Version': '1.0',
@@ -228,26 +228,26 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
         post_body['CoPersonRoles'][0]['Person']['Id'] = str(coperson_id)
     else:
         post_body['CoPersonRoles'][0]['Person']['Id'] = str(
-            copersonrole.get('CoPersonRoles')[0].get('Person').get('Id'))
+            coperson_role.get('CoPersonRoles')[0].get('Person').get('Id'))
     if cou_id:
         post_body['CoPersonRoles'][0]['CouId'] = str(cou_id)
     else:
-        post_body['CoPersonRoles'][0]['CouId'] = str(copersonrole.get('CoPersonRoles')[0].get('CouId'))
+        post_body['CoPersonRoles'][0]['CouId'] = str(coperson_role.get('CoPersonRoles')[0].get('CouId'))
     if status:
         if status not in self.STATUS_OPTIONS:
             raise TypeError("Invalid Fields 'status'")
         post_body['CoPersonRoles'][0]['Status'] = str(status)
     else:
-        post_body['CoPersonRoles'][0]['Status'] = copersonrole.get('CoPersonRoles')[0].get('Status')
+        post_body['CoPersonRoles'][0]['Status'] = coperson_role.get('CoPersonRoles')[0].get('Status')
     if affiliation:
         affiliation = str(affiliation).lower()
         if affiliation not in self.AFFILIATION_OPTIONS:
             raise TypeError("Invalid Fields 'affiliation'")
         post_body['CoPersonRoles'][0]['Affiliation'] = str(affiliation)
     else:
-        post_body['CoPersonRoles'][0]['Affiliation'] = copersonrole.get('CoPersonRoles')[0].get('Affiliation')
+        post_body['CoPersonRoles'][0]['Affiliation'] = coperson_role.get('CoPersonRoles')[0].get('Affiliation')
     post_body = json.dumps(post_body)
-    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    url = self._CO_API_URL + '/co_person_roles/' + str(coperson_role_id) + '.json'
     resp = self._s.put(
         url=url,
         data=post_body
@@ -258,7 +258,7 @@ def copersonroles_edit(self, copersonrole_id: int, coperson_id: int = None, cou_
         resp.raise_for_status()
 
 
-def copersonroles_view_all(self) -> dict:
+def coperson_roles_view_all(self) -> dict:
     """
     Retrieve all existing CO Person Roles.
 
@@ -314,7 +314,7 @@ def copersonroles_view_all(self) -> dict:
         resp.raise_for_status()
 
 
-def copersonroles_view_per_coperson(self, coperson_id: int) -> dict:
+def coperson_roles_view_per_coperson(self, coperson_id: int) -> dict:
     """
     Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
 
@@ -374,7 +374,7 @@ def copersonroles_view_per_coperson(self, coperson_id: int) -> dict:
         resp.raise_for_status()
 
 
-def copersonroles_view_per_cou(self, cou_id: int) -> dict:
+def coperson_roles_view_per_cou(self, cou_id: int) -> dict:
     """
     Retrieve all existing CO Person Roles for the specified COU.
 
@@ -434,12 +434,12 @@ def copersonroles_view_per_cou(self, cou_id: int) -> dict:
         resp.raise_for_status()
 
 
-def copersonroles_view_one(self, copersonrole_id: int) -> dict:
+def coperson_roles_view_one(self, coperson_role_id: int) -> dict:
     """
     Retrieve an existing CO Person Role.
 
     :param self:
-    :param copersonrole_id:
+    :param coperson_role_id:
     :return
         {
           "ResponseType":"CoPersonRoles",
@@ -482,7 +482,7 @@ def copersonroles_view_one(self, copersonrole_id: int) -> dict:
         404 CoPersonRole Unknown                                        id not found
         500 Other Error                                                 Unknown error
     """
-    url = self._CO_API_URL + '/co_person_roles/' + str(copersonrole_id) + '.json'
+    url = self._CO_API_URL + '/co_person_roles/' + str(coperson_role_id) + '.json'
     resp = self._s.get(
         url=url
     )

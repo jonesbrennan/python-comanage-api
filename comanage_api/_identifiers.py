@@ -22,7 +22,7 @@ identifiers_view_all() -> dict
 identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict
     Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 identifiers_view_one(identifier_id: int) -> dict
-    Retrieve all existing Identifiers.
+    Retrieve an existing Identifier.
 """
 
 import json
@@ -217,7 +217,7 @@ def identifiers_view_per_entity(self, entity_type: str, entity_id: int) -> dict:
 
 def identifiers_view_one(self, identifier_id: int) -> dict:
     """
-    Retrieve all existing Identifiers.
+    Retrieve an existing Identifier.
 
     :param self:
     :param identifier_id:
