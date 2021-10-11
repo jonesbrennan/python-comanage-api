@@ -6,6 +6,8 @@ from ._copeople import copeople_add, copeople_delete, copeople_edit, copeople_fi
 from ._copersonroles import coperson_roles_add, coperson_roles_delete, coperson_roles_edit, coperson_roles_view_all, \
     coperson_roles_view_per_coperson, coperson_roles_view_per_cou, coperson_roles_view_one
 from ._cous import cous_add, cous_delete, cous_edit, cous_view_all, cous_view_per_co, cous_view_one
+from ._emailaddresses import email_addresses_add, email_addresses_delete, email_addresses_edit, \
+    email_addresses_view_all, email_addresses_view_per_person, email_addresses_view_one
 from ._identifiers import identifiers_add, identifiers_assign, identifiers_delete, identifiers_edit, \
     identifiers_view_all, identifiers_view_per_entity, identifiers_view_one
 from ._names import names_add, names_delete, names_edit, names_view_all, names_view_per_person, names_view_one
@@ -155,6 +157,25 @@ class ComanageApi(object):
 
     def cous_view_one(self, cou_id: int):
         return cous_view_one(self, cou_id=cou_id)
+
+    # EmailAddress API
+    def email_addresses_add(self):
+        return email_addresses_add(self)
+
+    def email_addresses_delete(self):
+        return email_addresses_delete(self)
+
+    def email_addresses_edit(self):
+        return email_addresses_edit(self)
+
+    def email_addresses_view_all(self):
+        return email_addresses_view_all(self)
+
+    def email_addresses_view_per_person(self, person_type: str, person_id: int):
+        return email_addresses_view_per_person(self, person_type=person_type, person_id=person_id)
+
+    def email_addresses_view_one(self, email_address_id: int):
+        return email_addresses_view_one(self, email_address_id=email_address_id)
 
     # Indentifier API
     def identifiers_add(self):

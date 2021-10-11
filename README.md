@@ -13,6 +13,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
     - [CoPerson](#coperson)
     - [CoPersonRole](#copersonrole)
     - [Cou](#cou)
+    - [EmailAddress](#emailaddress)
     - [Identifier](#identifier)
     - [Name](#name)
     - [SshKey](#sshkey)
@@ -191,6 +192,24 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
     - Retrieve an existing Cou.
 
 **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
+
+### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API)
+
+- `email_addresses_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new EmailAddress.
+- `email_addresses_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove an EmailAddress.
+- `email_addresses_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing EmailAddress.
+- `email_addresses_view_all() -> dict`
+    - Retrieve all existing EmailAddresses.
+- `email_addresses_view_per_person(person_type: str, person_id: int) -> dict`
+    - Retrieve EmailAddresses attached to a CO Department, CO Person, or Org Identity.
+- `email_addresses_view_one(email_address_id: int) -> dict`
+    - Retrieve an existing EmailAddress.
 
 ### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 
