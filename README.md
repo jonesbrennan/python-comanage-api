@@ -13,8 +13,10 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
     - [CoPerson](#coperson)
     - [CoPersonRole](#copersonrole)
     - [Cou](#cou)
+    - [EmailAddress](#emailaddress)
     - [Identifier](#identifier)
     - [Name](#name)
+    - [OrgIdentity](#orgidentity)
     - [SshKey](#sshkey)
 - [Usage](#usage)
 - [SSH Key Authenticator Plugin in COmanage](#sshplugin)
@@ -152,19 +154,19 @@ before the OrgIdentity record can be removed.
 
 ### <a name="copersonrole"></a>[CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
 
-- `copersonroles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
+- `coperson_roles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
     - Add a new CO Person Role.
-- `copersonroles_delete(copersonrole_id: int) -> bool`
+- `coperson_roles_delete(coperson_role_id: int) -> bool`
     - Remove a CO Person Role.
-- `copersonroles_edit(copersonrole_id: int, coperson_id: int = None, cou_id: int = None, status: str = None, affiliation: str = None) -> bool`
+- `coperson_roles_edit(coperson_role_id: int, coperson_id: int = None, cou_id: int = None, status: str = None, affiliation: str = None) -> bool`
     - Edit an existing CO Person Role.
-- `copersonroles_view_all() -> dict`
+- `coperson_roles_view_all() -> dict`
     - Retrieve all existing CO Person Roles.
-- `copersonroles_view_per_coperson(coperson_id: int) -> dict`
+- `coperson_roles_view_per_coperson(coperson_id: int) -> dict`
     - Retrieve all existing CO Person Roles for the specified CO Person. Available since Registry v2.0.0.
-- `copersonroles_view_per_cou(cou_id: int) -> dict`
+- `coperson_roles_view_per_cou(cou_id: int) -> dict`
     - Retrieve all existing CO Person Roles for the specified COU.
-- `copersonroles_view_one(copersonrole_id: int) -> dict`
+- `coperson_roles_view_one(coperson_role_id: int) -> dict`
     - Retrieve an existing CO Person Role.
 
 **NOTE**: when provided, valid values for `status` and `affiliation` as follows:
@@ -192,6 +194,30 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 
 **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
 
+### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API)
+
+- `email_addresses_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new EmailAddress.
+- `email_addresses_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove an EmailAddress.
+- `email_addresses_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing EmailAddress.
+- `email_addresses_view_all() -> dict`
+    - Retrieve all existing EmailAddresses.
+- `email_addresses_view_per_person(person_type: str, person_id: int) -> dict`
+    - Retrieve EmailAddresses attached to a CO Department, CO Person, or Org Identity.
+- `email_addresses_view_one(email_address_id: int) -> dict`
+    - Retrieve an existing EmailAddress.
+
+**NOTE**: when provided, valid values for `person_type` as follows:
+
+```python
+EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentityid']
+```
+
 ### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 
 - `identifiers_add() -> dict`
@@ -211,7 +237,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 - `identifiers_view_per_entity(entity_type: str, entity_id: int) -> dict`
     - Retrieve Identifiers attached to a CO Department, Co Group, CO Person, or Org Identity.
 - `identifiers_view_one(identifier_id: int) -> dict`
-    - Retrieve all existing Identifiers.   
+    - Retrieve an existing Identifier.   
 
 **NOTE**: when provided, valid values for `entity_type` as follows:
 
@@ -243,6 +269,30 @@ ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgi
 PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 ```
 
+### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API)
+
+- `org_identities_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new Organizational Identity. A person must have an `OrgIdentity` before they can be added to a CO.
+- `org_identities_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove an Organizational Identity.
+    - The person must be removed from any COs (`CoPerson`) before the OrgIdentity record can be removed.
+    - This method will also delete related data, such as `Addresses`, `EmailAddresses`, and `TelephoneNumbers`.
+- `org_identities_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing Organizational Identity.
+- `org_identities_view_all() -> dict`
+    - Retrieve all existing Organizational Identities.
+- `org_identities_view_per_co(person_type: str, person_id: int) -> dict`
+    - Retrieve all existing Organizational Identities for the specified CO.
+- `org_identities_view_per_identifier(identifier_id: int) -> dict`
+    - Retrieve all existing Organizational Identities attached to the specified identifier.
+    - Note the specified identifier must be attached to an Org Identity, not a CO Person.
+- `org_identities_view_one(org_identity_id: int) -> dict`
+    - Retrieve an existing Organizational Identity.
+
+
 ### <a name="sshkey"></a>[SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
 
 - `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str = None, ssh_key_authenticator_id: int = None) -> dict`
@@ -264,7 +314,7 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 
 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
 ```
- 
+
 ## <a name="usage"></a>Usage
 
 Set up a virtual environment (`virtualenv` is used in these examples)
