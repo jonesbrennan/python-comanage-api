@@ -11,6 +11,8 @@ from ._emailaddresses import email_addresses_add, email_addresses_delete, email_
 from ._identifiers import identifiers_add, identifiers_assign, identifiers_delete, identifiers_edit, \
     identifiers_view_all, identifiers_view_per_entity, identifiers_view_one
 from ._names import names_add, names_delete, names_edit, names_view_all, names_view_per_person, names_view_one
+from ._orgidentities import org_identities_add, org_identities_delete, org_identities_edit, org_identities_view_all, \
+    org_identities_view_per_co, org_identities_view_per_identifier, org_identities_view_one
 from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_view_all, ssh_keys_view_per_coperson, \
     ssh_keys_view_one
 
@@ -85,6 +87,7 @@ class ComanageApi(object):
         self._adapter.register_uri('GET', self._MOCK_501_URL, reason='Not Implemented', status_code=501)
         # create comanage_api session
         self._s = Session()
+        self._s.headers = {'Content-Type': 'application/json'}
         self._s.auth = (self._CO_API_USER, self._CO_API_PASS)
 
     # COperson API
@@ -217,6 +220,28 @@ class ComanageApi(object):
 
     def names_view_one(self, name_id: int):
         return names_view_one(self, name_id=name_id)
+
+    # OrgIdentity API
+    def org_identities_add(self):
+        return org_identities_add(self)
+
+    def org_identities_delete(self):
+        return org_identities_delete(self)
+
+    def org_identities_edit(self):
+        return org_identities_edit(self)
+
+    def org_identities_view_all(self):
+        return org_identities_view_all(self)
+
+    def org_identities_view_per_co(self):
+        return org_identities_view_per_co(self)
+
+    def org_identities_view_per_identifier(self, identifier_id: int):
+        return org_identities_view_per_identifier(self, identifier_id=identifier_id)
+
+    def org_identities_view_one(self, org_identity_id: int):
+        return org_identities_view_one(self, org_identity_id=org_identity_id)
 
     # SshKey API
     def ssh_keys_add(self, coperson_id: int, ssh_key: str, key_type: str, comment: str = None,

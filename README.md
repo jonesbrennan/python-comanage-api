@@ -16,6 +16,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
     - [EmailAddress](#emailaddress)
     - [Identifier](#identifier)
     - [Name](#name)
+    - [OrgIdentity](#orgidentity)
     - [SshKey](#sshkey)
 - [Usage](#usage)
 - [SSH Key Authenticator Plugin in COmanage](#sshplugin)
@@ -268,6 +269,30 @@ ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgi
 PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 ```
 
+### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API)
+
+- `org_identities_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new Organizational Identity. A person must have an `OrgIdentity` before they can be added to a CO.
+- `org_identities_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove an Organizational Identity.
+    - The person must be removed from any COs (`CoPerson`) before the OrgIdentity record can be removed.
+    - This method will also delete related data, such as `Addresses`, `EmailAddresses`, and `TelephoneNumbers`.
+- `org_identities_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing Organizational Identity.
+- `org_identities_view_all() -> dict`
+    - Retrieve all existing Organizational Identities.
+- `org_identities_view_per_co(person_type: str, person_id: int) -> dict`
+    - Retrieve all existing Organizational Identities for the specified CO.
+- `org_identities_view_per_identifier(identifier_id: int) -> dict`
+    - Retrieve all existing Organizational Identities attached to the specified identifier.
+    - Note the specified identifier must be attached to an Org Identity, not a CO Person.
+- `org_identities_view_one(org_identity_id: int) -> dict`
+    - Retrieve an existing Organizational Identity.
+
+
 ### <a name="sshkey"></a>[SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
 
 - `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str = None, ssh_key_authenticator_id: int = None) -> dict`
@@ -289,7 +314,7 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 SSH_KEY_OPTIONS = ['ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 
 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'ssh-rsa', 'ssh-rsa1']
 ```
- 
+
 ## <a name="usage"></a>Usage
 
 Set up a virtual environment (`virtualenv` is used in these examples)

@@ -2,117 +2,18 @@
 
 Examples demonstrating basic usage for each wrapped endpoint. Some of the values used herein are specific to the ImPACT project registry and thus would not work for other registries, but the concept would be the same for any registry.
 
-## COU API
+## Table of Contents
 
-Example: `cous_example.py` 
+- [CoPerson API](#coperson) example output
+- [CoPersonRole API](#copersonrole) example output
+- [Cou API](#cou) example output
+- [EmailAddress API](#emailaddress) example output
+- [Identifier API](#identifier) example output
+- [Name API](#name) example output
+- [OrgIdentity API](#orgidentity) example output
+- [SshKey API](#sshkey) example output
 
-```console
-$ python examples/cous_example.py
-### cous_add
-{
-    "ResponseType": "NewObject",
-    "Version": "1.0",
-    "ObjectType": "Cou",
-    "Id": "105"
-}
-### cous_view_all
-{
-    "ResponseType": "Cous",
-    "Version": "1.0",
-    "Cous": [
-        {
-            "Version": "1.0",
-            "Id": "38",
-            "CoId": "3",
-            "Name": "enrollment-approval",
-            "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
-            "Lft": "66",
-            "Rght": "67",
-            "Created": "2021-09-10 14:33:11",
-            "Modified": "2021-09-10 14:33:11",
-            "Revision": "0",
-            "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
-        },
-        {
-            "Version": "1.0",
-            "Id": "39",
-            "CoId": "3",
-            "Name": "impact-users",
-            "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
-            "Lft": "68",
-            "Rght": "69",
-            "Created": "2021-09-10 14:44:09",
-            "Modified": "2021-09-10 14:44:09",
-            "Revision": "0",
-            "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
-        },
-        {
-            "Version": "1.0",
-            "Id": "105",
-            "CoId": "3",
-            "Name": "cou test",
-            "Description": "cou test description",
-            "Lft": "96",
-            "Rght": "97",
-            "Created": "2021-10-01 20:45:33",
-            "Modified": "2021-10-01 20:45:33",
-            "Revision": "0",
-            "Deleted": false,
-            "ActorIdentifier": "co_3.development"
-        }
-    ]
-}
-### cous_edit
-True
-### cous_view_one
-{
-    "ResponseType": "Cous",
-    "Version": "1.0",
-    "Cous": [
-        {
-            "Version": "1.0",
-            "Id": "105",
-            "CoId": "3",
-            "Name": "cou test - edited",
-            "Description": "cou test description - edited",
-            "Lft": "96",
-            "Rght": "97",
-            "Created": "2021-10-01 20:45:33",
-            "Modified": "2021-10-01 20:45:34",
-            "Revision": "1",
-            "Deleted": false,
-            "ActorIdentifier": "co_3.development"
-        }
-    ]
-}
-### cous_delete
-True
-### cous_view_one (previously deleted cou)
-{
-    "ResponseType": "Cous",
-    "Version": "1.0",
-    "Cous": [
-        {
-            "Version": "1.0",
-            "Id": "105",
-            "CoId": "3",
-            "Name": "cou test - edited",
-            "Description": "cou test description - edited",
-            "Lft": "96",
-            "Rght": "97",
-            "Created": "2021-10-01 20:45:33",
-            "Modified": "2021-10-01 20:45:34",
-            "Revision": "1",
-            "Deleted": true,
-            "ActorIdentifier": "co_3.development"
-        }
-    ]
-}
-```
-
-## CoPerson API
+## <a name="coperson"></a>CoPerson API
 
 Example: `copeople_example.py`
 
@@ -251,7 +152,7 @@ $ python examples/copeople_example.py
 }
 ```
 
-## CoPersonRole API
+## <a name="copersonrole"></a>CoPersonRole API
 
 Example: `coperson_roles_example.py`
 
@@ -457,7 +358,117 @@ True
 }
 ```
 
-## EmailAddress API
+## <a name="cou"></a>COU API
+
+Example: `cous_example.py` 
+
+```console
+$ python examples/cous_example.py
+### cous_add
+{
+    "ResponseType": "NewObject",
+    "Version": "1.0",
+    "ObjectType": "Cou",
+    "Id": "105"
+}
+### cous_view_all
+{
+    "ResponseType": "Cous",
+    "Version": "1.0",
+    "Cous": [
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "CoId": "3",
+            "Name": "enrollment-approval",
+            "Description": "Enrollment Approval Personnel - can approve or deny new registry members",
+            "Lft": "66",
+            "Rght": "67",
+            "Created": "2021-09-10 14:33:11",
+            "Modified": "2021-09-10 14:33:11",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        },
+        {
+            "Version": "1.0",
+            "Id": "39",
+            "CoId": "3",
+            "Name": "impact-users",
+            "Description": "ImPACT Users - Registering with the ImPACT site will add new user's to this group",
+            "Lft": "68",
+            "Rght": "69",
+            "Created": "2021-09-10 14:44:09",
+            "Modified": "2021-09-10 14:44:09",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        },
+        {
+            "Version": "1.0",
+            "Id": "105",
+            "CoId": "3",
+            "Name": "cou test",
+            "Description": "cou test description",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:33",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### cous_edit
+True
+### cous_view_one
+{
+    "ResponseType": "Cous",
+    "Version": "1.0",
+    "Cous": [
+        {
+            "Version": "1.0",
+            "Id": "105",
+            "CoId": "3",
+            "Name": "cou test - edited",
+            "Description": "cou test description - edited",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:34",
+            "Revision": "1",
+            "Deleted": false,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+### cous_delete
+True
+### cous_view_one (previously deleted cou)
+{
+    "ResponseType": "Cous",
+    "Version": "1.0",
+    "Cous": [
+        {
+            "Version": "1.0",
+            "Id": "105",
+            "CoId": "3",
+            "Name": "cou test - edited",
+            "Description": "cou test description - edited",
+            "Lft": "96",
+            "Rght": "97",
+            "Created": "2021-10-01 20:45:33",
+            "Modified": "2021-10-01 20:45:34",
+            "Revision": "1",
+            "Deleted": true,
+            "ActorIdentifier": "co_3.development"
+        }
+    ]
+}
+```
+
+## <a name="emailaddress"></a>EmailAddress API
 
 Example: `email_addresses_example.py`
 
@@ -541,7 +552,7 @@ $ python examples/email_addresses_example.py
 }
 ```
 
-## Identifiers API
+## <a name="identifier"></a>Identifier API
 
 Example: `identifiers_example.py`
 
@@ -646,7 +657,7 @@ $ python examples/identifiers_example.py
 }
 ```
 
-## Names API
+## <a name="name"></a>Name API
 
 Example: `names_example.py`
 
@@ -752,7 +763,138 @@ $ python examples/names_example.py
 }
 ```
 
-## SshKey API
+## <a name="orgidentity"></a>OrgIdentity API
+
+Example: `org_identities_example.py`
+
+```console
+$ python examples/org_identities_example.py
+### org_identities_add
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### org_identities_delete
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### org_identities_edit
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### org_identities_view_all
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/org_identities.json
+### org_identities_view_per_co
+{
+    "ResponseType": "OrgIdentities",
+    "Version": "1.0",
+    "OrgIdentities": [
+        {
+            "Version": "1.0",
+            "Id": "12",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "National Center for Supercomputing Applications",
+            "CoId": "3",
+            "Created": "2018-11-05 20:40:19",
+            "Modified": "2018-11-05 20:40:19",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverT/users/37233"
+        },
+        {
+            "Version": "1.0",
+            "Id": "13",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "University of North Carolina at Chapel Hill",
+            "CoId": "3",
+            "Created": "2018-11-05 20:48:47",
+            "Modified": "2018-11-05 20:48:47",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverT/users/241998"
+        },
+        {
+            "Version": "1.0",
+            "Id": "321",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "University of North Carolina at Chapel Hill",
+            "CoId": "3",
+            "Created": "2021-03-17 16:02:48",
+            "Modified": "2021-03-17 16:02:48",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        },
+        {
+            "Version": "1.0",
+            "Id": "418",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "University of North Carolina at Chapel Hill",
+            "CoId": "3",
+            "Created": "2021-09-10 18:32:22",
+            "Modified": "2021-09-10 18:32:22",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/227641"
+        },
+        {
+            "Version": "1.0",
+            "Id": "430",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "University of Wisconsin-Madison",
+            "CoId": "3",
+            "Created": "2021-09-14 11:06:03",
+            "Modified": "2021-09-14 11:06:03",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverT/users/2604273"
+        },
+        {
+            "Version": "1.0",
+            "Id": "435",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "Google",
+            "CoId": "3",
+            "Created": "2021-09-15 12:34:37",
+            "Modified": "2021-09-15 12:34:37",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/226066"
+        }
+    ]
+}
+### org_identities_view_per_identifier
+{
+    "ResponseType": "OrgIdentities",
+    "Version": "1.0",
+    "OrgIdentities": []
+}
+### org_identities_view_one
+{
+    "ResponseType": "OrgIdentities",
+    "Version": "1.0",
+    "OrgIdentities": [
+        {
+            "Version": "1.0",
+            "Id": "12",
+            "Status": "SY",
+            "Affiliation": "member",
+            "O": "National Center for Supercomputing Applications",
+            "CoId": "3",
+            "Created": "2018-11-05 20:40:19",
+            "Modified": "2018-11-05 20:40:19",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverT/users/37233"
+        }
+    ]
+}
+```
+
+## <a name="sshkey"></a>SshKey API
 
 **NOTE**: waiting to resolve whether `add` and `edit` functions should be available to priviledged API users (currenlty they are not)
 

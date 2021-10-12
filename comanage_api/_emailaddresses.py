@@ -89,14 +89,15 @@ def email_addresses_view_all(self) -> dict:
     :param self:
     :return
         {
-            "RequestType":"EmailAddresses",
+            "ResponseType":"EmailAddresses",
             "Version":"1.0",
             "EmailAddresses":
             [
                 {
                     "Version":"1.0",
+                    "Id":"<ID>",
                     "Mail":"<Mail>",
-                    "Type":"<Type>",
+                    "Type":<"Type">,
                     "Description":"<Description>",
                     "Verified":true|false,
                     "Person":
@@ -104,7 +105,10 @@ def email_addresses_view_all(self) -> dict:
                         "Type":("CO"|"Dept"|"Org"|"Organization"),
                         "Id":"<ID>"
                     }
-                }
+                    "Created":"<CreateTime>",
+                    "Modified":"<ModTime>"
+                },
+                {...}
             ]
         }:
 
@@ -132,16 +136,16 @@ def email_addresses_view_per_person(self, person_type: str, person_id: int) -> d
     :param person_type:
     :param person_id:
     :return
-        :return
         {
-            "RequestType":"EmailAddresses",
+            "ResponseType":"EmailAddresses",
             "Version":"1.0",
             "EmailAddresses":
             [
                 {
                     "Version":"1.0",
+                    "Id":"<ID>",
                     "Mail":"<Mail>",
-                    "Type":"<Type>",
+                    "Type":<"Type">,
                     "Description":"<Description>",
                     "Verified":true|false,
                     "Person":
@@ -149,6 +153,8 @@ def email_addresses_view_per_person(self, person_type: str, person_id: int) -> d
                         "Type":("CO"|"Dept"|"Org"|"Organization"),
                         "Id":"<ID>"
                     }
+                    "Created":"<CreateTime>",
+                    "Modified":"<ModTime>"
                 },
                 {...}
             ]
@@ -198,14 +204,15 @@ def email_addresses_view_one(self, email_address_id: int) -> dict:
     :param emailaddress_id:
     :return
         {
-            "RequestType":"EmailAddresses",
+            "ResponseType":"EmailAddresses",
             "Version":"1.0",
             "EmailAddresses":
             [
                 {
                     "Version":"1.0",
+                    "Id":"<ID>",
                     "Mail":"<Mail>",
-                    "Type":"<Type>",
+                    "Type":<"Type">,
                     "Description":"<Description>",
                     "Verified":true|false,
                     "Person":
@@ -213,6 +220,8 @@ def email_addresses_view_one(self, email_address_id: int) -> dict:
                         "Type":("CO"|"Dept"|"Org"|"Organization"),
                         "Id":"<ID>"
                     }
+                    "Created":"<CreateTime>",
+                    "Modified":"<ModTime>"
                 }
             ]
         }:
