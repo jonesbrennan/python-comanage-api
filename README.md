@@ -10,6 +10,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
 
 - [TL;DR](#tldr)
 - [API endpoints](#endpoints)
+    - [CoOrgIdentityLink](#coorgidentitylinks)
     - [CoPerson](#coperson)
     - [CoPersonRole](#copersonrole)
     - [Cou](#cou)
@@ -118,6 +119,32 @@ Return types based on implementation status of wrapped API endpoints
 - Not Implemented (`### NOT IMPLEMENTED ###`): 
     - `-> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `-> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
+
+### <a name="coorgidentitylink"></a>[CoOrgIdentityLink API](https://spaces.at.internet2.edu/display/COmanage/CoOrgIdentityLink+API) (COmanage v4.0.0)
+
+- `coorg_identity_links_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new CO Org Identity Link.
+    - A person must have an Org Identity and a CO Person record before they can be linked.
+    - Note that invitations are a separate operation.
+- `coorg_identity_links_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove a CO Org Identity Link.
+- `coorg_identity_links_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing CO Identity Link.
+- `coorg_identity_links_view_all() -> dict`
+    - Retrieve all existing CO Identity Links.
+- `coorg_identity_links_view_by_identity(identifier_id: int) -> dict`
+    - Retrieve all existing CO Identity Links for a CO Person or an Org Identity.
+- `coorg_identity_links_view_one(org_identity_id: int) -> dict`
+    - Retrieve an existing CO Identity Link.
+
+**NOTE**: when provided, valid values for `identity_type` as follows:
+
+```python
+IDENTITY_OPTIONS = ['copersonid', 'orgidentityid']
+```
 
 ### <a name="coperson"></a>[CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
 

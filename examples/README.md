@@ -5,6 +5,7 @@ Examples demonstrating basic usage for each wrapped endpoint. Some of the values
 ## Table of Contents
 
 - [Configuration](#config) `__init__.py` used by all examples
+- [CoOrgIdentityLink API](#coorgidentitylink) example output
 - [CoPerson API](#coperson) example output
 - [CoPersonRole API](#copersonrole) example output
 - [Cou API](#cou) example output
@@ -56,6 +57,32 @@ api = ComanageApi(
     co_api_org_name=COMANAGE_API_CO_NAME,
     co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
 )
+```
+
+## <a name="coorgidentitylink"></a>CoOrgIdentityLink API
+
+Example: `co_org_identity_links_example.py`
+
+```console
+$ python examples/co_org_identity_links_example.py
+### coorg_identity_links_add
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_delete
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_edit
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_view_all
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/co_org_identity_links.json
+### coorg_identity_links_view_by_identity
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/co_org_identity_links.json?copersonid=1603
+### coorg_identity_links_view_one
+[ERROR] Exception caught
+-->  NameError - name 'per_identity_coorg_identity_links' is not defined
 ```
 
 ## <a name="coperson"></a>CoPerson API

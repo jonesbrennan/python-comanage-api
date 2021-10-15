@@ -1,6 +1,8 @@
 import requests_mock
 from requests import Session
 
+from ._coorgidentitylinks import coorg_identity_links_add, coorg_identity_links_delete, coorg_identity_links_edit, \
+    coorg_identity_links_view_all, coorg_identity_links_view_by_identity, coorg_identity_links_view_one
 from ._copeople import copeople_add, copeople_delete, copeople_edit, copeople_find, copeople_match, \
     copeople_view_all, copeople_view_per_co, copeople_view_per_identifier, copeople_view_one
 from ._copersonroles import coperson_roles_add, coperson_roles_delete, coperson_roles_edit, coperson_roles_view_all, \
@@ -17,7 +19,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.4"
+__VERSION__ = "0.1.5"
 
 
 class ComanageApi(object):
@@ -89,6 +91,25 @@ class ComanageApi(object):
         self._s = Session()
         self._s.headers = {'Content-Type': 'application/json'}
         self._s.auth = (self._CO_API_USER, self._CO_API_PASS)
+
+    # CoOrgIdentityLink API
+    def coorg_identity_links_add(self):
+        return coorg_identity_links_add(self)
+
+    def coorg_identity_links_delete(self):
+        return coorg_identity_links_delete(self)
+
+    def coorg_identity_links_edit(self):
+        return coorg_identity_links_edit(self)
+
+    def coorg_identity_links_view_all(self):
+        return coorg_identity_links_view_all(self)
+
+    def coorg_identity_links_view_by_identity(self, identity_type: str, identity_id: int):
+        return coorg_identity_links_view_by_identity(self, identity_type=identity_type, identity_id=identity_id)
+
+    def coorg_identity_links_view_one(self, coorg_identity_link_id: int):
+        return coorg_identity_links_view_one(self, coorg_identity_link_id=coorg_identity_link_id)
 
     # COperson API
     def copeople_add(self):
