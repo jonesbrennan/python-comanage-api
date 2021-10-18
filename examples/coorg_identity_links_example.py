@@ -10,8 +10,8 @@ sys.path.append(
 from examples import *
 
 # must be set ahead of time and be valid within the CO
-IDENTITY_TYPE = 'copersonid'
-IDENTITY_ID = 1603
+IDENTITY_TYPE = 'orgidentityid'
+IDENTITY_ID = 190
 
 # coorg_identity_links_add, coorg_identity_links_delete, coorg_identity_links_edit, \
 #     coorg_identity_links_view_all, coorg_identity_links_view_by_identity, coorg_identity_links_view_one
