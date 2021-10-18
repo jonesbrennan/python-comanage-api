@@ -71,7 +71,7 @@ except (TypeError, HTTPError) as err:
 # org_identities_view_one(org_identity_id: int) -> dict
 print('### org_identities_view_one')
 try:
-    # get first EmailAddresses['Id'] from per_person_email_addresses response
+    # get first OrgIdentities['Id'] from per_identifier_org_identities response
     org_identity_id = int(per_co_org_identities['OrgIdentities'][0]['Id'])
     one_email_address = api.org_identities_view_one(org_identity_id=org_identity_id)
     print(json.dumps(one_email_address, indent=4))

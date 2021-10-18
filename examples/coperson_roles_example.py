@@ -10,8 +10,8 @@ sys.path.append(
 from examples import *
 
 # must be set ahead of time and be valid within the CO
-CO_PERSON_ID = 1603
-COU_ID = 39
+CO_PERSON_ID = 163
+COU_ID = 28
 
 # # coperson_roles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict
 print('### coperson_roles_add')

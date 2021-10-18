@@ -10,8 +10,8 @@ sys.path.append(
 from examples import *
 
 # must be set ahead of time and be valid within the CO
-CO_PERSON_ID = 1603
-PREV_DELETED_KEY_ID = 38
+CO_PERSON_ID = 163
+PREV_DELETED_KEY_ID = 35
 EX_SSH_KEY = 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6' \
              'IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJd' \
              'NUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYo' \
@@ -64,7 +64,7 @@ print('### ssh_keys_view_one')
 try:
     # get first SshKeys['Id'] from person_keys response if it exists
     if person_keys.get('SshKeys'):
-        ssh_key_id = int(json.loads(person_keys).get('SshKeys')[0].get('Id'))
+        ssh_key_id = int(person_keys.get('SshKeys')[0].get('Id'))
         one_key = api.ssh_keys_view_one(ssh_key_id=ssh_key_id)
         print(json.dumps(one_key, indent=4))
     else:

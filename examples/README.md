@@ -2,9 +2,12 @@
 
 Examples demonstrating basic usage for each wrapped endpoint. Some of the values used herein are specific to the ImPACT project registry and thus would not work for other registries, but the concept would be the same for any registry.
 
+- Example code tested against COmanage v4.0.0
+
 ## Table of Contents
 
 - [Configuration](#config) `__init__.py` used by all examples
+- [CoOrgIdentityLink API](#coorgidentitylink) example output
 - [CoPerson API](#coperson) example output
 - [CoPersonRole API](#copersonrole) example output
 - [Cou API](#cou) example output
@@ -56,6 +59,62 @@ api = ComanageApi(
     co_api_org_name=COMANAGE_API_CO_NAME,
     co_ssh_key_authenticator_id=COMANAGE_API_SSH_KEY_AUTHENTICATOR_ID
 )
+```
+
+## <a name="coorgidentitylink"></a>CoOrgIdentityLink API
+
+Example: `co_org_identity_links_example.py`
+
+```console
+$ python examples/coorg_identity_links_example.py
+### coorg_identity_links_add
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_delete
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_edit
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### coorg_identity_links_view_all
+[ERROR] Exception caught
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry-test.cilogon.org/registry/co_org_identity_links.json
+### coorg_identity_links_view_by_identity
+{
+    "ResponseType": "CoOrgIdentityLinks",
+    "Version": "1.0",
+    "CoOrgIdentityLinks": [
+        {
+            "Version": "1.0",
+            "Id": "44",
+            "CoPersonId": "163",
+            "OrgIdentityId": "190",
+            "Created": "2018-01-24 19:08:47",
+            "Modified": "2018-01-24 19:08:47",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        }
+    ]
+}
+### coorg_identity_links_view_one
+{
+    "ResponseType": "CoOrgIdentityLinks",
+    "Version": "1.0",
+    "CoOrgIdentityLinks": [
+        {
+            "Version": "1.0",
+            "Id": "44",
+            "CoPersonId": "163",
+            "OrgIdentityId": "190",
+            "Created": "2018-01-24 19:08:47",
+            "Modified": "2018-01-24 19:08:47",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "http://cilogon.org/serverA/users/242181"
+        }
+    ]
+}
 ```
 
 ## <a name="coperson"></a>CoPerson API
@@ -941,18 +1000,21 @@ $ python examples/org_identities_example.py
 
 ## <a name="sshkey"></a>SshKey API
 
-**NOTE**: waiting to resolve whether `add` and `edit` functions should be available to priviledged API users (currenlty they are not)
 
 Example: `ssh_keys_example.py `
 
 ```console
 $ python examples/ssh_keys_example.py
 ### ssh_keys_add
-[ERROR] Exception caught
--->  HTTPError - 500 Server Error: Internal Server Error for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys/add
+{
+    "ResponseType": "NewObject",
+    "Version": "1.0",
+    "ObjectType": "SshKey",
+    "Id": "38"
+}
 ### ssh_keys_view_all
 [ERROR] Exception caught
--->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys.json
+-->  HTTPError - 401 Client Error: Unauthorized for url: https://registry-test.cilogon.org/registry/ssh_key_authenticator/ssh_keys.json
 ### ssh_keys_view_per_coperson
 {
     "ResponseType": "SshKeys",
@@ -960,20 +1022,37 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "39",
+            "Id": "36",
             "Person": {
                 "Type": "CO",
-                "Id": "1603"
+                "Id": "163"
             },
-            "Comment": "michael.j.stealey@gmail.com",
+            "Comment": "SshKey API test",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-27 01:11:57",
-            "Modified": "2021-09-27 01:11:57",
+            "Created": "2021-10-18 15:04:22",
+            "Modified": "2021-10-18 15:04:22",
             "Revision": "0",
             "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
-            "SshKeyAuthenticatorId": "3"
+            "ActorIdentifier": "co_6.impact-development",
+            "SshKeyAuthenticatorId": "7"
+        },
+        {
+            "Version": "1.0",
+            "Id": "38",
+            "Person": {
+                "Type": "CO",
+                "Id": "163"
+            },
+            "Comment": "SshKey API test",
+            "Type": "ssh-rsa",
+            "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
+            "Created": "2021-10-18 15:07:07",
+            "Modified": "2021-10-18 15:07:07",
+            "Revision": "0",
+            "Deleted": false,
+            "ActorIdentifier": "co_6.impact-development",
+            "SshKeyAuthenticatorId": "7"
         }
     ]
 }
@@ -984,26 +1063,25 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "39",
+            "Id": "36",
             "Person": {
                 "Type": "CO",
-                "Id": "1603"
+                "Id": "163"
             },
-            "Comment": "michael.j.stealey@gmail.com",
+            "Comment": "SshKey API test",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-27 01:11:57",
-            "Modified": "2021-09-27 01:11:57",
+            "Created": "2021-10-18 15:04:22",
+            "Modified": "2021-10-18 15:04:22",
             "Revision": "0",
             "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
-            "SshKeyAuthenticatorId": "3"
+            "ActorIdentifier": "co_6.impact-development",
+            "SshKeyAuthenticatorId": "7"
         }
     ]
 }
 ### ssh_keys_edit
-[ERROR] Exception caught
--->  HTTPError - 401 Client Error: Unauthorized for url: https://registry.cilogon.org/registry/ssh_key_authenticator/ssh_keys/39.json
+True
 ### ssh_keys_view_one
 {
     "ResponseType": "SshKeys",
@@ -1011,20 +1089,20 @@ $ python examples/ssh_keys_example.py
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "39",
+            "Id": "36",
             "Person": {
                 "Type": "CO",
-                "Id": "1603"
+                "Id": "163"
             },
-            "Comment": "michael.j.stealey@gmail.com",
+            "Comment": "NEW COMMENT",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-27 01:11:57",
-            "Modified": "2021-09-27 01:11:57",
-            "Revision": "0",
+            "Created": "2021-10-18 15:04:22",
+            "Modified": "2021-10-18 15:07:08",
+            "Revision": "1",
             "Deleted": false,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
-            "SshKeyAuthenticatorId": "3"
+            "ActorIdentifier": "co_6.impact-development",
+            "SshKeyAuthenticatorId": "7"
         }
     ]
 }
@@ -1037,20 +1115,20 @@ True
     "SshKeys": [
         {
             "Version": "1.0",
-            "Id": "38",
+            "Id": "35",
             "Person": {
                 "Type": "CO",
-                "Id": "1603"
+                "Id": "163"
             },
-            "Comment": "michael.j.stealey@gmail.com",
+            "Comment": "NEW COMMENT",
             "Type": "ssh-rsa",
             "Skey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCqlE3to9rJzLb5pUldEEeFi9gYlrIQ7WGFVvx4azWY95+nN8DkOukaK6IMnXP8t0icCWKN4ib6Q5Avea99HD8LQtsmxQjDIgwB/McX3cjXzwB6y8InEBB213bD6koHnsf/fELTTFt6MkJdNUbqOGFvHSUnN6BPUGQ42jXqPw6wVXzOR5nUX9bLc4uPS8moMVXWWK+lG7odGPXHju8AP/6gdjuRaFJnYE3OYoLNbEDnn6cneTtnz5AuQW0KBocc56MyOelNSzxoz/XcNvZH/Hp7wPAJNZhmN6/futZBjG0AzIBHs/J9JXszxq4FO3M4oqg0G+UgFQccXXi1afkJxu7z",
-            "Created": "2021-09-25 16:41:57",
-            "Modified": "2021-09-26 20:42:17",
-            "Revision": "0",
+            "Created": "2021-10-18 15:00:08",
+            "Modified": "2021-10-18 15:04:24",
+            "Revision": "1",
             "Deleted": true,
-            "ActorIdentifier": "http://cilogon.org/serverA/users/242181",
-            "SshKeyAuthenticatorId": "3"
+            "ActorIdentifier": "co_6.impact-development",
+            "SshKeyAuthenticatorId": "7"
         }
     ]
 }

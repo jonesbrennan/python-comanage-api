@@ -10,6 +10,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
 
 - [TL;DR](#tldr)
 - [API endpoints](#endpoints)
+    - [CoOrgIdentityLink](#coorgidentitylinks)
     - [CoPerson](#coperson)
     - [CoPersonRole](#copersonrole)
     - [Cou](#cou)
@@ -119,7 +120,33 @@ Return types based on implementation status of wrapped API endpoints
     - `-> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `-> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
-### <a name="coperson"></a>[CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
+### <a name="coorgidentitylink"></a>[CoOrgIdentityLink API](https://spaces.at.internet2.edu/display/COmanage/CoOrgIdentityLink+API) (COmanage v4.0.0+)
+
+- `coorg_identity_links_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new CO Org Identity Link.
+    - A person must have an Org Identity and a CO Person record before they can be linked.
+    - Note that invitations are a separate operation.
+- `coorg_identity_links_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove a CO Org Identity Link.
+- `coorg_identity_links_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing CO Identity Link.
+- `coorg_identity_links_view_all() -> dict`
+    - Retrieve all existing CO Identity Links.
+- `coorg_identity_links_view_by_identity(identifier_id: int) -> dict`
+    - Retrieve all existing CO Identity Links for a CO Person or an Org Identity.
+- `coorg_identity_links_view_one(org_identity_id: int) -> dict`
+    - Retrieve an existing CO Identity Link.
+
+**NOTE**: when provided, valid values for `identity_type` as follows:
+
+```python
+IDENTITY_OPTIONS = ['copersonid', 'orgidentityid']
+```
+
+### <a name="coperson"></a>[CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API) (COmanage v3.3.0+)
 
 - `copeople_add() -> dict`
     - `### NOT IMPLEMENTED ###`
@@ -152,7 +179,7 @@ before the OrgIdentity record can be removed.
 - `copeople_view_one(coperson_id: int) -> dict`
     - Retrieve an existing CO Person.
 
-### <a name="copersonrole"></a>[CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
+### <a name="copersonrole"></a>[CoPersonRole API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API) (COmanage v3.3.0+)
 
 - `coperson_roles_add(coperson_id: int, cou_id: int, status: str = None, affiliation: str = None) -> dict`
     - Add a new CO Person Role.
@@ -177,7 +204,7 @@ STATUS_OPTIONS = ['Active', 'Approved', 'Confirmed', 'Declined', 'Deleted', 'Den
 AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'staff', 'student']
 ```
 
-### <a name="cou"></a>[COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
+### <a name="cou"></a>[COU API](https://spaces.at.internet2.edu/display/COmanage/COU+API) (COmanage v3.3.0+)
 
 - `cous_add(name: str, description: str, parent_id: int = None) -> dict`
     - Add a new Cou.
@@ -194,7 +221,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 
 **NOTE**: `cous_edit` has a special case where setting `parent_id=0` will reset the value of the `parent_id` of the COU to be None (have no parent)
 
-### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API)
+### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API) (COmanage v3.3.0+)
 
 - `email_addresses_add() -> dict`
     - `### NOT IMPLEMENTED ###`
@@ -218,7 +245,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentityid']
 ```
 
-### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
+### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API) (COmanage v3.3.0+)
 
 - `identifiers_add() -> dict`
     - `### NOT IMPLEMENTED ###`
@@ -245,7 +272,7 @@ EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentity
 ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgidentityid']
 ```   
 
-### <a name="name"></a>[Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
+### <a name="name"></a>[Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API) (COmanage v3.3.0+)
 
 - `names_add() -> dict`
     - `### NOT IMPLEMENTED ###`
@@ -269,7 +296,7 @@ ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgi
 PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 ```
 
-### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API)
+### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API) (COmanage v3.3.0+)
 
 - `org_identities_add() -> dict`
     - `### NOT IMPLEMENTED ###`
@@ -293,7 +320,9 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
     - Retrieve an existing Organizational Identity.
 
 
-### <a name="sshkey"></a>[SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.)
+### <a name="sshkey"></a>[SshKey API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API) (COmanage v4.0.0+)
+
+**REQUIRES**: The [SSH Key Authenticator plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin) which manages SSH Public Keys for CO People.
 
 - `ssh_keys_add(coperson_id: int, ssh_key: str, key_type: str, comment: str = None, ssh_key_authenticator_id: int = None) -> dict`
     - Add a new SSH Key.
@@ -420,11 +449,14 @@ Pressing the "Edit" option will display the fields for the Authenticator along w
 ## <a name="reference"></a>References
 
 - COmanage REST API v1: [https://spaces.at.internet2.edu/display/COmanage/REST+API+v1](https://spaces.at.internet2.edu/display/COmanage/REST+API+v1)
+- CoOrgIdentityLink API: [https://spaces.at.internet2.edu/display/COmanage/CoOrgIdentityLink+API](https://spaces.at.internet2.edu/display/COmanage/CoOrgIdentityLink+API)
 - COU API: [https://spaces.at.internet2.edu/display/COmanage/COU+API](https://spaces.at.internet2.edu/display/COmanage/COU+API)
 - CoPerson API: [https://spaces.at.internet2.edu/display/COmanage/CoPerson+API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API)
 - CoPersonRole API: [https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API](https://spaces.at.internet2.edu/display/COmanage/CoPersonRole+API)
+- EmailAddress API: [https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API)
 - Identifier API: [https://spaces.at.internet2.edu/display/COmanage/Identifier+API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API)
 - Name API: [https://spaces.at.internet2.edu/display/COmanage/Name+API](https://spaces.at.internet2.edu/display/COmanage/Name+API)
+- OrgIdentity API: [https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API)
 - SsHKey API: [https://spaces.at.internet2.edu/display/COmanage/SshKey+API](https://spaces.at.internet2.edu/display/COmanage/SshKey+API)
 - SSH Key Authenticator Plugin: [https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin](https://spaces.at.internet2.edu/display/COmanage/SSH+Key+Authenticator+Plugin)
 - PyPi: [https://pypi.org](https://pypi.org)
