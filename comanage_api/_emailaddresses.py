@@ -26,7 +26,7 @@ import json
 
 def email_addresses_add(self, email_address: str, person_type: str, person_id: int) -> dict:
     """
-    Add a new EmailAddress
+    Add a new EmailAddress.
 
     :param self:
     :param email_address:
@@ -99,8 +99,8 @@ def email_addresses_add(self, email_address: str, person_type: str, person_id: i
     )
     if resp.status_code == 201:
         return json.loads(resp.text)
-
-    resp.raise_for_status()
+    else:
+        resp.raise_for_status()
 
 
 def email_addresses_delete(self) -> bool:
