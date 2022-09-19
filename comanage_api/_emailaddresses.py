@@ -5,7 +5,7 @@ EmailAddress API - https://spaces.at.internet2.edu/display/COmanage/EmailAddress
 
 Methods
 -------
-email_addresses_add() -> dict
+email_addresses_add(email_address: str, person_type: str, person_id: int) -> dict
     Add a new EmailAddress.
 email_addresses_delete() -> bool
     ### NOT IMPLEMENTED ###
