@@ -224,7 +224,6 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 ### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API) (COmanage v3.3.0+)
 
 - `email_addresses_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
     - Add a new EmailAddress.
 - `email_addresses_delete() -> bool`
     - `### NOT IMPLEMENTED ###`
