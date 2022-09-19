@@ -299,10 +299,8 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 ### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API) (COmanage v3.3.0+)
 
 - `org_identities_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
     - Add a new Organizational Identity. A person must have an `OrgIdentity` before they can be added to a CO.
-- `org_identities_delete() -> bool`
-    - `### NOT IMPLEMENTED ###`
+- `org_identities_delete(org_identity_id: int) -> bool`
     - Remove an Organizational Identity.
     - The person must be removed from any COs (`CoPerson`) before the OrgIdentity record can be removed.
     - This method will also delete related data, such as `Addresses`, `EmailAddresses`, and `TelephoneNumbers`.
