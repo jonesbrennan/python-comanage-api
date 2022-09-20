@@ -20,7 +20,8 @@ try:
         identifier='test@domain.com',
         login_flag=False,
         person_type='CO',
-        person_id=CO_PERSON_ID)
+        person_id=CO_PERSON_ID
+    )
     print(json.dumps(new_identifier, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
