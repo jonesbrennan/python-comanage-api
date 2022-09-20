@@ -224,8 +224,8 @@ class ComanageApi(object):
         return identifiers_view_one(self, identifier_id=identifier_id)
 
     # Name API
-    def names_add(self, person_type: str, person_id: int, given_name: str, family_name: str):
-        return names_add(self, person_type=person_type, person_id=person_id, given_name=given_name, family_name=family_name)
+    def names_add(self, person_type: str, person_id: int, given: str, family: str):
+        return names_add(self, person_type=person_type, person_id=person_id, given=given, family=family)
 
     def names_delete(self):
         return names_delete(self)

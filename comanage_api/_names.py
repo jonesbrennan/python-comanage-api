@@ -5,7 +5,7 @@ Name API - https://spaces.at.internet2.edu/display/COmanage/Name+API
 
 Methods
 -------
-names_add(person_type: str, person_id: int, given_name: str, family_name: str) -> dict
+names_add(person_type: str, person_id: int, given: str, family: str) -> dict
     Add a new Name.
 names_delete() -> bool
     ### NOT IMPLEMENTED ###
@@ -24,14 +24,14 @@ names_view_one(name_id: int) -> dict
 import json
 
 
-def names_add(self, person_type: str, person_id: int, given_name: str, family_name: str) -> dict:
+def names_add(self, person_type: str, person_id: int, given: str, family: str) -> dict:
     """
         Add a new Name.
 
         person_type: Type of person (i.e. "CO"|"Org")
         person_id: COmanage ID for the person_type
-        given_name: First name for the person
-        family_name: Last name for the person
+        given: First name for the person
+        family: Last name for the person
         :request
             {
                 "RequestType":"Names",
@@ -96,8 +96,8 @@ def names_add(self, person_type: str, person_id: int, given_name: str, family_na
         ]
     }
 
-    post_body['Names'][0]['Given'] = given_name
-    post_body['Names'][0]['Family'] = family_name
+    post_body['Names'][0]['Given'] = given
+    post_body['Names'][0]['Family'] = family
     post_body['Names'][0]['Person']['Type'] = person_type
     post_body['Names'][0]['Person']['Id'] = person_id
 
