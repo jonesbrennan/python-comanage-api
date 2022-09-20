@@ -21,10 +21,12 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# org_identities_delete() -> bool
+# org_identities_delete(org_identity_id: int) -> bool
 print('### org_identities_delete')
 try:
-    delete_org_identity = api.org_identities_delete()
+    per_co_org_identities = api.org_identities_view_per_co()
+    org_identity_id = int(per_co_org_identities['OrgIdentities'][0]['Id'])
+    delete_org_identity = api.org_identities_delete(org_identity_id)
     print(json.dumps(delete_org_identity, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
