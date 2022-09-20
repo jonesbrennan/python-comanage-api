@@ -6,7 +6,6 @@ CoOrgIdentityLink API - https://spaces.at.internet2.edu/display/COmanage/CoOrgId
 Methods
 -------
 coorg_identity_links_add(coperson_id: int, org_identity_id: int) -> dict
-    ### NOT IMPLEMENTED ###
     Add a new CO Org Identity Link.
     A person must have an Org Identity and a CO Person record before they can be linked.
     Note that invitations are a separate operation.

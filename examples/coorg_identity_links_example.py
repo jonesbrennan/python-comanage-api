@@ -12,6 +12,7 @@ from examples import *
 # must be set ahead of time and be valid within the CO
 IDENTITY_TYPE = 'orgidentityid'
 IDENTITY_ID = 190
+CO_PERSON_ID = 163
 
 # coorg_identity_links_add, coorg_identity_links_delete, coorg_identity_links_edit, \
 #     coorg_identity_links_view_all, coorg_identity_links_view_by_identity, coorg_identity_links_view_one
@@ -19,14 +20,11 @@ IDENTITY_ID = 190
 # coorg_identity_links_add(coperson_id: int, org_identity_id: int) -> dict
 print('### coorg_identity_links_add')
 try:
-    per_co_copeople = api.copeople_view_per_co()
-    if per_co_copeople['CoPeople']:
-        coperson_id = int(per_co_copeople['CoPeople'][0]['Id'])
-        new_coorg_identity_link = api.coorg_identity_links_add(
-            coperson_id=coperson_id,
-            org_identity_id=IDENTITY_ID
-        )
-        print(json.dumps(new_coorg_identity_link, indent=4))
+    new_coorg_identity_link = api.coorg_identity_links_add(
+        coperson_id=CO_PERSON_ID,
+        org_identity_id=IDENTITY_ID
+    )
+    print(json.dumps(new_coorg_identity_link, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
