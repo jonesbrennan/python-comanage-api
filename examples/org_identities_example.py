@@ -59,11 +59,11 @@ except HTTPError as err:
     print('[ERROR] Exception caught')
     print('--> ', type(err).__name__, '-', err)
 
-# org_identities_view_per_identitifer(identifier_id: int) -> dict:
+# org_identities_view_per_identitifer(identifier: str) -> dict:
 print('### org_identities_view_per_identifier')
 try:
     per_identifier_org_identities = api.org_identities_view_per_identifier(
-        identifier_id=ORG_IDENDIFIER_ID
+        identifier=str(ORG_IDENDIFIER_ID)
     )
     print(json.dumps(per_identifier_org_identities, indent=4))
 except (TypeError, HTTPError) as err:

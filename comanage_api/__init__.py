@@ -19,7 +19,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.5"
+__VERSION__ = "0.1.6"
 
 
 class ComanageApi(object):
@@ -258,8 +258,8 @@ class ComanageApi(object):
     def org_identities_view_per_co(self):
         return org_identities_view_per_co(self)
 
-    def org_identities_view_per_identifier(self, identifier_id: int):
-        return org_identities_view_per_identifier(self, identifier_id=identifier_id)
+    def org_identities_view_per_identifier(self, identifier: str):
+        return org_identities_view_per_identifier(self, identifier=identifier)
 
     def org_identities_view_one(self, org_identity_id: int):
         return org_identities_view_one(self, org_identity_id=org_identity_id)
