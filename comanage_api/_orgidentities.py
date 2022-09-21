@@ -18,7 +18,7 @@ org_identities_view_all() -> dict
     Retrieve all existing Organizational Identities.
 org_identities_view_per_co(person_type: str, person_id: int) -> dict
     Retrieve all existing Organizational Identities for the specified CO.
-org_identities_view_per_identifier(identifier_id: int) -> dict
+org_identities_view_per_identifier(identifier: str) -> dict
     Retrieve all existing Organizational Identities attached to the specified identifier.
     Note the specified identifier must be attached to an Org Identity, not a CO Person.
 org_identities_view_one(org_identity_id: int) -> dict
@@ -249,7 +249,7 @@ def org_identities_view_per_co(self) -> dict:
         resp.raise_for_status()
 
 
-def org_identities_view_per_identifier(self, identifier_id: int) -> dict:
+def org_identities_view_per_identifier(self, identifier: str) -> dict:
     """
     Retrieve all existing Organizational Identities attached to the specified identifier.
     Note the specified identifier must be attached to an Org Identity, not a CO Person.
@@ -288,7 +288,7 @@ def org_identities_view_per_identifier(self, identifier_id: int) -> dict:
         500 Other Error                             Unknown error
     """
     url = self._CO_API_URL + '/org_identities.json'
-    params = {'coid': self._CO_API_ORG_ID, 'search.identifier': int(identifier_id)}
+    params = {'coid': self._CO_API_ORG_ID, 'search.identifier': identifier}
     resp = self._s.get(
         url=url,
         params=params
