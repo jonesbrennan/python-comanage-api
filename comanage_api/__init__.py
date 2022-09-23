@@ -19,7 +19,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.6"
+__VERSION__ = "0.1.5"
 
 
 class ComanageApi(object):
