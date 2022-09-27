@@ -7,6 +7,7 @@ Examples demonstrating basic usage for each wrapped endpoint. Some of the values
 ## Table of Contents
 
 - [Configuration](#config) `__init__.py` used by all examples
+- [CoGroup API](#cogroup) example output
 - [CoOrgIdentityLink API](#coorgidentitylink) example output
 - [CoPerson API](#coperson) example output
 - [CoPersonRole API](#copersonrole) example output
