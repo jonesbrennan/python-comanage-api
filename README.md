@@ -10,6 +10,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
 
 - [TL;DR](#tldr)
 - [API endpoints](#endpoints)
+    - [CoGroup](#cogroup)
     - [CoOrgIdentityLink](#coorgidentitylinks)
     - [CoPerson](#coperson)
     - [CoPersonRole](#copersonrole)
@@ -133,7 +134,7 @@ Return types based on implementation status of wrapped API endpoints
     - Edit an existing CoGroup.
 - `cogroup_reconcile_all() -> bool`
     - `### NOT IMPLEMENTED ###`
-    Reconcile all membership groups.
+    - Reconcile all membership groups.
 - `cogroup_reconcile_one() -> bool`
     - `### NOT IMPLEMENTED ###`
     - Reconcile memberships for a CoGroup.
