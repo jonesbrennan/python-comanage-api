@@ -1,8 +1,6 @@
 import requests_mock
 from requests import Session
 
-from ._cogroup import cogroup_add, cogroup_delete, cogroup_edit, cogroup_reconcile_all, cogroup_reconcile_one, \
-    cogroup_view_all, cogroup_view_per_co, cogroup_view_per_coperson, cogroup_view_per_identifier, cogroup_view_one
 from ._cogroupmember import cogroupmember_add, cogroupmember_delete, cogroupmember_edit, \
     cogroupmember_view_all, cogroupmember_view_per_group, cogroupmember_view_one
 from ._coorgidentitylinks import coorg_identity_links_add, coorg_identity_links_delete, coorg_identity_links_edit, \
@@ -23,7 +21,7 @@ from ._sshkeys import ssh_keys_add, ssh_keys_delete, ssh_keys_edit, ssh_keys_vie
     ssh_keys_view_one
 
 # fabric-comanage-api version
-__VERSION__ = "0.1.6"
+__VERSION__ = "0.1.5"
 
 
 class ComanageApi(object):
@@ -96,37 +94,6 @@ class ComanageApi(object):
         self._s.headers = {'Content-Type': 'application/json'}
         self._s.auth = (self._CO_API_USER, self._CO_API_PASS)
 
-    # CoGroup API
-    def cogroup_add(self):
-        return cogroup_add(self)
-
-    def cogroup_delete(self):
-        return cogroup_delete(self)
-
-    def cogroup_edit(self):
-        return cogroup_edit(self)
-
-    def cogroup_reconcile_all(self):
-        return cogroup_reconcile_all(self)
-
-    def cogroup_reconcile_one(self):
-        return cogroup_reconcile_one(self)
-
-    def cogroup_view_all(self):
-        return cogroup_view_all(self)
-
-    def cogroup_view_per_co(self):
-        return cogroup_view_per_co(self)
-
-    def cogroup_view_per_coperson(self):
-        return cogroup_view_per_coperson(self)
-
-    def cogroup_view_per_identifier(self):
-        return cogroup_view_per_identifier(self)
-
-    def cogroup_view_one(self):
-        return cogroup_view_one(self)
-
     # CoGroupMember API
     def cogroupmember_add(self, group_id: int, person_id: int):
         return cogroupmember_add(self, group_id=group_id, person_id=person_id)
@@ -147,8 +114,8 @@ class ComanageApi(object):
         return cogroupmember_view_one(self)
 
     # CoOrgIdentityLink API
-    def coorg_identity_links_add(self, coperson_id: int, org_identity_id: int):
-        return coorg_identity_links_add(self, coperson_id=coperson_id, org_identity_id=org_identity_id)
+    def coorg_identity_links_add(self):
+        return coorg_identity_links_add(self)
 
     def coorg_identity_links_delete(self):
         return coorg_identity_links_delete(self)
@@ -169,8 +136,8 @@ class ComanageApi(object):
     def copeople_add(self):
         return copeople_add(self)
 
-    def copeople_delete(self, coperson_id: int):
-        return copeople_delete(self, coperson_id=coperson_id)
+    def copeople_delete(self):
+        return copeople_delete(self)
 
     def copeople_edit(self):
         return copeople_edit(self)
@@ -237,8 +204,8 @@ class ComanageApi(object):
         return cous_view_one(self, cou_id=cou_id)
 
     # EmailAddress API
-    def email_addresses_add(self, email_address: str, person_type: str, person_id: int):
-        return email_addresses_add(self, email_address=email_address, person_type=person_type, person_id=person_id)
+    def email_addresses_add(self):
+        return email_addresses_add(self)
 
     def email_addresses_delete(self):
         return email_addresses_delete(self)
@@ -256,8 +223,8 @@ class ComanageApi(object):
         return email_addresses_view_one(self, email_address_id=email_address_id)
 
     # Indentifier API
-    def identifiers_add(self, identity_type: str, identifier: str, login_flag: bool, person_type: str, person_id: int):
-        return identifiers_add(self, identity_type=identity_type, identifier=identifier, login_flag=login_flag, person_type=person_type, person_id=person_id)
+    def identifiers_add(self):
+        return identifiers_add(self)
 
     def identifiers_assign(self):
         return identifiers_assign(self)
@@ -278,8 +245,8 @@ class ComanageApi(object):
         return identifiers_view_one(self, identifier_id=identifier_id)
 
     # Name API
-    def names_add(self, person_type: str, person_id: int, given: str, family: str):
-        return names_add(self, person_type=person_type, person_id=person_id, given=given, family=family)
+    def names_add(self):
+        return names_add(self)
 
     def names_delete(self):
         return names_delete(self)
@@ -300,8 +267,8 @@ class ComanageApi(object):
     def org_identities_add(self):
         return org_identities_add(self)
 
-    def org_identities_delete(self, org_identity_id: int):
-        return org_identities_delete(self, org_identity_id=org_identity_id)
+    def org_identities_delete(self):
+        return org_identities_delete(self)
 
     def org_identities_edit(self):
         return org_identities_edit(self)
@@ -312,8 +279,8 @@ class ComanageApi(object):
     def org_identities_view_per_co(self):
         return org_identities_view_per_co(self)
 
-    def org_identities_view_per_identifier(self, identifier: str):
-        return org_identities_view_per_identifier(self, identifier=identifier)
+    def org_identities_view_per_identifier(self, identifier_id: int):
+        return org_identities_view_per_identifier(self, identifier_id=identifier_id)
 
     def org_identities_view_one(self, org_identity_id: int):
         return org_identities_view_one(self, org_identity_id=org_identity_id)

@@ -15,13 +15,7 @@ CO_PERSON_ID = 163
 # identifiers_add() -> dict
 print('### identifiers_add')
 try:
-    new_identifier = api.identifiers_add(
-        identity_type='eppn',
-        identifier='test@domain.com',
-        login_flag=False,
-        person_type='CO',
-        person_id=CO_PERSON_ID
-    )
+    new_identifier = api.identifiers_add()
     print(json.dumps(new_identifier, indent=4))
 except HTTPError as err:
     print('[ERROR] Exception caught')
