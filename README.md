@@ -10,6 +10,7 @@ Available at PyPi: [https://pypi.org/project/fabric-comanage-api/](https://pypi.
 
 - [TL;DR](#tldr)
 - [API endpoints](#endpoints)
+    - [CoGroup](#cogroup)
     - [CoGroupMember](#cogroupmember)
     - [CoOrgIdentityLink](#coorgidentitylinks)
     - [CoPerson](#coperson)
@@ -121,7 +122,41 @@ Return types based on implementation status of wrapped API endpoints
     - `-> dict`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
     - `-> bool`: raise exception (`HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local`)
 
+
+### <a name="cogroup"></a>[CoGroup API](https://spaces.at.internet2.edu/display/COmanage/CoGroup+API) (COmanage v4.0.0+)
+
+- `cogroup_add() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Add a new CoGroup.
+- `cogroup_delete() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Remove a CoGroup.
+- `cogroup_edit() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Edit an existing CoGroup.
+- `cogroup_reconcile_all() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Reconcile all membership groups.
+- `cogroup_reconcile_one() -> bool`
+    - `### NOT IMPLEMENTED ###`
+    - Reconcile memberships for a CoGroup.
+- `cogroup_view_all() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Retrieve all existing CoGroups.
+- `cogroup_view_per_co() -> dict`
+    - Retrieve CoGroups attached to a CO.
+- `cogroup_view_per_coperson() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Retrieve Groups attached to a CO Person.
+- `cogroup_view_per_identifier() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Retrieve all existing CO Groups attached to the specified identifier.
+- `cogroup_view_one() -> dict`
+    - `### NOT IMPLEMENTED ###`
+    - Retrieve an existing CoGroup.
+    
 ### <a name="cogroupmember"></a>[CoGroupMember API](https://spaces.at.internet2.edu/display/COmanage/CoGroupMember+API) (COmanage v4.0.0+)
+
 - `cogroupmember_add(group_id: int, person_id: int) -> dict`
     - Add a new CoGroupMember (ie: a member of a CO group).
 - `cogroupmember_delete() -> bool`
@@ -141,8 +176,7 @@ Return types based on implementation status of wrapped API endpoints
 
 ### <a name="coorgidentitylink"></a>[CoOrgIdentityLink API](https://spaces.at.internet2.edu/display/COmanage/CoOrgIdentityLink+API) (COmanage v4.0.0+)
 
-- `coorg_identity_links_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
+- `coorg_identity_links_add(coperson_id: int, org_identity_id: int) -> dict`
     - Add a new CO Org Identity Link.
     - A person must have an Org Identity and a CO Person record before they can be linked.
     - Note that invitations are a separate operation.
@@ -168,11 +202,9 @@ IDENTITY_OPTIONS = ['copersonid', 'orgidentityid']
 ### <a name="coperson"></a>[CoPerson API](https://spaces.at.internet2.edu/display/COmanage/CoPerson+API) (COmanage v3.3.0+)
 
 - `copeople_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
     - Add a new CO Person. A person must have an OrgIdentity before they can be added to a CO.
     - Note that linking to an OrgIdentity and invitations are separate operations.
-- `copeople_delete() -> bool`
-    - `### NOT IMPLEMENTED ###`
+- `copeople_delete(coperson_id: int) -> bool`
     - Remove a CO Person. This method will also delete related data, such as `CoPersonRoles`, `EmailAddresses`,
 and `Identifiers`. 
     - A person must be removed from any COs (CoPerson records must be deleted)
@@ -242,8 +274,7 @@ AFFILIATION_OPTIONS = ['affiliate', 'alum', 'employee', 'faculty', 'member', 'st
 
 ### <a name="emailaddress"></a>[EmailAddress API](https://spaces.at.internet2.edu/display/COmanage/EmailAddress+API) (COmanage v3.3.0+)
 
-- `email_addresses_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
+- `email_addresses_add(email_address: str, person_type: str, person_id: int) -> dict`
     - Add a new EmailAddress.
 - `email_addresses_delete() -> bool`
     - `### NOT IMPLEMENTED ###`
@@ -266,8 +297,7 @@ EMAILADDRESS_OPTIONS = ['codeptid', 'copersonid', 'organizationid', 'orgidentity
 
 ### <a name="identifier"></a>[Identifier API](https://spaces.at.internet2.edu/display/COmanage/Identifier+API) (COmanage v3.3.0+)
 
-- `identifiers_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
+- `identifiers_add(identity_type: str, identifier: str, login_flag: bool, person_type: str, person_id: int) -> dict`
     - Add a new Identifier.
 - `identifiers_assign() -> bool`
     - `### NOT IMPLEMENTED ###`
@@ -293,8 +323,7 @@ ENTITY_OPTIONS = ['codeptid', 'cogroupid', 'copersonid', 'organizationid', 'orgi
 
 ### <a name="name"></a>[Name API](https://spaces.at.internet2.edu/display/COmanage/Name+API) (COmanage v3.3.0+)
 
-- `names_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
+- `names_add(person_type: str, person_id: int, given: str, family: str) -> dict`
     - Add a new Name.
 - `names_delete() -> bool`
     - `### NOT IMPLEMENTED ###`
@@ -318,10 +347,8 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
 ### <a name="orgidentity"></a>[OrgIdentity API](https://spaces.at.internet2.edu/display/COmanage/OrgIdentity+API) (COmanage v3.3.0+)
 
 - `org_identities_add() -> dict`
-    - `### NOT IMPLEMENTED ###`
     - Add a new Organizational Identity. A person must have an `OrgIdentity` before they can be added to a CO.
-- `org_identities_delete() -> bool`
-    - `### NOT IMPLEMENTED ###`
+- `org_identities_delete(org_identity_id: int) -> bool`
     - Remove an Organizational Identity.
     - The person must be removed from any COs (`CoPerson`) before the OrgIdentity record can be removed.
     - This method will also delete related data, such as `Addresses`, `EmailAddresses`, and `TelephoneNumbers`.
@@ -332,7 +359,7 @@ PERSON_OPTIONS = ['copersonid', 'orgidentityid']
     - Retrieve all existing Organizational Identities.
 - `org_identities_view_per_co(person_type: str, person_id: int) -> dict`
     - Retrieve all existing Organizational Identities for the specified CO.
-- `org_identities_view_per_identifier(identifier_id: int) -> dict`
+- `org_identities_view_per_identifier(identifier: str) -> dict`
     - Retrieve all existing Organizational Identities attached to the specified identifier.
     - Note the specified identifier must be attached to an Org Identity, not a CO Person.
 - `org_identities_view_one(org_identity_id: int) -> dict`

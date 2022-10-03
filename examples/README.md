@@ -7,6 +7,7 @@ Examples demonstrating basic usage for each wrapped endpoint. Some of the values
 ## Table of Contents
 
 - [Configuration](#config) `__init__.py` used by all examples
+- [CoGroup API](#cogroup) example output
 - [CoGroupMember API](#cogroupmember) example output
 - [CoOrgIdentityLink API](#coorgidentitylink) example output
 - [CoPerson API](#coperson) example output
@@ -62,6 +63,46 @@ api = ComanageApi(
 )
 ```
 
+## <a name="cogroup"></a>CoGroup API
+
+Example: `cogroup_example.py`
+
+```console
+$ python examples/cogroup_example.py
+### cogroup_add
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_delete
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_edit
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_reconcile_all
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_reconcile_one
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_view_all
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_view_per_co
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_view_per_coperson
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_view_per_identifier
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+### cogroup_view_one
+[ERROR] Exception caught
+-->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
+
+```
+
+
 ## <a name="cogroupmember"></a>CoGroupMember API
 
 Example: `cogroupmember_example.py`
@@ -88,6 +129,7 @@ $ python examples/cogroupmember_example.py
 -->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
 
 ```
+
 
 ## <a name="coorgidentitylink"></a>CoOrgIdentityLink API
 
