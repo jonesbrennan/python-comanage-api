@@ -64,10 +64,10 @@ api = ComanageApi(
 
 ## <a name="cogroup"></a>CoGroup API
 
-Example: `co_group_example.py`
+Example: `cogroup_example.py`
 
 ```console
-$ python examples/coorg_group_example.py
+$ python examples/cogroup_example.py
 ### cogroup_add
 [ERROR] Exception caught
 -->  HTTPError - 501 Server Error: Not Implemented for url: mock://not_implemented_501.local
