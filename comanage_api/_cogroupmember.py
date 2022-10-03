@@ -153,7 +153,7 @@ def cogroupmember_view_all(self) -> dict:
         url=url
     )
     if resp.status_code == 200:
-        return True
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
@@ -198,7 +198,7 @@ def cogroupmember_view_per_group(self, group_id: int) -> dict:
         params=params
     )
     if resp.status_code == 200:
-        return True
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
 
@@ -217,6 +217,6 @@ def cogroupmember_view_one(self) -> dict:
         url=url
     )
     if resp.status_code == 200:
-        return True
+        return json.loads(resp.text)
     else:
         resp.raise_for_status()
